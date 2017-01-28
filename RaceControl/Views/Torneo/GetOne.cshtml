@@ -1,0 +1,65 @@
+﻿@model WebRaceControl.Models.Torneo
+@{
+    ViewBag.Title = "GetOne";
+}
+
+<div class="row">
+    <div class="col-lg-4">
+        <h2>Categorias</h2>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary"
+                    data-toggle="modal" data-target="#myModal"
+                    onclick="location.href='@Url.Action("Create", "Categoria")'">
+                Nuevo Categoria
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+@foreach (var item in Model.Categoria)
+{
+                     <tr>
+                        <td>@item.nombre</td>                       
+                    </tr>
+}
+                             
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <h2>Fechas</h2>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary"
+                    data-toggle="modal" data-target="#myModal"
+                    onclick="location.href='@Url.Action("Create", "Categoria")'">
+                Nuevo Fecha
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Pilotos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Carrera)
+                    {
+                        <tr>
+                            <td>@item.nombre</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
