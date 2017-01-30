@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_A0C5ED_RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Torneo">
           <Key>
             <PropertyRef Name="idTorneo" />
@@ -14,14 +14,14 @@
           <Property Name="fecha" Type="datetime" />
           <Property Name="idCliente" Type="bigint" />
         </EntityType>
-        <EntityContainer Name="DB_A0C5ED_RaceControlModelStoreContainer">
+        <EntityContainer Name="RaceControlModelStoreContainer">
           <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DB_A0C5ED_RaceControlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="RaceControlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Torneo">
           <Key>
             <PropertyRef Name="idTorneo" />
@@ -31,7 +31,7 @@
           <Property Name="fecha" Type="DateTime" Precision="3" />
           <Property Name="idCliente" Type="Int64" />
         </EntityType>
-        <EntityContainer Name="RaceControlEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EntidadesRaceControl" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Torneo" EntityType="Self.Torneo" />
         </EntityContainer>
       </Schema>
@@ -39,9 +39,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DB_A0C5ED_RaceControlModelStoreContainer" CdmEntityContainer="RaceControlEntities">
+        <EntityContainerMapping StorageEntityContainer="RaceControlModelStoreContainer" CdmEntityContainer="EntidadesRaceControl">
           <EntitySetMapping Name="Torneo">
-            <EntityTypeMapping TypeName="DB_A0C5ED_RaceControlModel.Torneo">
+            <EntityTypeMapping TypeName="RaceControlModel.Torneo">
               <MappingFragment StoreEntitySet="Torneo">
                 <ScalarProperty Name="idTorneo" ColumnName="idTorneo" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

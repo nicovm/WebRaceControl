@@ -12,7 +12,7 @@ namespace RaceControl.Content
 {
     public class TorneoController : Controller
     {
-        private RaceControlEntities db = new RaceControlEntities();
+        private EntidadesRaceControl db = new EntidadesRaceControl();
 
         // GET: Torneos
         public ActionResult Index()

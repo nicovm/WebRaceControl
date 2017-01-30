@@ -207,23 +207,23 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\RaceControlModel.Context.cs">
+    <Compile Include="Models\ModelRacelControl.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RaceControlModel.Context.tt</DependentUpon>
+      <DependentUpon>ModelRacelControl.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RaceControlModel.cs">
+    <Compile Include="Models\ModelRacelControl.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RaceControlModel.tt</DependentUpon>
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RaceControlModel.Designer.cs">
+    <Compile Include="Models\ModelRacelControl.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RaceControlModel.edmx</DependentUpon>
+      <DependentUpon>ModelRacelControl.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Torneo.cs">
-      <DependentUpon>RaceControlModel.tt</DependentUpon>
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -235,27 +235,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\RaceControlModel.Context.tt">
+    <Content Include="Models\ModelRacelControl.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RaceControlModel.edmx</DependentUpon>
-      <LastGenOutput>RaceControlModel.Context.cs</LastGenOutput>
+      <DependentUpon>ModelRacelControl.edmx</DependentUpon>
+      <LastGenOutput>ModelRacelControl.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\RaceControlModel.tt">
+    <Content Include="Models\ModelRacelControl.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RaceControlModel.edmx</DependentUpon>
-      <LastGenOutput>RaceControlModel.cs</LastGenOutput>
+      <DependentUpon>ModelRacelControl.edmx</DependentUpon>
+      <LastGenOutput>ModelRacelControl.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\RaceControlModel.edmx">
+    <EntityDeploy Include="Models\ModelRacelControl.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RaceControlModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelRacelControl.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\RaceControlModel.edmx.diagram">
-      <DependentUpon>RaceControlModel.edmx</DependentUpon>
+    <Content Include="Models\ModelRacelControl.edmx.diagram">
+      <DependentUpon>ModelRacelControl.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

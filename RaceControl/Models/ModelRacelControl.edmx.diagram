@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f61d025a301443e594aed9a7c511d541" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_A0C5ED_RaceControlModel.Torneo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="cbb5ced4aa1a4b19b86a92965fc2732b" Name="Diagram1">
+        <EntityTypeShape EntityType="RaceControlModel.Torneo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

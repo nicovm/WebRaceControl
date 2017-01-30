@@ -13,10 +13,10 @@ namespace RaceControl.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RaceControlEntities : DbContext
+    public partial class EntidadesRaceControl : DbContext
     {
-        public RaceControlEntities()
-            : base("name=RaceControlEntities")
+        public EntidadesRaceControl()
+            : base("name=EntidadesRaceControl")
         {
         }
     
