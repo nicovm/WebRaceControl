@@ -8,8 +8,83 @@
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="fecha" Type="DateTime" Precision="3" />
     <Property Name="idCliente" Type="Int64" />
+    <NavigationProperty Name="Categoria" Relationship="RaceControlModel.FK_Categoria_Torneo" FromRole="Torneo" ToRole="Categoria" />
+    <NavigationProperty Name="Carrera" Relationship="RaceControlModel.FK_Carrera_Torneo" FromRole="Torneo" ToRole="Carrera" />
   </EntityType>
   <EntityContainer Name="EntidadesRaceControl" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Torneo" EntityType="Self.Torneo" />
+    <EntitySet Name="Categoria" EntityType="RaceControlModel.Categoria" />
+    <EntitySet Name="Categoria_Piloto" EntityType="RaceControlModel.Categoria_Piloto" />
+    <AssociationSet Name="FK_Categoria_Torneo" Association="RaceControlModel.FK_Categoria_Torneo">
+      <End Role="Torneo" EntitySet="Torneo" />
+      <End Role="Categoria" EntitySet="Categoria" />
+    </AssociationSet>
+    <EntitySet Name="Carrera" EntityType="RaceControlModel.Carrera" />
+    <EntitySet Name="Carrera_Piloto" EntityType="RaceControlModel.Carrera_Piloto" />
+    <AssociationSet Name="FK_Carrera_Torneo" Association="RaceControlModel.FK_Carrera_Torneo">
+      <End Role="Torneo" EntitySet="Torneo" />
+      <End Role="Carrera" EntitySet="Carrera" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="idCategoria" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="idTorneo" Type="Int64" />
+    <NavigationProperty Name="Torneo" Relationship="RaceControlModel.FK_Categoria_Torneo" FromRole="Categoria" ToRole="Torneo" />
+  </EntityType>
+  <EntityType Name="Categoria_Piloto">
+    <Key>
+      <PropertyRef Name="idPiloto" />
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="idPiloto" Type="Int64" Nullable="false" />
+    <Property Name="idCategoria" Type="Int64" Nullable="false" />
+    <Property Name="auto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Categoria_Torneo">
+    <End Type="RaceControlModel.Torneo" Role="Torneo" Multiplicity="0..1" />
+    <End Type="RaceControlModel.Categoria" Role="Categoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Torneo">
+        <PropertyRef Name="idTorneo" />
+      </Principal>
+      <Dependent Role="Categoria">
+        <PropertyRef Name="idTorneo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Carrera">
+    <Key>
+      <PropertyRef Name="idCarrera" />
+    </Key>
+    <Property Name="idCarrera" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="fecha" Type="DateTime" Precision="3" />
+    <Property Name="idTorneo" Type="Int64" />
+    <NavigationProperty Name="Torneo" Relationship="RaceControlModel.FK_Carrera_Torneo" FromRole="Carrera" ToRole="Torneo" />
+  </EntityType>
+  <EntityType Name="Carrera_Piloto">
+    <Key>
+      <PropertyRef Name="idPiloto" />
+      <PropertyRef Name="idCarrera" />
+    </Key>
+    <Property Name="idPiloto" Type="Int64" Nullable="false" />
+    <Property Name="idCarrera" Type="Int64" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Carrera_Torneo">
+    <End Type="RaceControlModel.Torneo" Role="Torneo" Multiplicity="0..1" />
+    <End Type="RaceControlModel.Carrera" Role="Carrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Torneo">
+        <PropertyRef Name="idTorneo" />
+      </Principal>
+      <Dependent Role="Carrera">
+        <PropertyRef Name="idTorneo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

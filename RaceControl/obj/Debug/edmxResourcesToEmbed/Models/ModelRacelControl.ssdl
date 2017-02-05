@@ -1,5 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Carrera">
+    <Key>
+      <PropertyRef Name="idCarrera" />
+    </Key>
+    <Property Name="idCarrera" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="fecha" Type="datetime" />
+    <Property Name="idTorneo" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Carrera_Piloto">
+    <Key>
+      <PropertyRef Name="idPiloto" />
+      <PropertyRef Name="idCarrera" />
+    </Key>
+    <Property Name="idPiloto" Type="bigint" Nullable="false" />
+    <Property Name="idCarrera" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="idCategoria" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="100" />
+    <Property Name="idTorneo" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Categoria_Piloto">
+    <Key>
+      <PropertyRef Name="idPiloto" />
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="idPiloto" Type="bigint" Nullable="false" />
+    <Property Name="idCategoria" Type="bigint" Nullable="false" />
+    <Property Name="auto" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Torneo">
     <Key>
       <PropertyRef Name="idTorneo" />
@@ -9,7 +44,43 @@
     <Property Name="fecha" Type="datetime" />
     <Property Name="idCliente" Type="bigint" />
   </EntityType>
+  <Association Name="FK_Carrera_Torneo">
+    <End Role="Torneo" Type="Self.Torneo" Multiplicity="0..1" />
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Torneo">
+        <PropertyRef Name="idTorneo" />
+      </Principal>
+      <Dependent Role="Carrera">
+        <PropertyRef Name="idTorneo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categoria_Torneo">
+    <End Role="Torneo" Type="Self.Torneo" Multiplicity="0..1" />
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Torneo">
+        <PropertyRef Name="idTorneo" />
+      </Principal>
+      <Dependent Role="Categoria">
+        <PropertyRef Name="idTorneo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="RaceControlModelStoreContainer">
+    <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Carrera_Torneo" Association="Self.FK_Carrera_Torneo">
+      <End Role="Torneo" EntitySet="Torneo" />
+      <End Role="Carrera" EntitySet="Carrera" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categoria_Torneo" Association="Self.FK_Categoria_Torneo">
+      <End Role="Torneo" EntitySet="Torneo" />
+      <End Role="Categoria" EntitySet="Categoria" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>
