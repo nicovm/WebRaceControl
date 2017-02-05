@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RaceControl.Models;
+using System.IO;
 
 namespace RaceControl.Content
 {
@@ -46,10 +47,11 @@ namespace RaceControl.Content
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idTorneo,nombre,fecha,idCliente")] Torneo torneo)
+        public ActionResult Create([Bind(Include = "idTorneo,nombre,fecha,idCliente")] Torneo torneo, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                guardarImg(file, torneo.nombre);
                 db.Torneo.Add(torneo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -137,6 +139,17 @@ namespace RaceControl.Content
                 return HttpNotFound();
             }
             return View(torneo);
+        }
+
+        private void guardarImg(HttpPostedFileBase file, string nombreTorneo)
+        {
+            if (file != null)
+            {
+                string filename = string.Format("logo_torneo-{0}.png", nombreTorneo);
+                string path = Path.Combine(Server.MapPath("~/Content/imgTorneo"), filename);
+                file.SaveAs(path);
+
+            }
         }
     }
 }
