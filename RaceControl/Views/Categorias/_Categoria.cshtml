@@ -33,6 +33,7 @@
 
      
         @Html.Hidden("idTorneo", (object) ViewBag.torneo.idTorneo)
+        @Html.Hidden("idCategoria", (object) Model.idCategoria)
 
             <div class="form">
 
@@ -76,11 +77,8 @@
 
 
 }
-
-
-
-        @section Scripts {
+ section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
-        }
+ }
 
 

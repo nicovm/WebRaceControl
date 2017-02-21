@@ -40,7 +40,7 @@ namespace RaceControl.Controllers
         public ActionResult Create(int idTorneo)
         {
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre");
-            ViewBag.torneo = db.Torneo.Find(3);
+            ViewBag.torneo = db.Torneo.Find(idTorneo);
             return PartialView("_Categoria");
         }
 
@@ -74,8 +74,9 @@ namespace RaceControl.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", categoria.idTorneo);
-            return RedirectToAction("GetOne","Torneo");
+            ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre");
+            ViewBag.torneo = db.Torneo.Find(categoria.idCategoria);
+            return PartialView("_Categoria",categoria);
         }
 
         // POST: Categorias/Edit/5

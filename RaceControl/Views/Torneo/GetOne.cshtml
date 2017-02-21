@@ -25,7 +25,28 @@
 @foreach (var item in Model.Categoria)
 {
                      <tr>
-                        <td>@item.nombre</td>                       
+                        <td>@item.nombre</td>
+
+                         <td>
+                             <button id="btnNuevoCategoria" type="button" class="btn btn-info"
+                                     data-toggle="modal" data-target="#myModal" data-id= @item.idCategoria
+                                     onclick="clickBtn(this,false,@Model.idTorneo)">
+                                 Editar
+                             </button>
+
+                             <button id="btnNuevoCategoria" type="button" class="btn btn-success"
+                                     data-toggle="modal" data-target="#myModal"
+                                     onclick="location.href='@Url.Action("Create", "Categorias", Model)'">
+                                 Agregar Piloto
+                             </button>
+
+                       
+                         </td>
+                       
+                         @*<td>
+                             @Html.ActionLink("Editar", "Edit", new { id = item.idCategoria }) |    
+                              @Html.ActionLink("Agregar piloto", "AddPiloto", new { id = item.idCategoria })
+                         </td>*@                   
                     </tr>
 }
                              
@@ -38,7 +59,7 @@
         <h2>Fechas</h2>
         <div class="form-group">
             <button type="button" class="btn btn-primary"
-                    data-toggle="modal" data-target="#myModal"
+                    data-toggle="modal" data-target="#myModal" 
                     onclick="location.href='@Url.Action("Create", "Categoria")'">
                 Nuevo Fecha
             </button>
@@ -81,12 +102,15 @@
 
         var url;
 
-        if (nuevo) url = "@Url.Action("Create", "Categorias",new { idTorneo = Model.idTorneo}) "  
+        if (nuevo) url = "@Url.Action("Create", "Categorias",new { idTorneo = Model.idTorneo}) "
         else {
 
-           var id = element.getAttribute('data-id');
+           var idCategoria = element.getAttribute('data-id');
 
-        url = "@Url.Action("Edit", "Categorias")" + id;
+        
+           url = "@Url.Action("Edit", "Categorias",new { id = "-1" }) "
+            url = url.replace("-1", idCategoria)
+           
          }
 
 
@@ -101,7 +125,7 @@
 
 
 
-   
+
 
 </script>
 
