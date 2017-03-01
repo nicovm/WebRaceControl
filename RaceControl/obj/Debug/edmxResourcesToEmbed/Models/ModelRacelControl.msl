@@ -48,5 +48,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Piloto">
+      <EntityTypeMapping TypeName="RaceControlModel.Piloto">
+        <MappingFragment StoreEntitySet="Piloto">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

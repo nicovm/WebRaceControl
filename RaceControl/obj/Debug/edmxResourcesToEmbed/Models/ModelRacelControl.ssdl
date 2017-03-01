@@ -35,6 +35,15 @@
     <Property Name="idCategoria" Type="bigint" Nullable="false" />
     <Property Name="auto" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="Piloto">
+    <Key>
+      <PropertyRef Name="dni" />
+    </Key>
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="apellido" Type="nvarchar" MaxLength="50" />
+    <Property Name="dni" Type="int" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Torneo">
     <Key>
       <PropertyRef Name="idTorneo" />
@@ -73,6 +82,7 @@
     <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Carrera_Torneo" Association="Self.FK_Carrera_Torneo">
       <End Role="Torneo" EntitySet="Torneo" />

@@ -1,0 +1,61 @@
+﻿@model RaceControl.Models.Piloto
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">
+        ¿Seguro que quieres eliminarlo?
+    </h4>
+</div>
+
+    <div>
+      
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.apellido)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.apellido)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
+    
+        </dl>
+      
+    </div>
+
+<div class="modal-footer">
+    @using (Html.BeginForm())
+            {
+        @Html.AntiForgeryToken()
+
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <input type="submit" value="Eliminar" class="btn btn-danger" />
+
+
+    }
+</div>
+
+
+
+
+

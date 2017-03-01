@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
+    <Compile Include="Controllers\PilotoController.cs" />
     <Compile Include="Controllers\TorneoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -235,6 +236,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelRacelControl.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Piloto.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Torneo.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
@@ -244,6 +248,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\js\myJs\validacionPiloto.js" />
+    <Content Include="Content\js\validaciones.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -325,6 +331,11 @@
     <Content Include="Views\Categorias\Edit.cshtml" />
     <Content Include="Views\Categorias\Index.cshtml" />
     <Content Include="Views\Categorias\_Categoria.cshtml" />
+    <Content Include="Views\Piloto\Create.cshtml" />
+    <Content Include="Views\Piloto\Delete.cshtml" />
+    <Content Include="Views\Piloto\Details.cshtml" />
+    <Content Include="Views\Piloto\Edit.cshtml" />
+    <Content Include="Views\Piloto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -332,7 +343,6 @@
     <Folder Include="Content\font-awesome\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\ImgTorneo\" />
-    <Folder Include="Content\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

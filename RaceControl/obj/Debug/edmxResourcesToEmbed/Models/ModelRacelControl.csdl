@@ -25,6 +25,7 @@
       <End Role="Torneo" EntitySet="Torneo" />
       <End Role="Carrera" EntitySet="Carrera" />
     </AssociationSet>
+    <EntitySet Name="Piloto" EntityType="RaceControlModel.Piloto" />
   </EntityContainer>
   <EntityType Name="Categoria">
     <Key>
@@ -87,4 +88,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Piloto">
+    <Key>
+      <PropertyRef Name="dni" />
+    </Key>
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dni" Type="Int32" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

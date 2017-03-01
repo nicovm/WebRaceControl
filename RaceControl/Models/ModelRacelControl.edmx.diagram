@@ -12,6 +12,7 @@
         <EntityTypeShape EntityType="RaceControlModel.Carrera" Width="1.5" PointX="3" PointY="3.875" />
         <EntityTypeShape EntityType="RaceControlModel.Carrera_Piloto" Width="1.5" PointX="5.375" PointY="0.75" />
         <AssociationConnector Association="RaceControlModel.FK_Carrera_Torneo" />
+        <EntityTypeShape EntityType="RaceControlModel.Piloto" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

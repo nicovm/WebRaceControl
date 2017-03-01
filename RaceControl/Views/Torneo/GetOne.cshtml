@@ -10,7 +10,7 @@
             <button id="btnNuevoCategoria" type="button" class="btn btn-primary"
                     data-toggle="modal" data-target="#myModal"
                     @*onclick="location.href='@Url.Action("Create", "Categorias", Model)'">*@
-                    onclick="clickBtn(this,true,@Model.idTorneo)">
+                    onclick="clickBtn(this,true)">
                 Nuevo Categoria
             </button>
         </div>
@@ -99,7 +99,7 @@
 <script type="text/javascript">
 
     function clickBtn(element, nuevo) {
-
+        alert('Ingreso');
         var url;
 
         if (nuevo) url = "@Url.Action("Create", "Categorias",new { idTorneo = Model.idTorneo}) "

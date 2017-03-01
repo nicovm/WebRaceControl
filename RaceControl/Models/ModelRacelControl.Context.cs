@@ -30,5 +30,6 @@ namespace RaceControl.Models
         public virtual DbSet<Categoria_Piloto> Categoria_Piloto { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Carrera_Piloto> Carrera_Piloto { get; set; }
+        public virtual DbSet<Piloto> Piloto { get; set; }
     }
 }
