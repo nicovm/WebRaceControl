@@ -14,7 +14,6 @@
   <EntityContainer Name="EntidadesRaceControl" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Torneo" EntityType="Self.Torneo" />
     <EntitySet Name="Categoria" EntityType="RaceControlModel.Categoria" />
-    <EntitySet Name="Categoria_Piloto" EntityType="RaceControlModel.Categoria_Piloto" />
     <AssociationSet Name="FK_Categoria_Torneo" Association="RaceControlModel.FK_Categoria_Torneo">
       <End Role="Torneo" EntitySet="Torneo" />
       <End Role="Categoria" EntitySet="Categoria" />
@@ -26,6 +25,15 @@
       <End Role="Carrera" EntitySet="Carrera" />
     </AssociationSet>
     <EntitySet Name="Piloto" EntityType="RaceControlModel.Piloto" />
+    <EntitySet Name="Categoria_Piloto" EntityType="RaceControlModel.Categoria_Piloto" />
+    <AssociationSet Name="FK_Categoria_Piloto_Categoria" Association="RaceControlModel.FK_Categoria_Piloto_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Categoria_Piloto" EntitySet="Categoria_Piloto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categoria_Piloto_Categoria_Piloto" Association="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto">
+      <End Role="Piloto" EntitySet="Piloto" />
+      <End Role="Categoria_Piloto" EntitySet="Categoria_Piloto" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Categoria">
     <Key>
@@ -36,15 +44,7 @@
     <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="idTorneo" Type="Int64" />
     <NavigationProperty Name="Torneo" Relationship="RaceControlModel.FK_Categoria_Torneo" FromRole="Categoria" ToRole="Torneo" />
-  </EntityType>
-  <EntityType Name="Categoria_Piloto">
-    <Key>
-      <PropertyRef Name="idPiloto" />
-      <PropertyRef Name="idCategoria" />
-    </Key>
-    <Property Name="idPiloto" Type="Int64" Nullable="false" />
-    <Property Name="idCategoria" Type="Int64" Nullable="false" />
-    <Property Name="auto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Categoria_Piloto" Relationship="RaceControlModel.FK_Categoria_Piloto_Categoria" FromRole="Categoria" ToRole="Categoria_Piloto" />
   </EntityType>
   <Association Name="FK_Categoria_Torneo">
     <End Type="RaceControlModel.Torneo" Role="Torneo" Multiplicity="0..1" />
@@ -96,5 +96,41 @@
     <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="dni" Type="Int32" Nullable="false" />
     <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Categoria_Piloto" Relationship="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" FromRole="Piloto" ToRole="Categoria_Piloto" />
   </EntityType>
+  <EntityType Name="Categoria_Piloto">
+    <Key>
+      <PropertyRef Name="dniPiloto" />
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="dniPiloto" Type="Int32" Nullable="false" />
+    <Property Name="idCategoria" Type="Int64" Nullable="false" />
+    <Property Name="auto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Categoria" Relationship="RaceControlModel.FK_Categoria_Piloto_Categoria" FromRole="Categoria_Piloto" ToRole="Categoria" />
+    <NavigationProperty Name="Piloto" Relationship="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" FromRole="Categoria_Piloto" ToRole="Piloto" />
+  </EntityType>
+  <Association Name="FK_Categoria_Piloto_Categoria">
+    <End Type="RaceControlModel.Categoria" Role="Categoria" Multiplicity="1" />
+    <End Type="RaceControlModel.Categoria_Piloto" Role="Categoria_Piloto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="idCategoria" />
+      </Principal>
+      <Dependent Role="Categoria_Piloto">
+        <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categoria_Piloto_Categoria_Piloto">
+    <End Type="RaceControlModel.Piloto" Role="Piloto" Multiplicity="1" />
+    <End Type="RaceControlModel.Categoria_Piloto" Role="Categoria_Piloto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Piloto">
+        <PropertyRef Name="dni" />
+      </Principal>
+      <Dependent Role="Categoria_Piloto">
+        <PropertyRef Name="dniPiloto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

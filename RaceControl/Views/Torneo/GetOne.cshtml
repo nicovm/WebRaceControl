@@ -19,13 +19,18 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Pilotos</th>
+                        <th>-</th>
                     </tr>
+                   
                 </thead>
                 <tbody>
 @foreach (var item in Model.Categoria)
 {
                      <tr>
                         <td>@item.nombre</td>
+
+                         <td>@item.Categoria_Piloto.Count()</td>
 
                          <td>
                              <button id="btnNuevoCategoria" type="button" class="btn btn-info"
@@ -34,9 +39,9 @@
                                  Editar
                              </button>
 
-                             <button id="btnNuevoCategoria" type="button" class="btn btn-success"
+                             <button id="btnAgrPiloto" type="button" class="btn btn-success"
                                      data-toggle="modal" data-target="#myModal"
-                                     onclick="location.href='@Url.Action("Create", "Categorias", Model)'">
+                                     onclick="location.href='@Url.Action("AgregarPiloto", "Categorias", new { idCategoria = item.idCategoria})'">
                                  Agregar Piloto
                              </button>
 

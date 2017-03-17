@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using RaceControl.Models;
 
+
 namespace RaceControl.Controllers
 {
     public class CategoriasController : Controller
@@ -122,6 +123,73 @@ namespace RaceControl.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AgregarPiloto(int idCategoria )
+        {
+            ViewBag.Categoria = db.Categoria.Find(idCategoria);
+            ViewBag.Pilotos = db.Piloto.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AgregarPiloto(int idCategoria , int dni)
+        {
+            //Verifico que el piloto no este agreagado ya a la categoria
+            Categoria_Piloto CatPiloto;
+
+            CatPiloto = db.Categoria_Piloto.Where(cp => cp.dniPiloto == dni && cp.idCategoria == idCategoria).FirstOrDefault();
+            
+            if (CatPiloto == null)
+            {
+                //El piloto no esta agregado
+                CatPiloto = new Categoria_Piloto();
+                CatPiloto.idCategoria = idCategoria;
+                CatPiloto.dniPiloto = dni;
+
+                db.Categoria_Piloto.Add(CatPiloto);
+                Categoria categoria = db.Categoria.Find(idCategoria);
+
+                db.SaveChanges();
+                return RedirectToAction("GetOne", "Torneo", new { id = categoria.idCategoria });
+            }
+            else
+            {
+                //El piloto ya esta agregado 
+                Piloto piloto = db.Piloto.Find(dni);
+                Categoria categoria = db.Categoria.Find(idCategoria);
+                string msj = string.Format("El Piloto {0} {1} ya se encuentra agregado a la categoría {2} ", piloto.nombre, piloto.apellido, categoria.nombre);
+                TempData["alert"] = Constante.alertDanger(msj);
+              
+                return RedirectToAction("AgregarPiloto", new { idCategoria = categoria.idCategoria});
+            }
+
+          
+        }
+
+        public ActionResult Buscar(string buscar, int idCategoria)
+        {
+            List<Piloto> listPilotos;
+            ViewBag.Categoria = db.Categoria.Find(idCategoria);
+           
+            if (IsNumeric(buscar))
+            {
+                int dni = int.Parse(buscar);
+                listPilotos = db.Piloto.Where(p => p.nombre.Contains(buscar) || 
+                p.apellido.Contains(buscar) || p.dni == dni).ToList();
+            }
+            else if (string.IsNullOrEmpty(buscar))
+            {
+                listPilotos = db.Piloto.ToList();
+            }
+            else
+            {
+                listPilotos = db.Piloto.Where(p => p.nombre.Contains(buscar) ||
+               p.apellido.Contains(buscar) ).ToList();
+            }
+            ViewBag.Pilotos = listPilotos;
+            return View("AgregarPiloto");
+          
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -130,5 +198,13 @@ namespace RaceControl.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public bool IsNumeric( string s)
+        {
+            int output;
+            return int.TryParse(s, out output);
+        }
+
     }
 }

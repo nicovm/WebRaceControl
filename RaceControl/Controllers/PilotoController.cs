@@ -13,23 +13,18 @@ namespace RaceControl.Controllers
 {
     public class PilotoController : Controller
     {
-        const string quote = "\"";
+     
         private EntidadesRaceControl db = new EntidadesRaceControl();
 
         // GET: Piloto
        
-        public ActionResult Index()
+        public ActionResult Index ( )
         {
-           
+            //ViewBag.alert = alert;
             return View(db.Piloto.ToList());
         }
 
-       
-        public ActionResult Index1(string alert)
-        {
-            ViewBag.alert = alert;
-            return View("index",db.Piloto.ToList());
-        }
+    
 
 
         // GET: Piloto/Details/5
@@ -127,10 +122,10 @@ namespace RaceControl.Controllers
             db.Piloto.Remove(piloto);
             db.SaveChanges();
 
-            string alert = "<div class=" + quote + "alert alert-danger" + quote + "><a class=" + quote +
-                  "close" + quote + " data-dismiss=" + quote + "alert" + quote + ">×</a><span> "+ msj +" </span></div>";
+            //string alert = "<div class=" + quote + "alert alert-danger" + quote + "><a class=" + quote +
+            //      "close" + quote + " data-dismiss=" + quote + "alert" + quote + ">×</a><span> "+ msj +" </span></div>";
 
-            TempData["alert"] = alert;
+            TempData["alert"] = Constante.alertDanger(msj);
 
             return RedirectToAction("Index");
         }

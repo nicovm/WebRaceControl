@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "AgregarPiloto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@string.Format("Agregar piloto a la categoria {0}", ViewBag.Categoria.nombre) </h2>
+
+<div id="alertForm">
+    @Html.Raw(TempData["alert"])
+</div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <input id="buscar" class="form-control" >
+        <p class="help-block"> Ingrese el nombre, apellido o DNI del piloto </p>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-default"  onclick="buscar(@ViewBag.Categoria.idCategoria)">Buscar</button>
+    </div>
+</div>
+
+<br />
+<table class="table">
+    <tr>
+        <th><h4>DNI</h4></th>
+        <th><h4>Nombre</h4></th>
+        <th><h4>Apellido</h4></th>  
+        <th><h4></h4></th>
+    </tr>
+    @foreach (var item in ViewBag.Pilotos)
+    {
+        <tr>
+            <td>
+                @item.dni
+            </td>
+            <td>
+                @item.nombre
+            </td>
+            <td>
+                @item.apellido
+            </td>
+            <td>
+
+                @using (Html.BeginForm("AgregarPiloto", "Categorias", FormMethod.Post,
+                                                                        new { enctype = "multipart/form-data" }))
+                {
+                    @Html.Hidden("idCategoria", (Object)ViewBag.Categoria.idCategoria)
+                    @Html.Hidden("dni", (object)item.dni)
+                    <input type="submit" value="Agregar" class="btn btn-success" />
+                }
+
+            </td>
+        </tr>
+
+    }
+</table>
+
+<script type="text/javascript">
+
+    function buscar(idCategoria)
+    {
+        var buscar = $('#buscar').val();
+        window.location.href = "/Categorias/Buscar?buscar=" + buscar + "&idCategoria=" + idCategoria;
+    }
+
+</script>

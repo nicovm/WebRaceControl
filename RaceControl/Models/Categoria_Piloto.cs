@@ -14,8 +14,11 @@ namespace RaceControl.Models
     
     public partial class Categoria_Piloto
     {
-        public long idPiloto { get; set; }
+        public int dniPiloto { get; set; }
         public long idCategoria { get; set; }
         public string auto { get; set; }
+    
+        public virtual Categoria Categoria { get; set; }
+        public virtual Piloto Piloto { get; set; }
     }
 }

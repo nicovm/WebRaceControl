@@ -14,11 +14,19 @@ namespace RaceControl.Models
     
     public partial class Categoria
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Categoria()
+        {
+            this.Categoria_Piloto = new HashSet<Categoria_Piloto>();
+        }
+    
         public long idCategoria { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public Nullable<long> idTorneo { get; set; }
     
         public virtual Torneo Torneo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Categoria_Piloto> Categoria_Piloto { get; set; }
     }
 }

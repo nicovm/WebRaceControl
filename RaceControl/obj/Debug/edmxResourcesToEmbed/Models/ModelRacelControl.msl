@@ -21,15 +21,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Categoria_Piloto">
-      <EntityTypeMapping TypeName="RaceControlModel.Categoria_Piloto">
-        <MappingFragment StoreEntitySet="Categoria_Piloto">
-          <ScalarProperty Name="auto" ColumnName="auto" />
-          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
-          <ScalarProperty Name="idPiloto" ColumnName="idPiloto" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Carrera">
       <EntityTypeMapping TypeName="RaceControlModel.Carrera">
         <MappingFragment StoreEntitySet="Carrera">
@@ -55,6 +46,15 @@
           <ScalarProperty Name="dni" ColumnName="dni" />
           <ScalarProperty Name="apellido" ColumnName="apellido" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categoria_Piloto">
+      <EntityTypeMapping TypeName="RaceControlModel.Categoria_Piloto">
+        <MappingFragment StoreEntitySet="Categoria_Piloto">
+          <ScalarProperty Name="auto" ColumnName="auto" />
+          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+          <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -14,9 +14,18 @@ namespace RaceControl.Models
     
     public partial class Piloto
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Piloto()
+        {
+            this.Categoria_Piloto = new HashSet<Categoria_Piloto>();
+        }
+    
         public string nombre { get; set; }
         public string apellido { get; set; }
         public int dni { get; set; }
         public string email { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Categoria_Piloto> Categoria_Piloto { get; set; }
     }
 }

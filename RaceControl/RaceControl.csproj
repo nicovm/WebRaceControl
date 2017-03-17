@@ -219,6 +219,7 @@
     <Compile Include="Models\Categoria_Piloto.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Constante.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelRacelControl.Context.cs">
@@ -336,6 +337,7 @@
     <Content Include="Views\Piloto\Details.cshtml" />
     <Content Include="Views\Piloto\Edit.cshtml" />
     <Content Include="Views\Piloto\Index.cshtml" />
+    <Content Include="Views\Categorias\AgregarPiloto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

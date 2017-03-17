@@ -7,12 +7,14 @@
       <Diagram DiagramId="cbb5ced4aa1a4b19b86a92965fc2732b" Name="Diagram1">
         <EntityTypeShape EntityType="RaceControlModel.Torneo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RaceControlModel.Categoria" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="RaceControlModel.Categoria_Piloto" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="RaceControlModel.FK_Categoria_Torneo" />
-        <EntityTypeShape EntityType="RaceControlModel.Carrera" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="RaceControlModel.Carrera" Width="1.5" PointX="0.625" PointY="4.375" />
         <EntityTypeShape EntityType="RaceControlModel.Carrera_Piloto" Width="1.5" PointX="5.375" PointY="0.75" />
         <AssociationConnector Association="RaceControlModel.FK_Carrera_Torneo" />
-        <EntityTypeShape EntityType="RaceControlModel.Piloto" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="RaceControlModel.Piloto" Width="1.5" PointX="5.625" PointY="4.875" />
+        <EntityTypeShape EntityType="RaceControlModel.Categoria_Piloto" Width="1.5" PointX="3.25" PointY="3.75" />
+        <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria" />
+        <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

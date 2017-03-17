@@ -28,10 +28,10 @@
   </EntityType>
   <EntityType Name="Categoria_Piloto">
     <Key>
-      <PropertyRef Name="idPiloto" />
+      <PropertyRef Name="dniPiloto" />
       <PropertyRef Name="idCategoria" />
     </Key>
-    <Property Name="idPiloto" Type="bigint" Nullable="false" />
+    <Property Name="dniPiloto" Type="int" Nullable="false" />
     <Property Name="idCategoria" Type="bigint" Nullable="false" />
     <Property Name="auto" Type="nvarchar" MaxLength="50" />
   </EntityType>
@@ -65,6 +65,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Categoria_Piloto_Categoria">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+    <End Role="Categoria_Piloto" Type="Self.Categoria_Piloto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="idCategoria" />
+      </Principal>
+      <Dependent Role="Categoria_Piloto">
+        <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categoria_Piloto_Categoria_Piloto">
+    <End Role="Piloto" Type="Self.Piloto" Multiplicity="1" />
+    <End Role="Categoria_Piloto" Type="Self.Categoria_Piloto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Piloto">
+        <PropertyRef Name="dni" />
+      </Principal>
+      <Dependent Role="Categoria_Piloto">
+        <PropertyRef Name="dniPiloto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Categoria_Torneo">
     <End Role="Torneo" Type="Self.Torneo" Multiplicity="0..1" />
     <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
@@ -87,6 +111,14 @@
     <AssociationSet Name="FK_Carrera_Torneo" Association="Self.FK_Carrera_Torneo">
       <End Role="Torneo" EntitySet="Torneo" />
       <End Role="Carrera" EntitySet="Carrera" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categoria_Piloto_Categoria" Association="Self.FK_Categoria_Piloto_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Categoria_Piloto" EntitySet="Categoria_Piloto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categoria_Piloto_Categoria_Piloto" Association="Self.FK_Categoria_Piloto_Categoria_Piloto">
+      <End Role="Piloto" EntitySet="Piloto" />
+      <End Role="Categoria_Piloto" EntitySet="Categoria_Piloto" />
     </AssociationSet>
     <AssociationSet Name="FK_Categoria_Torneo" Association="Self.FK_Categoria_Torneo">
       <End Role="Torneo" EntitySet="Torneo" />

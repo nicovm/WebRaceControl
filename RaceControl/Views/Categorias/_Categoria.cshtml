@@ -33,7 +33,20 @@
 
      
         @Html.Hidden("idTorneo", (object) ViewBag.torneo.idTorneo)
-        @Html.Hidden("idCategoria", (object) Model.idCategoria)
+        
+        @{
+            if (Model != null)
+            {
+                @Html.Hidden("idCategoria", (object)Model.idCategoria)
+            }
+            else
+            {
+                @Html.Hidden("idCategoria", 0)
+            }
+
+        }
+
+     
 
             <div class="form">
 
