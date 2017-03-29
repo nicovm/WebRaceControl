@@ -42,7 +42,7 @@ namespace RaceControl.Controllers
         {
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre");
             ViewBag.torneo = db.Torneo.Find(idTorneo);
-            return PartialView("_Categoria");
+            return PartialView("CreateEdit");
         }
 
         // POST: Categorias/Create
@@ -56,7 +56,7 @@ namespace RaceControl.Controllers
             {
                 db.Categoria.Add(categoria);
                 db.SaveChanges();
-                return RedirectToAction("GetOne", "Torneo", new { id = categoria.idTorneo }); ;
+                return RedirectToAction("GetOne", "Torneo", new { id = categoria.idTorneo }); 
             }
 
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", categoria.idTorneo);
@@ -76,8 +76,8 @@ namespace RaceControl.Controllers
                 return HttpNotFound();
             }
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre");
-            ViewBag.torneo = db.Torneo.Find(categoria.idCategoria);
-            return PartialView("_Categoria",categoria);
+            ViewBag.torneo = db.Torneo.Find(categoria.idTorneo);
+            return View("CreateEdit",categoria);
         }
 
         // POST: Categorias/Edit/5
@@ -91,10 +91,10 @@ namespace RaceControl.Controllers
             {
                 db.Entry(categoria).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetOne", "Torneo", new { id = categoria.idTorneo });
             }
-            ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", categoria.idTorneo);
-            return View(categoria);
+           // ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", categoria.idTorneo);
+            return RedirectToAction("GetOne", "Torneo", new { id = categoria.idTorneo });
         }
 
         // GET: Categorias/Delete/5
@@ -149,7 +149,7 @@ namespace RaceControl.Controllers
                 Categoria categoria = db.Categoria.Find(idCategoria);
 
                 db.SaveChanges();
-                return RedirectToAction("GetOne", "Torneo", new { id = categoria.idCategoria });
+                return RedirectToAction("GetOne", "Torneo", new { id = categoria.Torneo.idTorneo });
             }
             else
             {
@@ -159,7 +159,7 @@ namespace RaceControl.Controllers
                 string msj = string.Format("El Piloto {0} {1} ya se encuentra agregado a la categoría {2} ", piloto.nombre, piloto.apellido, categoria.nombre);
                 TempData["alert"] = Constante.alertDanger(msj);
               
-                return RedirectToAction("AgregarPiloto", new { idCategoria = categoria.idCategoria});
+                return RedirectToAction("AgregarPiloto", new { idCategoria = categoria.idTorneo});
             }
 
           

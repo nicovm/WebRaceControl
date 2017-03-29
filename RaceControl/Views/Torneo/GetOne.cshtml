@@ -4,12 +4,23 @@
 }
 
 
+@*console.error(message); //gives you the red errormessage
+console.log(message); //gives the default message
+console.warn(message); //gives the warn message with the exclamation mark in front of it
+console.info(message); //gives an info message with an 'i' in front of the message*@
+
 <div class="row">
 
-
+    <ol class="breadcrumb">
+        <li class="active">
+            <i class="fa fa-dashboard"></i> <strong>Torneo:</strong> @Model.nombre
+        </li>
+    </ol>
 
     <div class="col-lg-4">
-        <h2>Categorias</h2>
+        <h1 class="page-header">
+            Categoría
+        </h1>
         <div class="form-group">
             <button id="btnNuevoCategoria" type="button" class="btn btn-primary"
                     data-toggle="modal" data-target="#myModal"
@@ -65,11 +76,13 @@
     </div>
 
     <div class="col-lg-8">
-        <h2>Fechas</h2>
+        <h1 class="page-header">
+            Fechas
+        </h1>
         <div class="form-group">
             <button type="button" class="btn btn-primary"
-                    data-toggle="modal" data-target="#modalCarrera"
-                    @*onclick="clickCarrera(this, true)"*@>
+                    data-toggle="modal" data-target="#modalNvoCarrera"
+                    onclick="clickCarrera(this, true)">
                 @*onclick="location.href='@Url.Action("Create", "Categoria")'">*@
                 Nueva Carrera
             </button>
@@ -80,15 +93,29 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th>Fecha</th>
+                        <th>Autodromo</th>
                         <th>Nombre</th>
-                        <th>Pilotos</th>
+                        <th>Editar</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Carrera)
                     {
                         <tr>
+                            <td>@item.fecha.Value.ToString("dd/MM/yyy")</td>
+                            <td>@item.Autodromo.nombre</td>
                             <td>@item.nombre</td>
+                            <td>
+                                <button id="btnEditarCarrera" type="button" class="btn btn-info"
+                                        data-toggle="modal" data-target="#modalNvoCarrera" data-id=@item.idCarrera
+                                        onclick="clickCarrera(this,false)">
+
+                                    Editar
+                                </button>
+
+                            </td>
                         </tr>
                     }
 
@@ -111,11 +138,11 @@
 
 
 
-<div class="modal fade" id="modalCarrera" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modalNvoCarrera" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
 
-        <div class="modal-content" id="resultado">
-            <div class="modal-header">
+        <div class="modal-content" id="resultadoCarrera">
+            @*<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Nueva Fecha</h4>
             </div>
@@ -160,7 +187,7 @@
                 }
 
 
-            </div>
+            </div>*@
         </div>
 
 
@@ -169,7 +196,63 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalEditCarrera" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
 
+        <div class="modal-content" id="resultado">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Fecha</h4>
+            </div>
+
+
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Edit", "Carrera"))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form">
+
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> @Model.nombre
+                            </li>
+                        </ol>
+
+                        @Html.Hidden("idTorneo", Model.idTorneo)
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <div class="form-group">
+                            <h3>Nombre</h3>
+                            <input class="form-control text-box single-line" id="nombre" name="nombre" value="" type="text">
+                        </div>
+
+                        <h3>Fecha</h3>
+                        <div class="input-group date col-lg-3">
+
+                            <input type="text" id="fecha" class="form-control text-box single-line" name="fecha"><span class="input-group-addon" id="icon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" value="Guardar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -180,6 +263,10 @@
 
 
     function clickBtn(element, nuevo) {
+       
+
+        console.log("input clickBtn"); //gives the default message
+
         //alert('Ingreso');
         var url;
 
@@ -193,7 +280,7 @@
             url = url.replace("-1", idCategoria)
 
         }
-
+        console.log("[]"); //gives the default message
         $('#resultado').html('Cargando...');
         //alert(url);
         // var id = $(this).attr('data-id'); // the id that's given to each button in the list
@@ -208,29 +295,45 @@
 
 
     function clickCarrera(element, nuevo) {
+        var tag = " clickCarrera ";
         var url;
 
-        if (nuevo) url = "@Url.Action("Create", "Carrera",new { idTorneo = Model.idTorneo}) "
+        console.log("input to clickCarrera")
+       
+        if (nuevo) url = "@Url.Action("Create", "Carrera",new { idTorneo = Model.idTorneo}) ";
         else {
 
             var idCarrera = element.getAttribute('data-id');
 
 
-            url = "@Url.Action("Edit", "Carrera",new { id = "-1" }) "
-            url = url.replace("-1", idCarrera)
+            url = "@Url.Action("Edit", "Carrera",new { id = "-1" }) ";
+            url = url.replace("-1", idCarrera);
 
         }
 
-        $('#resultado').html('Cargando...');
+        console.log(tag.concat("Cargando..."));
+        $('#resultadoCarrera').html("Cargando...");
         //alert(url);
         // var id = $(this).attr('data-id'); // the id that's given to each button in the list
         $.get(url, function (data) {
             //alert($('#new-client-containe').html);
+            console.log(tag.concat("Data obtenido"));
+            console.log(tag.concat(data));
+            $('#resultadoCarrera').html(data);
 
-            $('#resultado').html(data);
+            $('#fecha').datepicker({
+                format: "dd/mm/yyyy",
+
+
+                autoclose: true,
+                language: "es",
+
+            });
+            console.log(tag.concat("fin"));
         });
     }
 
+  
 
 
 

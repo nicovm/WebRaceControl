@@ -12,15 +12,18 @@ namespace RaceControl.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Carrera
+    public partial class Autodromo
     {
-        public long idCarrera { get; set; }
-        public string nombre { get; set; }
-        public Nullable<System.DateTime> fecha { get; set; }
-        public Nullable<long> idTorneo { get; set; }
-        public long idAutodromo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Autodromo()
+        {
+            this.Carrera = new HashSet<Carrera>();
+        }
     
-        public virtual Torneo Torneo { get; set; }
-        public virtual Autodromo Autodromo { get; set; }
+        public long idAutodromo { get; set; }
+        public string nombre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Carrera> Carrera { get; set; }
     }
 }

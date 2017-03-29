@@ -24,6 +24,7 @@
     <EntitySetMapping Name="Carrera">
       <EntityTypeMapping TypeName="RaceControlModel.Carrera">
         <MappingFragment StoreEntitySet="Carrera">
+          <ScalarProperty Name="idAutodromo" ColumnName="idAutodromo" />
           <ScalarProperty Name="idTorneo" ColumnName="idTorneo" />
           <ScalarProperty Name="fecha" ColumnName="fecha" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -55,6 +56,14 @@
           <ScalarProperty Name="auto" ColumnName="auto" />
           <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
           <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Autodromo">
+      <EntityTypeMapping TypeName="RaceControlModel.Autodromo">
+        <MappingFragment StoreEntitySet="Autodromo">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idAutodromo" ColumnName="idAutodromo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

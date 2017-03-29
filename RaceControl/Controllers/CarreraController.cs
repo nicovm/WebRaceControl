@@ -39,9 +39,17 @@ namespace RaceControl.Controllers
         // GET: Carrera/Create
         public ActionResult Create(int idTorneo)
         {
+           ViewBag.listAutodromo = db.Autodromo.ToList();
+
+
+
+            //ViewBag.idAutodromo = new SelectList(db.Autodromo, "idAutodromo", "nombre");
+
+            ViewData["ListAutodromo"] = new SelectList(db.Autodromo, "idAutodromo", "nombre");
+
             ViewBag.Torneo = db.Torneo.Find(idTorneo);
 
-            return View();
+            return View("CreateEdit");
         }
 
         // POST: Carrera/Create
@@ -49,17 +57,17 @@ namespace RaceControl.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idCarrera,nombre,fecha,idTorneo")] Carrera carrera)
+        public ActionResult Create([Bind(Include = "idCarrera,nombre,fecha,idTorneo,idAutodromo")] Carrera carrera)
         {
             if (ModelState.IsValid)
             {
                 db.Carrera.Add(carrera);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetOne","Torneo", new { id = carrera.idTorneo});
             }
 
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", carrera.idTorneo);
-            return View(carrera);
+            return RedirectToAction("GetOne", "Torneo", new { id = carrera.idTorneo });
         }
 
         // GET: Carrera/Edit/5
@@ -74,8 +82,10 @@ namespace RaceControl.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", carrera.idTorneo);
-            return View(carrera);
+            //ViewBag.idAutodromo = new SelectList(db.Autodromo, "idAutodromo", "nombre");
+            ViewData["ListAutodromo"] = new SelectList(db.Autodromo, "idAutodromo", "nombre");
+            ViewBag.torneo = db.Torneo.Find(carrera.idTorneo);
+            return View("CreateEdit",carrera);
         }
 
         // POST: Carrera/Edit/5
@@ -89,7 +99,7 @@ namespace RaceControl.Controllers
             {
                 db.Entry(carrera).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetOne", "Torneo", new { id = carrera.idTorneo });
             }
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", carrera.idTorneo);
             return View(carrera);

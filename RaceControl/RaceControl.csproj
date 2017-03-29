@@ -208,6 +208,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Autodromo.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
@@ -423,11 +426,12 @@
     <Content Include="Views\Piloto\Edit.cshtml" />
     <Content Include="Views\Piloto\Index.cshtml" />
     <Content Include="Views\Categorias\AgregarPiloto.cshtml" />
-    <Content Include="Views\Carrera\Create.cshtml" />
+    <Content Include="Views\Carrera\CreateEdit.cshtml" />
     <Content Include="Views\Carrera\Delete.cshtml" />
     <Content Include="Views\Carrera\Details.cshtml" />
     <Content Include="Views\Carrera\Edit.cshtml" />
     <Content Include="Views\Carrera\Index.cshtml" />
+    <Content Include="Views\Categorias\CreateEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

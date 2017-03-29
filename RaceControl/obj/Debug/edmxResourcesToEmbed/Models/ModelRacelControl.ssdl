@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Autodromo">
+    <Key>
+      <PropertyRef Name="idAutodromo" />
+    </Key>
+    <Property Name="idAutodromo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Carrera">
     <Key>
       <PropertyRef Name="idCarrera" />
@@ -8,6 +15,7 @@
     <Property Name="nombre" Type="nvarchar" MaxLength="50" />
     <Property Name="fecha" Type="datetime" />
     <Property Name="idTorneo" Type="bigint" />
+    <Property Name="idAutodromo" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Carrera_Piloto">
     <Key>
@@ -53,6 +61,18 @@
     <Property Name="fecha" Type="datetime" />
     <Property Name="idCliente" Type="bigint" />
   </EntityType>
+  <Association Name="FK_Carrera_Autodromo">
+    <End Role="Autodromo" Type="Self.Autodromo" Multiplicity="1" />
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Autodromo">
+        <PropertyRef Name="idAutodromo" />
+      </Principal>
+      <Dependent Role="Carrera">
+        <PropertyRef Name="idAutodromo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Carrera_Torneo">
     <End Role="Torneo" Type="Self.Torneo" Multiplicity="0..1" />
     <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
@@ -102,12 +122,17 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="RaceControlModelStoreContainer">
+    <EntitySet Name="Autodromo" EntityType="Self.Autodromo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Carrera_Autodromo" Association="Self.FK_Carrera_Autodromo">
+      <End Role="Autodromo" EntitySet="Autodromo" />
+      <End Role="Carrera" EntitySet="Carrera" />
+    </AssociationSet>
     <AssociationSet Name="FK_Carrera_Torneo" Association="Self.FK_Carrera_Torneo">
       <End Role="Torneo" EntitySet="Torneo" />
       <End Role="Carrera" EntitySet="Carrera" />
