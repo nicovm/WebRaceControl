@@ -17,7 +17,8 @@ console.info(message); //gives an info message with an 'i' in front of the messa
         </li>
     </ol>
 
-    <div class="col-lg-4">
+
+    <div class="col-lg-5">
         <h1 class="page-header">
             Categoría
         </h1>
@@ -75,7 +76,7 @@ console.info(message); //gives an info message with an 'i' in front of the messa
         </div>
     </div>
 
-    <div class="col-lg-8">
+    <div class="col-lg-7">
         <h1 class="page-header">
             Fechas
         </h1>
@@ -113,6 +114,11 @@ console.info(message); //gives an info message with an 'i' in front of the messa
                                         onclick="clickCarrera(this,false)">
 
                                     Editar
+                                </button>
+
+                                <button id="btnTecnica" type="button" class="btn btn-success"
+                                        onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = item.idCarrera})'">
+                                   Tecnica
                                 </button>
 
                             </td>

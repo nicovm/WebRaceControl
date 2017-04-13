@@ -131,6 +131,14 @@ namespace RaceControl.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Tecnica (int idCarrera)
+        {
+            Carrera carrera = db.Carrera.Find(idCarrera);
+
+            return View(carrera);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

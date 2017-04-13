@@ -432,6 +432,8 @@
     <Content Include="Views\Carrera\Edit.cshtml" />
     <Content Include="Views\Carrera\Index.cshtml" />
     <Content Include="Views\Categorias\CreateEdit.cshtml" />
+    <Content Include="Views\Piloto\CreateEdit.cshtml" />
+    <Content Include="Views\Carrera\Tecnica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -439,6 +441,7 @@
     <Folder Include="Content\font-awesome\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\ImgTorneo\" />
+    <Folder Include="Views\Tecnica\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

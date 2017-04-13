@@ -45,7 +45,7 @@ namespace RaceControl.Controllers
         // GET: Piloto/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateEdit");
         }
 
         // POST: Piloto/Create
@@ -57,9 +57,21 @@ namespace RaceControl.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Piloto.Add(piloto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Piloto otroPiloto = db.Piloto.Find(piloto.dni);
+                if (otroPiloto == null)
+                {
+                    db.Piloto.Add(piloto);
+                    db.SaveChanges();
+                    ViewBag.alertUsuario = Constante.alertInfo(string.Format("El piloto {0} {1} creado"));
+                    return RedirectToAction("Index");
+                }
+                else //Existe otro piloto con el mismo dni
+                {
+                    TempData["alert"] = Constante.alertWarning(string.Format("Ya existe un piloto creado con ese DNI"));
+                    return RedirectToAction("Index");
+                }
+
+             
             }
 
             return PartialView(piloto);
@@ -77,7 +89,7 @@ namespace RaceControl.Controllers
             {
                 return HttpNotFound();
             }
-            return View(piloto);
+            return View("CreateEdit",piloto);
         }
 
         // POST: Piloto/Edit/5
