@@ -1,6 +1,6 @@
-﻿@model RaceControl.Models.Carrera
+﻿@model RaceControl.Models.TecnicaTmp
 @{
-    
+
 }
 
 <div class="row">
@@ -24,14 +24,90 @@
 
 </div>
 
-<div class="row">
-    <div class="col-md-8">
-        <input id="buscar" class="form-control">
-        <p class="help-block"> Ingrese el nombre, apellido o DNI del piloto </p>
+@if (Model.categoria == null)
+{
+    <div id="selectCategoria">
+        <h3>Seleccione una categoría </h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-sm-11">Nombre</th>
+                        <th class="col-sm-1">-</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Categorias)
+                    {
+                        <tr>
+                            <td> <h4>@item.nombre</h4> </td>
+
+                            <td align="center">
+                                <button id="btnSelectCategoria" type="button" class="btn btn-info"
+                                        data-toggle="modal" data-target="#myModal" data-id=@item.idCategoria
+                                        onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = Model.carrera.idCarrera , idCategoria = item.idCategoria })'">
+                                    Seleccionar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        @*<button class="btn btn-default" onclick="buscar(@ViewBag.Categoria.idCategoria)">Buscar</button>*@
+}
+else //tiene seleccionada la categoria debe seleccionar el piloto
+{
+    <div id="selectPiloto">
+        <h3>Seleccione un piloto </h3>
+        <div class="form-group input-group">
+            <input class="form-control" type="text" id="buscarPiloto">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        onclick="buscarPiloto(@Model.categoria.idCategoria)">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+
+        <div id="listPiloto">
+            @Html.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = Model.categoria.idCategoria, buscar = "" })
+        </div>
+
     </div>
-</div>
+}
+
+<script>
 
 
+    function buscarPiloto(idCategoria)
+    {
+        var buscar = $('#buscarPiloto').val();
+       
+        var url = "@Html.Raw(Url.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = "-2", buscar = "-1" }))"
+      
+        url = url.replace("-1", buscar);
+        url = url.replace("-2", idCategoria);
+
+        $.get(url, function (data) {
+
+            $('#listPiloto').html('');
+            $('#listPiloto').html(data);
+
+
+        });
+
+    }
+
+    @if (Model.categoria != null)
+    {
+
+    }
+
+
+
+</script>

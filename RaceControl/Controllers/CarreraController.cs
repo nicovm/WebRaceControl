@@ -132,11 +132,73 @@ namespace RaceControl.Controllers
         }
 
 
-        public ActionResult Tecnica (int idCarrera)
+        public ActionResult Tecnica (int idCarrera , int? idCategoria, int? dniPiloto)
         {
+            TecnicaTmp tecnicaTmp = new TecnicaTmp();
+
             Carrera carrera = db.Carrera.Find(idCarrera);
 
-            return View(carrera);
+            tecnicaTmp.carrera = carrera;
+
+            if (idCategoria != null) // selecciono una categoria
+            {
+                tecnicaTmp.categoria = db.Categoria.Find(idCategoria);
+               
+            }
+            else
+            {
+                //Busco las categoria del torneo
+                ViewBag.Categorias = db.Categoria.Where(c => c.idTorneo == carrera.idTorneo).ToList();
+                //retorno la vista con las categorias del torneo a seleccionar
+                return View(tecnicaTmp);
+            }
+           
+
+            if (dniPiloto != null) // selecciono un piloto
+            {
+
+                tecnicaTmp.piloto = db.Piloto.Find(dniPiloto);
+                //direccinar a realizar la revision
+            }
+            else
+            {
+                //Buscar todos los pilotos que pertenecen a la categoria seleccionada
+                ViewBag.CatPiloto = db.Categoria_Piloto.Where(cp => cp.idCategoria == tecnicaTmp.categoria.idCategoria).ToList();
+                //retorno la vista con las categorias del torneo a seleccionar
+                return View(tecnicaTmp);
+            }            
+
+
+
+            return View(tecnicaTmp);
+        }
+
+        public ActionResult BuscarPiloto(int idCarrera,int idCategoria ,  string buscar)
+        {
+            ViewBag.idCarrera = idCarrera;
+            if (Constante.IsNumeric(buscar)) // si es numerico es porque ingreso el dni del piloto
+            {
+                int dni = int.Parse(buscar);
+                List<Categoria_Piloto> catPiloto = db.Categoria_Piloto.Where(ct => ct.idCategoria == idCategoria &&
+                (ct.dniPiloto == dni || ct.Piloto.nombre.Contains(buscar) || ct.Piloto.apellido.Contains(buscar))).ToList();
+               
+                ViewBag.CatPiloto = catPiloto;
+            }
+            else if (string.IsNullOrEmpty(buscar)) // no ingreso ningun datos devuelvo todo los los pilotos
+            {
+                List<Categoria_Piloto> catPiloto = db.Categoria_Piloto.Where(ct => ct.idCategoria == idCategoria).ToList();
+            
+                ViewBag.CatPiloto = catPiloto;
+            }
+            else // ingreso un texto puede ser el nombre o apellido
+            {
+                List<Categoria_Piloto> catPiloto = db.Categoria_Piloto.Where(ct => ct.idCategoria == idCategoria &&
+                (ct.Piloto.nombre.Contains(buscar) || ct.Piloto.apellido.Contains(buscar))).ToList();
+
+                ViewBag.CatPiloto = catPiloto;
+            }
+
+            return View("ListPilotoTecnica");
         }
 
         protected override void Dispose(bool disposing)

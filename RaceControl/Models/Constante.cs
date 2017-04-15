@@ -50,5 +50,12 @@ namespace RaceControl.Models
 
             return alert;
         }
+
+        public static bool IsNumeric(string s)
+        {
+            int output;
+            return int.TryParse(s, out output);
+        }
+
     }
 }

@@ -170,17 +170,17 @@ namespace RaceControl.Controllers
             List<Piloto> listPilotos;
             ViewBag.Categoria = db.Categoria.Find(idCategoria);
            
-            if (IsNumeric(buscar))
+            if (Constante.IsNumeric(buscar)) // si es numerico es porque ingreso el dni del piloto
             {
                 int dni = int.Parse(buscar);
                 listPilotos = db.Piloto.Where(p => p.nombre.Contains(buscar) || 
                 p.apellido.Contains(buscar) || p.dni == dni).ToList();
             }
-            else if (string.IsNullOrEmpty(buscar))
+            else if (string.IsNullOrEmpty(buscar)) // no infreso ninguno datos devuelvo todolos los pilotos
             {
                 listPilotos = db.Piloto.ToList();
             }
-            else
+            else // ingreso un texto puede ser el nombre o apellido
             {
                 listPilotos = db.Piloto.Where(p => p.nombre.Contains(buscar) ||
                p.apellido.Contains(buscar) ).ToList();
@@ -200,11 +200,6 @@ namespace RaceControl.Controllers
         }
 
 
-        public bool IsNumeric( string s)
-        {
-            int output;
-            return int.TryParse(s, out output);
-        }
-
+     
     }
 }
