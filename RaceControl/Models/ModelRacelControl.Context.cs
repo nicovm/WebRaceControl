@@ -32,5 +32,8 @@ namespace RaceControl.Models
         public virtual DbSet<Piloto> Piloto { get; set; }
         public virtual DbSet<Categoria_Piloto> Categoria_Piloto { get; set; }
         public virtual DbSet<Autodromo> Autodromo { get; set; }
+        public virtual DbSet<Elem_Revision> Elem_Revision { get; set; }
+        public virtual DbSet<Tecnica> Tecnica { get; set; }
+        public virtual DbSet<TecnicaRevision> TecnicaRevision { get; set; }
     }
 }

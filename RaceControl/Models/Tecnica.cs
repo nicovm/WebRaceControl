@@ -12,24 +12,24 @@ namespace RaceControl.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Categoria
+    public partial class Tecnica
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Categoria()
+        public Tecnica()
         {
-            this.Categoria_Piloto = new HashSet<Categoria_Piloto>();
-            this.Tecnica = new HashSet<Tecnica>();
+            this.TecnicaRevision = new HashSet<TecnicaRevision>();
         }
     
+        public long idTecnica { get; set; }
+        public long dniPiloto { get; set; }
+        public long idCarrera { get; set; }
+        public string observacion { get; set; }
+        public Nullable<System.DateTime> fecha { get; set; }
         public long idCategoria { get; set; }
-        public string nombre { get; set; }
-        public string descripcion { get; set; }
-        public Nullable<long> idTorneo { get; set; }
     
-        public virtual Torneo Torneo { get; set; }
+        public virtual Carrera Carrera { get; set; }
+        public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Categoria_Piloto> Categoria_Piloto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tecnica> Tecnica { get; set; }
+        public virtual ICollection<TecnicaRevision> TecnicaRevision { get; set; }
     }
 }

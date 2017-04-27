@@ -39,7 +39,7 @@ namespace RaceControl.Controllers
         // GET: Carrera/Create
         public ActionResult Create(int idTorneo)
         {
-           ViewBag.listAutodromo = db.Autodromo.ToList();
+            ViewBag.listAutodromo = db.Autodromo.ToList();
 
 
 
@@ -63,7 +63,7 @@ namespace RaceControl.Controllers
             {
                 db.Carrera.Add(carrera);
                 db.SaveChanges();
-                return RedirectToAction("GetOne","Torneo", new { id = carrera.idTorneo});
+                return RedirectToAction("GetOne", "Torneo", new { id = carrera.idTorneo });
             }
 
             ViewBag.idTorneo = new SelectList(db.Torneo, "idTorneo", "nombre", carrera.idTorneo);
@@ -85,7 +85,7 @@ namespace RaceControl.Controllers
             //ViewBag.idAutodromo = new SelectList(db.Autodromo, "idAutodromo", "nombre");
             ViewData["ListAutodromo"] = new SelectList(db.Autodromo, "idAutodromo", "nombre");
             ViewBag.torneo = db.Torneo.Find(carrera.idTorneo);
-            return View("CreateEdit",carrera);
+            return View("CreateEdit", carrera);
         }
 
         // POST: Carrera/Edit/5
@@ -132,7 +132,7 @@ namespace RaceControl.Controllers
         }
 
 
-        public ActionResult Tecnica (int idCarrera , int? idCategoria, int? dniPiloto)
+        public ActionResult Tecnica(int idCarrera, int? idCategoria, int? dniPiloto)
         {
             TecnicaTmp tecnicaTmp = new TecnicaTmp();
 
@@ -143,7 +143,7 @@ namespace RaceControl.Controllers
             if (idCategoria != null) // selecciono una categoria
             {
                 tecnicaTmp.categoria = db.Categoria.Find(idCategoria);
-               
+
             }
             else
             {
@@ -152,7 +152,7 @@ namespace RaceControl.Controllers
                 //retorno la vista con las categorias del torneo a seleccionar
                 return View(tecnicaTmp);
             }
-           
+
 
             if (dniPiloto != null) // selecciono un piloto
             {
@@ -166,14 +166,25 @@ namespace RaceControl.Controllers
                 ViewBag.CatPiloto = db.Categoria_Piloto.Where(cp => cp.idCategoria == tecnicaTmp.categoria.idCategoria).ToList();
                 //retorno la vista con las categorias del torneo a seleccionar
                 return View(tecnicaTmp);
-            }            
+            }
 
 
+            if (tecnicaTmp.categoria != null && tecnicaTmp.piloto != null) // selecciono la categoria y el piloto
+            {
+                //Busco la tecnica
+                Tecnica tecnica = db.Tecnica.Where(t => t.idCarrera == tecnicaTmp.carrera.idCarrera
+                && t.idCategoria == tecnicaTmp.categoria.idCategoria && t.dniPiloto == tecnicaTmp.piloto.dni).FirstOrDefault();
+
+                if (tecnica != null) tecnicaTmp.tecnica = tecnica; // ya tiene una tecnica creada
+                else tecnicaTmp.tecnica = nuevaTecnica(tecnicaTmp.carrera.idCarrera, 
+                    tecnicaTmp.categoria.idCategoria, tecnicaTmp.piloto.dni);// nueva tecnica
+              
+            }
 
             return View(tecnicaTmp);
         }
 
-        public ActionResult BuscarPiloto(int idCarrera,int idCategoria ,  string buscar)
+        public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)
         {
             ViewBag.idCarrera = idCarrera;
             if (Constante.IsNumeric(buscar)) // si es numerico es porque ingreso el dni del piloto
@@ -181,13 +192,13 @@ namespace RaceControl.Controllers
                 int dni = int.Parse(buscar);
                 List<Categoria_Piloto> catPiloto = db.Categoria_Piloto.Where(ct => ct.idCategoria == idCategoria &&
                 (ct.dniPiloto == dni || ct.Piloto.nombre.Contains(buscar) || ct.Piloto.apellido.Contains(buscar))).ToList();
-               
+
                 ViewBag.CatPiloto = catPiloto;
             }
             else if (string.IsNullOrEmpty(buscar)) // no ingreso ningun datos devuelvo todo los los pilotos
             {
                 List<Categoria_Piloto> catPiloto = db.Categoria_Piloto.Where(ct => ct.idCategoria == idCategoria).ToList();
-            
+
                 ViewBag.CatPiloto = catPiloto;
             }
             else // ingreso un texto puede ser el nombre o apellido
@@ -201,6 +212,45 @@ namespace RaceControl.Controllers
             return View("ListPilotoTecnica");
         }
 
+        private Tecnica nuevaTecnica(long idCarrera ,long idCategoria , long dniPiloto)
+        {
+            Tecnica newTecnica = new Models.Tecnica();
+            newTecnica.idCarrera = idCarrera;
+            newTecnica.idCategoria = idCategoria;
+            newTecnica.dniPiloto = dniPiloto;
+            newTecnica.fecha = DateTime.Now;
+
+            db.Tecnica.Add(newTecnica);
+          
+            db.SaveChanges();
+            // Tambien asocio los elementos de revision con la tecnica
+            asociarElemRevisionTenica(newTecnica.idTecnica);
+
+            return newTecnica;
+
+        }
+
+        /// <summary>
+        /// Permte asociar los elemento de revision con la idTenica 
+        /// </summary>
+        /// <param name="idTecnica"> tenica que se va asociar los elementos de revision</param>
+        private void asociarElemRevisionTenica(long idTecnica)
+        {
+            List<Elem_Revision> listElem = db.Elem_Revision.ToList();
+
+            foreach (Elem_Revision item in listElem)
+            {
+                TecnicaRevision newTecRev = new TecnicaRevision();
+                newTecRev.idElemRevision = item.idElemRevision;
+                newTecRev.idTecnica = idTecnica;
+
+                db.TecnicaRevision.Add(newTecRev);
+                db.SaveChanges();
+
+            }
+
+           
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -209,5 +259,7 @@ namespace RaceControl.Controllers
             }
             base.Dispose(disposing);
         }
+
+       
     }
 }

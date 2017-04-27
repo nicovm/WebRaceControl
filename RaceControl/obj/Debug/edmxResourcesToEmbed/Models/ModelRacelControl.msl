@@ -67,5 +67,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Elem_Revision">
+      <EntityTypeMapping TypeName="RaceControlModel.Elem_Revision">
+        <MappingFragment StoreEntitySet="Elem_Revision">
+          <ScalarProperty Name="frecuencia" ColumnName="frecuencia" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tecnica">
+      <EntityTypeMapping TypeName="RaceControlModel.Tecnica">
+        <MappingFragment StoreEntitySet="Tecnica">
+          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="observacion" ColumnName="observacion" />
+          <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+          <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
+          <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TecnicaRevision">
+      <EntityTypeMapping TypeName="RaceControlModel.TecnicaRevision">
+        <MappingFragment StoreEntitySet="TecnicaRevision">
+          <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
+          <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+          <ScalarProperty Name="idRevision" ColumnName="idRevision" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

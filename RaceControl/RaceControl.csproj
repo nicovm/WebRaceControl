@@ -224,6 +224,9 @@
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Constante.cs" />
+    <Compile Include="Models\Elem_Revision.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelRacelControl.Context.cs">
@@ -242,6 +245,12 @@
       <DependentUpon>ModelRacelControl.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Piloto.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tecnica.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TecnicaRevision.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TecnicaTmp.cs" />

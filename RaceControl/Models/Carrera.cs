@@ -14,6 +14,12 @@ namespace RaceControl.Models
     
     public partial class Carrera
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Carrera()
+        {
+            this.Tecnica = new HashSet<Tecnica>();
+        }
+    
         public long idCarrera { get; set; }
         public string nombre { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
@@ -22,5 +28,7 @@ namespace RaceControl.Models
     
         public virtual Torneo Torneo { get; set; }
         public virtual Autodromo Autodromo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tecnica> Tecnica { get; set; }
     }
 }

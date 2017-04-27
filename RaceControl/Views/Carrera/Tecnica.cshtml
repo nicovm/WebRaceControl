@@ -3,7 +3,8 @@
 
 }
 
-<div class="row">
+<div class="row" id="seleccionado">
+    
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading ">
@@ -14,7 +15,7 @@
                         @* <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">*@
                     </div>
                     <div class="col-xs-9 text-left">
-                        <div class="huge">Prueba</div>
+                        <h3>@Model.carrera.nombre</h3>
                         @*<div>New Comments!</div>*@
                     </div>
                 </div>
@@ -22,6 +23,48 @@
         </div>
     </div>
 
+    @if (Model.categoria != null)
+    {
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading ">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                            @* <img src="~/Content/imgTorneo/logo_torneo-CarShow.png" class="img-fluid" width="75px" height="75px">*@
+                            @* <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">*@
+                        </div>
+                        <div class="col-xs-9 text-left">
+                            <h3>@Model.categoria.nombre</h3>
+                            @*<div>New Comments!</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.piloto != null)
+    {
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading ">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                            @* <img src="~/Content/imgTorneo/logo_torneo-CarShow.png" class="img-fluid" width="75px" height="75px">*@
+                            @* <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">*@
+                        </div>
+                        <div class="col-xs-9 text-left">
+                            <h3>@Model.piloto.nombre</h3>
+                            @*<div class="huge">@Model.piloto.nombre</div>*@
+                            @*<div>New Comments!</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @if (Model.categoria == null)
@@ -60,7 +103,7 @@
 
     </div>
 }
-else //tiene seleccionada la categoria debe seleccionar el piloto
+else if (Model.piloto == null) //tiene seleccionada la categoria debe seleccionar el piloto
 {
     <div id="selectPiloto">
         <h3>Seleccione un piloto </h3>

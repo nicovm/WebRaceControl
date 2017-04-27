@@ -43,6 +43,15 @@
     <Property Name="idCategoria" Type="bigint" Nullable="false" />
     <Property Name="auto" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="Elem_Revision">
+    <Key>
+      <PropertyRef Name="idElemRevision" />
+    </Key>
+    <Property Name="idElemRevision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="50" />
+    <Property Name="frecuencia" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="Piloto">
     <Key>
       <PropertyRef Name="dni" />
@@ -51,6 +60,25 @@
     <Property Name="apellido" Type="nvarchar" MaxLength="50" />
     <Property Name="dni" Type="int" Nullable="false" />
     <Property Name="email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tecnica">
+    <Key>
+      <PropertyRef Name="idTecnica" />
+    </Key>
+    <Property Name="idTecnica" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dniPiloto" Type="bigint" Nullable="false" />
+    <Property Name="idCarrera" Type="bigint" Nullable="false" />
+    <Property Name="observacion" Type="nvarchar" MaxLength="50" />
+    <Property Name="fecha" Type="datetime" />
+    <Property Name="idCategoria" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TecnicaRevision">
+    <Key>
+      <PropertyRef Name="idRevision" />
+    </Key>
+    <Property Name="idRevision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idTecnica" Type="bigint" Nullable="false" />
+    <Property Name="idElemRevision" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Torneo">
     <Key>
@@ -121,13 +149,64 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Tecnica_Carrera">
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+    <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carrera">
+        <PropertyRef Name="idCarrera" />
+      </Principal>
+      <Dependent Role="Tecnica">
+        <PropertyRef Name="idCarrera" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tecnica_Categoria">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+    <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="idCategoria" />
+      </Principal>
+      <Dependent Role="Tecnica">
+        <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TecnicaRevision_Elem_Revision">
+    <End Role="Elem_Revision" Type="Self.Elem_Revision" Multiplicity="1" />
+    <End Role="TecnicaRevision" Type="Self.TecnicaRevision" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Elem_Revision">
+        <PropertyRef Name="idElemRevision" />
+      </Principal>
+      <Dependent Role="TecnicaRevision">
+        <PropertyRef Name="idElemRevision" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TecnicaRevision_Tecnica">
+    <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="1" />
+    <End Role="TecnicaRevision" Type="Self.TecnicaRevision" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tecnica">
+        <PropertyRef Name="idTecnica" />
+      </Principal>
+      <Dependent Role="TecnicaRevision">
+        <PropertyRef Name="idTecnica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="RaceControlModelStoreContainer">
     <EntitySet Name="Autodromo" EntityType="Self.Autodromo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TecnicaRevision" EntityType="Self.TecnicaRevision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Carrera_Autodromo" Association="Self.FK_Carrera_Autodromo">
       <End Role="Autodromo" EntitySet="Autodromo" />
@@ -148,6 +227,22 @@
     <AssociationSet Name="FK_Categoria_Torneo" Association="Self.FK_Categoria_Torneo">
       <End Role="Torneo" EntitySet="Torneo" />
       <End Role="Categoria" EntitySet="Categoria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
+      <End Role="Carrera" EntitySet="Carrera" />
+      <End Role="Tecnica" EntitySet="Tecnica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tecnica_Categoria" Association="Self.FK_Tecnica_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Tecnica" EntitySet="Tecnica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="Self.FK_TecnicaRevision_Elem_Revision">
+      <End Role="Elem_Revision" EntitySet="Elem_Revision" />
+      <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="Self.FK_TecnicaRevision_Tecnica">
+      <End Role="Tecnica" EntitySet="Tecnica" />
+      <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

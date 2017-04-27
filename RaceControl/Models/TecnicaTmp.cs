@@ -24,12 +24,16 @@ namespace RaceControl.Models
         /// </summary>
         public Piloto piloto { get; set; }
 
+        public Tecnica tecnica { get; set; }
+
+
         //Contructor
         public TecnicaTmp()
         {
             this.carrera = null;
             this.categoria = null;
             this.piloto = null;
+            this.tecnica = null;
         }
 
 

@@ -48,6 +48,15 @@
           <Property Name="idCategoria" Type="bigint" Nullable="false" />
           <Property Name="auto" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Elem_Revision">
+          <Key>
+            <PropertyRef Name="idElemRevision" />
+          </Key>
+          <Property Name="idElemRevision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="frecuencia" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Piloto">
           <Key>
             <PropertyRef Name="dni" />
@@ -56,6 +65,25 @@
           <Property Name="apellido" Type="nvarchar" MaxLength="50" />
           <Property Name="dni" Type="int" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tecnica">
+          <Key>
+            <PropertyRef Name="idTecnica" />
+          </Key>
+          <Property Name="idTecnica" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dniPiloto" Type="bigint" Nullable="false" />
+          <Property Name="idCarrera" Type="bigint" Nullable="false" />
+          <Property Name="observacion" Type="nvarchar" MaxLength="50" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="idCategoria" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TecnicaRevision">
+          <Key>
+            <PropertyRef Name="idRevision" />
+          </Key>
+          <Property Name="idRevision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTecnica" Type="bigint" Nullable="false" />
+          <Property Name="idElemRevision" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Torneo">
           <Key>
@@ -126,13 +154,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tecnica_Carrera">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="idCarrera" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="idCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tecnica_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TecnicaRevision_Elem_Revision">
+          <End Role="Elem_Revision" Type="Self.Elem_Revision" Multiplicity="1" />
+          <End Role="TecnicaRevision" Type="Self.TecnicaRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elem_Revision">
+              <PropertyRef Name="idElemRevision" />
+            </Principal>
+            <Dependent Role="TecnicaRevision">
+              <PropertyRef Name="idElemRevision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TecnicaRevision_Tecnica">
+          <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="1" />
+          <End Role="TecnicaRevision" Type="Self.TecnicaRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tecnica">
+              <PropertyRef Name="idTecnica" />
+            </Principal>
+            <Dependent Role="TecnicaRevision">
+              <PropertyRef Name="idTecnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RaceControlModelStoreContainer">
           <EntitySet Name="Autodromo" EntityType="Self.Autodromo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TecnicaRevision" EntityType="Self.TecnicaRevision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Carrera_Autodromo" Association="Self.FK_Carrera_Autodromo">
             <End Role="Autodromo" EntitySet="Autodromo" />
@@ -153,6 +232,22 @@
           <AssociationSet Name="FK_Categoria_Torneo" Association="Self.FK_Categoria_Torneo">
             <End Role="Torneo" EntitySet="Torneo" />
             <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tecnica_Categoria" Association="Self.FK_Tecnica_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="Self.FK_TecnicaRevision_Elem_Revision">
+            <End Role="Elem_Revision" EntitySet="Elem_Revision" />
+            <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="Self.FK_TecnicaRevision_Tecnica">
+            <End Role="Tecnica" EntitySet="Tecnica" />
+            <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -198,6 +293,25 @@
             <End Role="Autodromo" EntitySet="Autodromo" />
             <End Role="Carrera" EntitySet="Carrera" />
           </AssociationSet>
+          <EntitySet Name="Elem_Revision" EntityType="RaceControlModel.Elem_Revision" />
+          <EntitySet Name="Tecnica" EntityType="RaceControlModel.Tecnica" />
+          <AssociationSet Name="FK_Tecnica_Carrera" Association="RaceControlModel.FK_Tecnica_Carrera">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tecnica_Categoria" Association="RaceControlModel.FK_Tecnica_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <EntitySet Name="TecnicaRevision" EntityType="RaceControlModel.TecnicaRevision" />
+          <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision">
+            <End Role="Elem_Revision" EntitySet="Elem_Revision" />
+            <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="RaceControlModel.FK_TecnicaRevision_Tecnica">
+            <End Role="Tecnica" EntitySet="Tecnica" />
+            <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Categoria">
           <Key>
@@ -209,6 +323,7 @@
           <Property Name="idTorneo" Type="Int64" />
           <NavigationProperty Name="Torneo" Relationship="RaceControlModel.FK_Categoria_Torneo" FromRole="Categoria" ToRole="Torneo" />
           <NavigationProperty Name="Categoria_Piloto" Relationship="RaceControlModel.FK_Categoria_Piloto_Categoria" FromRole="Categoria" ToRole="Categoria_Piloto" />
+          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_Tecnica_Categoria" FromRole="Categoria" ToRole="Tecnica" />
         </EntityType>
         <Association Name="FK_Categoria_Torneo">
           <End Type="RaceControlModel.Torneo" Role="Torneo" Multiplicity="0..1" />
@@ -233,6 +348,7 @@
           <NavigationProperty Name="Torneo" Relationship="RaceControlModel.FK_Carrera_Torneo" FromRole="Carrera" ToRole="Torneo" />
           <Property Name="idAutodromo" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Autodromo" Relationship="RaceControlModel.FK_Carrera_Autodromo" FromRole="Carrera" ToRole="Autodromo" />
+          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_Tecnica_Carrera" FromRole="Carrera" ToRole="Tecnica" />
         </EntityType>
         <EntityType Name="Carrera_Piloto">
           <Key>
@@ -319,6 +435,88 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Elem_Revision">
+          <Key>
+            <PropertyRef Name="idElemRevision" />
+          </Key>
+          <Property Name="idElemRevision" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="frecuencia" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TecnicaRevision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="Elem_Revision" ToRole="TecnicaRevision" />
+        </EntityType>
+        <EntityType Name="Tecnica">
+          <Key>
+            <PropertyRef Name="idTecnica" />
+          </Key>
+          <Property Name="idTecnica" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dniPiloto" Type="Int64" Nullable="false" />
+          <Property Name="idCarrera" Type="Int64" Nullable="false" />
+          <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="idCategoria" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Carrera" Relationship="RaceControlModel.FK_Tecnica_Carrera" FromRole="Tecnica" ToRole="Carrera" />
+          <NavigationProperty Name="Categoria" Relationship="RaceControlModel.FK_Tecnica_Categoria" FromRole="Tecnica" ToRole="Categoria" />
+          <NavigationProperty Name="TecnicaRevision" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Tecnica" ToRole="TecnicaRevision" />
+        </EntityType>
+        <Association Name="FK_Tecnica_Carrera">
+          <End Type="RaceControlModel.Carrera" Role="Carrera" Multiplicity="1" />
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="idCarrera" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="idCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tecnica_Categoria">
+          <End Type="RaceControlModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TecnicaRevision">
+          <Key>
+            <PropertyRef Name="idRevision" />
+          </Key>
+          <Property Name="idRevision" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTecnica" Type="Int64" Nullable="false" />
+          <Property Name="idElemRevision" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Elem_Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="TecnicaRevision" ToRole="Elem_Revision" />
+          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="TecnicaRevision" ToRole="Tecnica" />
+        </EntityType>
+        <Association Name="FK_TecnicaRevision_Elem_Revision">
+          <End Type="RaceControlModel.Elem_Revision" Role="Elem_Revision" Multiplicity="1" />
+          <End Type="RaceControlModel.TecnicaRevision" Role="TecnicaRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elem_Revision">
+              <PropertyRef Name="idElemRevision" />
+            </Principal>
+            <Dependent Role="TecnicaRevision">
+              <PropertyRef Name="idElemRevision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TecnicaRevision_Tecnica">
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="1" />
+          <End Type="RaceControlModel.TecnicaRevision" Role="TecnicaRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tecnica">
+              <PropertyRef Name="idTecnica" />
+            </Principal>
+            <Dependent Role="TecnicaRevision">
+              <PropertyRef Name="idTecnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -388,6 +586,37 @@
               <MappingFragment StoreEntitySet="Autodromo">
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="idAutodromo" ColumnName="idAutodromo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elem_Revision">
+            <EntityTypeMapping TypeName="RaceControlModel.Elem_Revision">
+              <MappingFragment StoreEntitySet="Elem_Revision">
+                <ScalarProperty Name="frecuencia" ColumnName="frecuencia" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tecnica">
+            <EntityTypeMapping TypeName="RaceControlModel.Tecnica">
+              <MappingFragment StoreEntitySet="Tecnica">
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+                <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
+                <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TecnicaRevision">
+            <EntityTypeMapping TypeName="RaceControlModel.TecnicaRevision">
+              <MappingFragment StoreEntitySet="TecnicaRevision">
+                <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
+                <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+                <ScalarProperty Name="idRevision" ColumnName="idRevision" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
