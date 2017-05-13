@@ -49,14 +49,23 @@
       <End Role="Categoria" EntitySet="Categoria" />
       <End Role="Tecnica" EntitySet="Tecnica" />
     </AssociationSet>
-    <EntitySet Name="TecnicaRevision" EntityType="RaceControlModel.TecnicaRevision" />
+    <EntitySet Name="Observacion" EntityType="RaceControlModel.Observacion" />
+    <EntitySet Name="Revision" EntityType="RaceControlModel.Revision" />
     <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision">
       <End Role="Elem_Revision" EntitySet="Elem_Revision" />
-      <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+      <End Role="Revision" EntitySet="Revision" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Observacion_TecnicaRevision" Association="RaceControlModel.FK_Observacion_TecnicaRevision">
+      <End Role="Revision" EntitySet="Revision" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Observacion_TecnicaRevisionOK" Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK">
+      <End Role="Revision" EntitySet="Revision" />
+      <End Role="Observacion" EntitySet="Observacion" />
     </AssociationSet>
     <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="RaceControlModel.FK_TecnicaRevision_Tecnica">
       <End Role="Tecnica" EntitySet="Tecnica" />
-      <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+      <End Role="Revision" EntitySet="Revision" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Categoria">
@@ -189,7 +198,7 @@
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="frecuencia" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="TecnicaRevision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="Elem_Revision" ToRole="TecnicaRevision" />
+    <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="Elem_Revision" ToRole="Revision" />
   </EntityType>
   <EntityType Name="Tecnica">
     <Key>
@@ -203,7 +212,7 @@
     <Property Name="idCategoria" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Carrera" Relationship="RaceControlModel.FK_Tecnica_Carrera" FromRole="Tecnica" ToRole="Carrera" />
     <NavigationProperty Name="Categoria" Relationship="RaceControlModel.FK_Tecnica_Categoria" FromRole="Tecnica" ToRole="Categoria" />
-    <NavigationProperty Name="TecnicaRevision" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Tecnica" ToRole="TecnicaRevision" />
+    <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Tecnica" ToRole="Revision" />
   </EntityType>
   <Association Name="FK_Tecnica_Carrera">
     <End Type="RaceControlModel.Carrera" Role="Carrera" Multiplicity="1" />
@@ -229,36 +238,83 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="TecnicaRevision">
+  <EntityType Name="Observacion">
+    <Key>
+      <PropertyRef Name="idObservacion" />
+    </Key>
+    <Property Name="idObservacion" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idRevision" Type="Int64" />
+    <Property Name="idRevisionOk" Type="Int64" />
+    <Property Name="ok" Type="Boolean" Nullable="false" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fechaOk" Type="DateTime" Precision="3" />
+    <Property Name="idUsuario" Type="Int64" Nullable="false" />
+    <Property Name="idUsuarioOk" Type="Int64" />
+    <Property Name="idCarrera" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_Observacion_TecnicaRevision" FromRole="Observacion" ToRole="Revision" />
+    <NavigationProperty Name="Revision1" Relationship="RaceControlModel.FK_Observacion_TecnicaRevisionOK" FromRole="Observacion" ToRole="Revision" />
+  </EntityType>
+  <EntityType Name="Revision">
     <Key>
       <PropertyRef Name="idRevision" />
     </Key>
     <Property Name="idRevision" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="idTecnica" Type="Int64" Nullable="false" />
     <Property Name="idElemRevision" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Elem_Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="TecnicaRevision" ToRole="Elem_Revision" />
-    <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="TecnicaRevision" ToRole="Tecnica" />
+    <NavigationProperty Name="Elem_Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="Revision" ToRole="Elem_Revision" />
+    <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_TecnicaRevision" FromRole="Revision" ToRole="Observacion" />
+    <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_TecnicaRevisionOK" FromRole="Revision" ToRole="Observacion" />
+    <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Revision" ToRole="Tecnica" />
   </EntityType>
   <Association Name="FK_TecnicaRevision_Elem_Revision">
-    <End Type="RaceControlModel.Elem_Revision" Role="Elem_Revision" Multiplicity="1" />
-    <End Type="RaceControlModel.TecnicaRevision" Role="TecnicaRevision" Multiplicity="*" />
+    <End Type="RaceControlModel.Elem_Revision" Role="Elem_Revision" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Elem_Revision">
         <PropertyRef Name="idElemRevision" />
       </Principal>
-      <Dependent Role="TecnicaRevision">
+      <Dependent Role="Revision">
         <PropertyRef Name="idElemRevision" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Observacion_TecnicaRevision">
+    <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="0..1" />
+    <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Revision">
+        <PropertyRef Name="idRevision" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idRevision" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Observacion_TecnicaRevisionOK">
+    <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="0..1" />
+    <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Revision">
+        <PropertyRef Name="idRevision" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idRevisionOk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TecnicaRevision_Tecnica">
-    <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="1" />
-    <End Type="RaceControlModel.TecnicaRevision" Role="TecnicaRevision" Multiplicity="*" />
+    <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tecnica">
         <PropertyRef Name="idTecnica" />
       </Principal>
-      <Dependent Role="TecnicaRevision">
+      <Dependent Role="Revision">
         <PropertyRef Name="idTecnica" />
       </Dependent>
     </ReferentialConstraint>

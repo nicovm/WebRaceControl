@@ -244,13 +244,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelRacelControl.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Observacion.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Piloto.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tecnica.cs">
+    <Compile Include="Models\Revision.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TecnicaRevision.cs">
+    <Compile Include="Models\Tecnica.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TecnicaTmp.cs" />
@@ -446,6 +449,8 @@
     <Content Include="Views\Piloto\CreateEdit.cshtml" />
     <Content Include="Views\Carrera\Tecnica.cshtml" />
     <Content Include="Views\Carrera\ListPilotoTecnica.cshtml" />
+    <Content Include="Views\Carrera\Revision.cshtml" />
+    <Content Include="Views\Carrera\CreateEditObs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

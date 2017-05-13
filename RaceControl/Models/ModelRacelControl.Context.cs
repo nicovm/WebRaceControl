@@ -34,6 +34,7 @@ namespace RaceControl.Models
         public virtual DbSet<Autodromo> Autodromo { get; set; }
         public virtual DbSet<Elem_Revision> Elem_Revision { get; set; }
         public virtual DbSet<Tecnica> Tecnica { get; set; }
-        public virtual DbSet<TecnicaRevision> TecnicaRevision { get; set; }
+        public virtual DbSet<Observacion> Observacion { get; set; }
+        public virtual DbSet<Revision> Revision { get; set; }
     }
 }

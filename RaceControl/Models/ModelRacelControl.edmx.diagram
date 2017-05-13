@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cbb5ced4aa1a4b19b86a92965fc2732b" Name="Diagram1">
+      <Diagram DiagramId="cbb5ced4aa1a4b19b86a92965fc2732b" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="RaceControlModel.Torneo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RaceControlModel.Categoria" Width="1.5" PointX="3.375" PointY="0.75" />
         <AssociationConnector Association="RaceControlModel.FK_Categoria_Torneo" />
@@ -17,12 +17,15 @@
         <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" />
         <EntityTypeShape EntityType="RaceControlModel.Autodromo" Width="1.5" PointX="3" PointY="6.875" />
         <AssociationConnector Association="RaceControlModel.FK_Carrera_Autodromo" />
-        <EntityTypeShape EntityType="RaceControlModel.Elem_Revision" Width="1.5" PointX="7.625" PointY="9.875" />
+        <EntityTypeShape EntityType="RaceControlModel.Elem_Revision" Width="1.5" PointX="12.5" PointY="4.875" />
         <EntityTypeShape EntityType="RaceControlModel.Tecnica" Width="1.5" PointX="7.625" PointY="2.5" />
         <AssociationConnector Association="RaceControlModel.FK_Tecnica_Carrera" />
         <AssociationConnector Association="RaceControlModel.FK_Tecnica_Categoria" />
-        <EntityTypeShape EntityType="RaceControlModel.TecnicaRevision" Width="1.5" PointX="9.875" PointY="6.25" />
+        <EntityTypeShape EntityType="RaceControlModel.Observacion" Width="1.5" PointX="8.25" PointY="9.5" />
+        <EntityTypeShape EntityType="RaceControlModel.Revision" Width="1.5" PointX="9.375" PointY="6.875" />
         <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision" />
+        <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevision" />
+        <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK" />
         <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Tecnica" />
       </Diagram>
     </edmx:Diagrams>

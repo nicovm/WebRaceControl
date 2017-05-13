@@ -183,6 +183,25 @@ namespace RaceControl.Controllers
 
             return View(tecnicaTmp);
         }
+    
+        //GET
+        public ActionResult Revision(int idRevision)
+        {
+            Revision revision = db.Revision.Find(idRevision);
+
+            return View(revision);
+            
+        }
+
+
+        //GET
+        public ActionResult CreateObs(int idRevision)
+        {
+            ViewBag.idRevision = idRevision;
+            return View();
+        }
+
+    
 
         public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)
         {
@@ -240,16 +259,15 @@ namespace RaceControl.Controllers
 
             foreach (Elem_Revision item in listElem)
             {
-                TecnicaRevision newTecRev = new TecnicaRevision();
+                Revision newTecRev = new Revision();
                 newTecRev.idElemRevision = item.idElemRevision;
                 newTecRev.idTecnica = idTecnica;
 
-                db.TecnicaRevision.Add(newTecRev);
-                db.SaveChanges();
-
+                db.Revision.Add(newTecRev);
+              
             }
 
-           
+            db.SaveChanges();
         }
         protected override void Dispose(bool disposing)
         {

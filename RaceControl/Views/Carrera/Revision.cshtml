@@ -1,0 +1,86 @@
+﻿@model RaceControl.Models.Revision
+
+@{
+
+}
+
+
+<h1> @Model.Elem_Revision.nombre</h1>
+<div class="form-group">
+    <button id="btnNuevoCategoria" type="button" class="btn btn-primary"
+            data-toggle="modal" data-target="#myModal"
+            @*onclick="location.href='@Url.Action("Create", "Categorias", Model)'">*@
+            onclick="clickBtnObervacion(this,true)">
+        Nueva obervación
+    </button>
+
+</div>
+
+
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="col-sm-8">Obervación</th>
+                <th class="col-sm-4">Carrera</th>
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Observacion)
+            {
+            <tr>
+                <td> <h4>@item.descripcion</h4> </td>
+                <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="modalNvoCarrera" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content" id="resultado">
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function clickBtnObervacion(element, nuevo) {
+        var tag = "clickBtnObservacion";
+        var url;
+
+        if (nuevo) url = "@Url.Action("CreateObs", "Carrera",new { idRevision = Model.idRevision}) ";
+        else {
+
+            var id = element.getAttribute('data-id');
+
+
+            url = "@Url.Action("EditObs", "Carrera",new { id = "-1" }) ";
+            url = url.replace("-1", id);
+
+            $('#resultado').html("Cargando...");
+            $.get(url, function (data) {
+                
+                console.log(tag.concat("Data obtenido"));
+               
+                $('#resultado').html(data);
+
+            });
+
+        }
+
+    }
+
+</script>

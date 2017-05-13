@@ -89,9 +89,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TecnicaRevision">
-      <EntityTypeMapping TypeName="RaceControlModel.TecnicaRevision">
-        <MappingFragment StoreEntitySet="TecnicaRevision">
+    <EntitySetMapping Name="Observacion">
+      <EntityTypeMapping TypeName="RaceControlModel.Observacion">
+        <MappingFragment StoreEntitySet="Observacion">
+          <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+          <ScalarProperty Name="idUsuarioOk" ColumnName="idUsuarioOk" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="fechaOk" ColumnName="fechaOk" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="ok" ColumnName="ok" />
+          <ScalarProperty Name="idRevisionOk" ColumnName="idRevisionOk" />
+          <ScalarProperty Name="idRevision" ColumnName="idRevision" />
+          <ScalarProperty Name="idObservacion" ColumnName="idObservacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Revision">
+      <EntityTypeMapping TypeName="RaceControlModel.Revision">
+        <MappingFragment StoreEntitySet="Revision">
           <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
           <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
           <ScalarProperty Name="idRevision" ColumnName="idRevision" />

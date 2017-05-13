@@ -12,20 +12,20 @@ namespace RaceControl.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Elem_Revision
+    public partial class Observacion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Elem_Revision()
-        {
-            this.Revision = new HashSet<Revision>();
-        }
-    
-        public long idElemRevision { get; set; }
-        public string nombre { get; set; }
+        public long idObservacion { get; set; }
+        public Nullable<long> idRevision { get; set; }
+        public Nullable<long> idRevisionOk { get; set; }
+        public bool ok { get; set; }
         public string descripcion { get; set; }
-        public bool frecuencia { get; set; }
+        public System.DateTime fecha { get; set; }
+        public Nullable<System.DateTime> fechaOk { get; set; }
+        public long idUsuario { get; set; }
+        public Nullable<long> idUsuarioOk { get; set; }
+        public long idCarrera { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Revision> Revision { get; set; }
+        public virtual Revision Revision { get; set; }
+        public virtual Revision Revision1 { get; set; }
     }
 }

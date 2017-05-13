@@ -12,13 +12,24 @@ namespace RaceControl.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TecnicaRevision
+    public partial class Revision
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Revision()
+        {
+            this.Observacion = new HashSet<Observacion>();
+            this.Observacion1 = new HashSet<Observacion>();
+        }
+    
         public long idRevision { get; set; }
         public long idTecnica { get; set; }
         public long idElemRevision { get; set; }
     
         public virtual Elem_Revision Elem_Revision { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Observacion> Observacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Observacion> Observacion1 { get; set; }
         public virtual Tecnica Tecnica { get; set; }
     }
 }

@@ -52,6 +52,21 @@
     <Property Name="descripcion" Type="nvarchar" MaxLength="50" />
     <Property Name="frecuencia" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Observacion">
+    <Key>
+      <PropertyRef Name="idObservacion" />
+    </Key>
+    <Property Name="idObservacion" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idRevision" Type="bigint" />
+    <Property Name="idRevisionOk" Type="bigint" />
+    <Property Name="ok" Type="bit" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="fechaOk" Type="datetime" />
+    <Property Name="idUsuario" Type="bigint" Nullable="false" />
+    <Property Name="idUsuarioOk" Type="bigint" />
+    <Property Name="idCarrera" Type="bigint" Nullable="false" />
+  </EntityType>
   <EntityType Name="Piloto">
     <Key>
       <PropertyRef Name="dni" />
@@ -60,6 +75,14 @@
     <Property Name="apellido" Type="nvarchar" MaxLength="50" />
     <Property Name="dni" Type="int" Nullable="false" />
     <Property Name="email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Revision">
+    <Key>
+      <PropertyRef Name="idRevision" />
+    </Key>
+    <Property Name="idRevision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idTecnica" Type="bigint" Nullable="false" />
+    <Property Name="idElemRevision" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Tecnica">
     <Key>
@@ -71,14 +94,6 @@
     <Property Name="observacion" Type="nvarchar" MaxLength="50" />
     <Property Name="fecha" Type="datetime" />
     <Property Name="idCategoria" Type="bigint" Nullable="false" />
-  </EntityType>
-  <EntityType Name="TecnicaRevision">
-    <Key>
-      <PropertyRef Name="idRevision" />
-    </Key>
-    <Property Name="idRevision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="idTecnica" Type="bigint" Nullable="false" />
-    <Property Name="idElemRevision" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Torneo">
     <Key>
@@ -149,6 +164,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Observacion_TecnicaRevision">
+    <End Role="Revision" Type="Self.Revision" Multiplicity="0..1" />
+    <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Revision">
+        <PropertyRef Name="idRevision" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idRevision" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Observacion_TecnicaRevisionOK">
+    <End Role="Revision" Type="Self.Revision" Multiplicity="0..1" />
+    <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Revision">
+        <PropertyRef Name="idRevision" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idRevisionOk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tecnica_Carrera">
     <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
     <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
@@ -174,25 +213,29 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TecnicaRevision_Elem_Revision">
-    <End Role="Elem_Revision" Type="Self.Elem_Revision" Multiplicity="1" />
-    <End Role="TecnicaRevision" Type="Self.TecnicaRevision" Multiplicity="*" />
+    <End Role="Elem_Revision" Type="Self.Elem_Revision" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Revision" Type="Self.Revision" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Elem_Revision">
         <PropertyRef Name="idElemRevision" />
       </Principal>
-      <Dependent Role="TecnicaRevision">
+      <Dependent Role="Revision">
         <PropertyRef Name="idElemRevision" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TecnicaRevision_Tecnica">
-    <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="1" />
-    <End Role="TecnicaRevision" Type="Self.TecnicaRevision" Multiplicity="*" />
+    <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Revision" Type="Self.Revision" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tecnica">
         <PropertyRef Name="idTecnica" />
       </Principal>
-      <Dependent Role="TecnicaRevision">
+      <Dependent Role="Revision">
         <PropertyRef Name="idTecnica" />
       </Dependent>
     </ReferentialConstraint>
@@ -204,9 +247,10 @@
     <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Observacion" EntityType="Self.Observacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Revision" EntityType="Self.Revision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TecnicaRevision" EntityType="Self.TecnicaRevision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Carrera_Autodromo" Association="Self.FK_Carrera_Autodromo">
       <End Role="Autodromo" EntitySet="Autodromo" />
@@ -228,6 +272,14 @@
       <End Role="Torneo" EntitySet="Torneo" />
       <End Role="Categoria" EntitySet="Categoria" />
     </AssociationSet>
+    <AssociationSet Name="FK_Observacion_TecnicaRevision" Association="Self.FK_Observacion_TecnicaRevision">
+      <End Role="Revision" EntitySet="Revision" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Observacion_TecnicaRevisionOK" Association="Self.FK_Observacion_TecnicaRevisionOK">
+      <End Role="Revision" EntitySet="Revision" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
       <End Role="Carrera" EntitySet="Carrera" />
       <End Role="Tecnica" EntitySet="Tecnica" />
@@ -238,11 +290,11 @@
     </AssociationSet>
     <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="Self.FK_TecnicaRevision_Elem_Revision">
       <End Role="Elem_Revision" EntitySet="Elem_Revision" />
-      <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+      <End Role="Revision" EntitySet="Revision" />
     </AssociationSet>
     <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="Self.FK_TecnicaRevision_Tecnica">
       <End Role="Tecnica" EntitySet="Tecnica" />
-      <End Role="TecnicaRevision" EntitySet="TecnicaRevision" />
+      <End Role="Revision" EntitySet="Revision" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

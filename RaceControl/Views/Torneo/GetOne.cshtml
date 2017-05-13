@@ -5,9 +5,9 @@
 
 
 @*console.error(message); //gives you the red errormessage
-console.log(message); //gives the default message
-console.warn(message); //gives the warn message with the exclamation mark in front of it
-console.info(message); //gives an info message with an 'i' in front of the message*@
+    console.log(message); //gives the default message
+    console.warn(message); //gives the warn message with the exclamation mark in front of it
+    console.info(message); //gives an info message with an 'i' in front of the message*@
 
 <div class="row">
 
@@ -98,31 +98,31 @@ console.info(message); //gives an info message with an 'i' in front of the messa
                         <th>Autodromo</th>
                         <th>Nombre</th>
                         <th>Editar</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Carrera)
                     {
-                        <tr>
-                            <td>@item.fecha.Value.ToString("dd/MM/yyy")</td>
-                            <td>@item.Autodromo.nombre</td>
-                            <td>@item.nombre</td>
-                            <td>
-                                <button id="btnEditarCarrera" type="button" class="btn btn-info"
-                                        data-toggle="modal" data-target="#modalNvoCarrera" data-id=@item.idCarrera
-                                        onclick="clickCarrera(this,false)">
+                    <tr>
+                        <td>@item.fecha.Value.ToString("dd/MM/yyy")</td>
+                        <td>@item.Autodromo.nombre</td>
+                        <td>@item.nombre</td>
+                        <td>
+                            <button id="btnEditarCarrera" type="button" class="btn btn-info"
+                                    data-toggle="modal" data-target="#modalNvoCarrera" data-id=@item.idCarrera
+                                    onclick="clickCarrera(this,false)">
 
-                                    Editar
-                                </button>
+                                Editar
+                            </button>
 
-                                <button id="btnTecnica" type="button" class="btn btn-success"
-                                        onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = item.idCarrera})'">
-                                   Tecnica
-                                </button>
+                            <button id="btnTecnica" type="button" class="btn btn-success"
+                                    onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = item.idCarrera})'">
+                                Tecnica
+                            </button>
 
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                     }
 
                 </tbody>
@@ -149,51 +149,51 @@ console.info(message); //gives an info message with an 'i' in front of the messa
 
         <div class="modal-content" id="resultadoCarrera">
             @*<div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Nueva Fecha</h4>
-            </div>
-
-            
-
-            <div class="modal-body">
-                @using (Html.BeginForm("Create","Carrera"))
-            {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form">
-
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard"></i> @Model.nombre
-                            </li>
-                        </ol>
-
-                        @Html.Hidden("idTorneo",Model.idTorneo)
-
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Nueva Fecha</h4>
+                </div>
 
 
-                        <div class="form-group">
-                            <h3>Nombre</h3>
-                            <input class="form-control text-box single-line" id="nombre" name="nombre" value="" type="text">
+
+                <div class="modal-body">
+                    @using (Html.BeginForm("Create","Carrera"))
+                {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form">
+
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> @Model.nombre
+                                </li>
+                            </ol>
+
+                            @Html.Hidden("idTorneo",Model.idTorneo)
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="form-group">
+                                <h3>Nombre</h3>
+                                <input class="form-control text-box single-line" id="nombre" name="nombre" value="" type="text">
+                            </div>
+
+                            <h3>Fecha</h3>
+                            <div class="input-group date col-lg-3" >
+
+                                <input type="text" id="fecha" class="form-control text-box single-line" name="fecha"><span class="input-group-addon" id="icon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                            </div>
                         </div>
-                            
-                        <h3>Fecha</h3>
-                        <div class="input-group date col-lg-3" >
-                           
-                            <input type="text" id="fecha" class="form-control text-box single-line" name="fecha"><span class="input-group-addon" id="icon"><i class="glyphicon glyphicon-th"></i></span>
-                        </div>
-
-                      
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" value="Guardar" class="btn btn-primary" />
-                        </div>
-                    </div>
-                }
+                    }
 
 
-            </div>*@
+                </div>*@
         </div>
 
 
@@ -269,7 +269,7 @@ console.info(message); //gives an info message with an 'i' in front of the messa
 
 
     function clickBtn(element, nuevo) {
-       
+
 
         console.log("input clickBtn"); //gives the default message
 
@@ -305,7 +305,7 @@ console.info(message); //gives an info message with an 'i' in front of the messa
         var url;
 
         console.log("input to clickCarrera")
-       
+
         if (nuevo) url = "@Url.Action("Create", "Carrera",new { idTorneo = Model.idTorneo}) ";
         else {
 
@@ -339,7 +339,7 @@ console.info(message); //gives an info message with an 'i' in front of the messa
         });
     }
 
-  
+
 
 
 

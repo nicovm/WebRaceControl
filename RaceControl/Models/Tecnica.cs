@@ -17,7 +17,7 @@ namespace RaceControl.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tecnica()
         {
-            this.TecnicaRevision = new HashSet<TecnicaRevision>();
+            this.Revision = new HashSet<Revision>();
         }
     
         public long idTecnica { get; set; }
@@ -30,6 +30,6 @@ namespace RaceControl.Models
         public virtual Carrera Carrera { get; set; }
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TecnicaRevision> TecnicaRevision { get; set; }
+        public virtual ICollection<Revision> Revision { get; set; }
     }
 }
