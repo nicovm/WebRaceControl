@@ -26,10 +26,10 @@ namespace RaceControl.Models
         public long idElemRevision { get; set; }
     
         public virtual Elem_Revision Elem_Revision { get; set; }
+        public virtual Tecnica Tecnica { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Observacion> Observacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Observacion> Observacion1 { get; set; }
-        public virtual Tecnica Tecnica { get; set; }
     }
 }

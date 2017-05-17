@@ -198,10 +198,21 @@ namespace RaceControl.Controllers
         public ActionResult CreateObs(int idRevision)
         {
             ViewBag.idRevision = idRevision;
-            return View();
+            return View("CreateEditObs");
         }
 
-    
+       //POST
+        [HttpPost]
+        public ActionResult CreateObs(Observacion Observacion)
+        {
+            Observacion.fecha = DateTime.Now;
+            Observacion.ok = false;
+            //Crear logue de usuario
+
+            return View("CreateEditObs");
+        }
+
+
 
         public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)
         {

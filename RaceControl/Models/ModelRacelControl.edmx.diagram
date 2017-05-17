@@ -21,12 +21,12 @@
         <EntityTypeShape EntityType="RaceControlModel.Tecnica" Width="1.5" PointX="7.625" PointY="2.5" />
         <AssociationConnector Association="RaceControlModel.FK_Tecnica_Carrera" />
         <AssociationConnector Association="RaceControlModel.FK_Tecnica_Categoria" />
-        <EntityTypeShape EntityType="RaceControlModel.Observacion" Width="1.5" PointX="8.25" PointY="9.5" />
         <EntityTypeShape EntityType="RaceControlModel.Revision" Width="1.5" PointX="9.375" PointY="6.875" />
         <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision" />
+        <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Tecnica" />
+        <EntityTypeShape EntityType="RaceControlModel.Observacion" Width="1.5" PointX="5.875" PointY="9.625" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevision" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK" />
-        <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Tecnica" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

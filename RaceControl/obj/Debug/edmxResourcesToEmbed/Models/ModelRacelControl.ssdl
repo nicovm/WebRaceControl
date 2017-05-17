@@ -65,7 +65,6 @@
     <Property Name="fechaOk" Type="datetime" />
     <Property Name="idUsuario" Type="bigint" Nullable="false" />
     <Property Name="idUsuarioOk" Type="bigint" />
-    <Property Name="idCarrera" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Piloto">
     <Key>

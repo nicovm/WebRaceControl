@@ -23,7 +23,6 @@ namespace RaceControl.Models
         public Nullable<System.DateTime> fechaOk { get; set; }
         public long idUsuario { get; set; }
         public Nullable<long> idUsuarioOk { get; set; }
-        public long idCarrera { get; set; }
     
         public virtual Revision Revision { get; set; }
         public virtual Revision Revision1 { get; set; }
