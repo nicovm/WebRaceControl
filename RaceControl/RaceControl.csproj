@@ -209,6 +209,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Autodromo.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
@@ -259,6 +262,9 @@
     </Compile>
     <Compile Include="Models\TecnicaTmp.cs" />
     <Compile Include="Models\Torneo.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -516,6 +522,7 @@
     <Content Include="Views\Carrera\Revision.cshtml" />
     <Content Include="Views\Carrera\CreateEditObs.cshtml" />
     <Content Include="Views\Account\Login1.cshtml" />
+    <Content Include="Views\Account\Register1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

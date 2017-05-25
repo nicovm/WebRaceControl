@@ -5,6 +5,23 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <EntityType Name="Autodromo">
           <Key>
             <PropertyRef Name="idAutodromo" />
@@ -108,6 +125,14 @@
           <Property Name="fecha" Type="datetime" />
           <Property Name="idCliente" Type="bigint" />
         </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAspNetUsers" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="dni" Type="int" />
+        </EntityType>
         <Association Name="FK_Carrera_Autodromo">
           <End Role="Autodromo" Type="Self.Autodromo" Multiplicity="1" />
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
@@ -192,6 +217,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Observacion_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Observacion">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Observacion_UsuarioOk">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Observacion">
+              <PropertyRef Name="idUsuarioOk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tecnica_Carrera">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
           <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
@@ -244,7 +293,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idAspNetUsers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RaceControlModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Autodromo" EntityType="Self.Autodromo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
@@ -256,6 +318,7 @@
           <EntitySet Name="Revision" EntityType="Self.Revision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Carrera_Autodromo" Association="Self.FK_Carrera_Autodromo">
             <End Role="Autodromo" EntitySet="Autodromo" />
             <End Role="Carrera" EntitySet="Carrera" />
@@ -284,6 +347,14 @@
             <End Role="Revision" EntitySet="Revision" />
             <End Role="Observacion" EntitySet="Observacion" />
           </AssociationSet>
+          <AssociationSet Name="FK_Observacion_Usuario" Association="Self.FK_Observacion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Observacion" EntitySet="Observacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Observacion_UsuarioOk" Association="Self.FK_Observacion_UsuarioOk">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Observacion" EntitySet="Observacion" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Tecnica" EntitySet="Tecnica" />
@@ -299,6 +370,10 @@
           <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="Self.FK_TecnicaRevision_Tecnica">
             <End Role="Tecnica" EntitySet="Tecnica" />
             <End Role="Revision" EntitySet="Revision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_AspNetUsers" Association="Self.FK_Usuario_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -370,6 +445,20 @@
           </AssociationSet>
           <AssociationSet Name="FK_Observacion_TecnicaRevisionOK" Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK">
             <End Role="Revision" EntitySet="Revision" />
+            <End Role="Observacion" EntitySet="Observacion" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="RaceControlModel.AspNetUsers" />
+          <EntitySet Name="Usuario" EntityType="RaceControlModel.Usuario" />
+          <AssociationSet Name="FK_Usuario_AspNetUsers" Association="RaceControlModel.FK_Usuario_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Observacion_Usuario" Association="RaceControlModel.FK_Observacion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Observacion" EntitySet="Observacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Observacion_UsuarioOk" Association="RaceControlModel.FK_Observacion_UsuarioOk">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Observacion" EntitySet="Observacion" />
           </AssociationSet>
           </EntityContainer>
@@ -598,7 +687,9 @@
           <Property Name="idUsuarioOk" Type="Int64" />
           <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_Observacion_TecnicaRevision" FromRole="Observacion" ToRole="Revision" />
           <NavigationProperty Name="Revision1" Relationship="RaceControlModel.FK_Observacion_TecnicaRevisionOK" FromRole="Observacion" ToRole="Revision" />
-        </EntityType>
+          <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Observacion_Usuario" FromRole="Observacion" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="RaceControlModel.FK_Observacion_UsuarioOk" FromRole="Observacion" ToRole="Usuario" />
+          </EntityType>
         <Association Name="FK_Observacion_TecnicaRevision">
           <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="0..1" />
           <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
@@ -620,6 +711,71 @@
             </Principal>
             <Dependent Role="Observacion">
               <PropertyRef Name="idRevisionOk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Usuario_AspNetUsers" FromRole="AspNetUsers" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAspNetUsers" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="dni" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="RaceControlModel.FK_Usuario_AspNetUsers" FromRole="Usuario" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_Usuario" FromRole="Usuario" ToRole="Observacion" />
+          <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_UsuarioOk" FromRole="Usuario" ToRole="Observacion" />
+        </EntityType>
+        <Association Name="FK_Usuario_AspNetUsers">
+          <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idAspNetUsers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Observacion_Usuario">
+          <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Observacion">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Observacion_UsuarioOk">
+          <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Observacion">
+              <PropertyRef Name="idUsuarioOk" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -738,6 +894,33 @@
                 <ScalarProperty Name="idRevisionOk" ColumnName="idRevisionOk" />
                 <ScalarProperty Name="idRevision" ColumnName="idRevision" />
                 <ScalarProperty Name="idObservacion" ColumnName="idObservacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="RaceControlModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="RaceControlModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="idAspNetUsers" ColumnName="idAspNetUsers" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

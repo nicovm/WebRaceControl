@@ -26,5 +26,7 @@ namespace RaceControl.Models
     
         public virtual Revision Revision { get; set; }
         public virtual Revision Revision1 { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario Usuario1 { get; set; }
     }
 }

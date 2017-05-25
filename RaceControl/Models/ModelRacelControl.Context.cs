@@ -36,5 +36,7 @@ namespace RaceControl.Models
         public virtual DbSet<Tecnica> Tecnica { get; set; }
         public virtual DbSet<Revision> Revision { get; set; }
         public virtual DbSet<Observacion> Observacion { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

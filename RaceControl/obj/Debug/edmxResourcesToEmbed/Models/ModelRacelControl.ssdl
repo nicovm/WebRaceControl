@@ -1,5 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
   <EntityType Name="Autodromo">
     <Key>
       <PropertyRef Name="idAutodromo" />
@@ -103,6 +120,14 @@
     <Property Name="fecha" Type="datetime" />
     <Property Name="idCliente" Type="bigint" />
   </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idAspNetUsers" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="dni" Type="int" />
+  </EntityType>
   <Association Name="FK_Carrera_Autodromo">
     <End Role="Autodromo" Type="Self.Autodromo" Multiplicity="1" />
     <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
@@ -187,6 +212,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Observacion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Observacion_UsuarioOk">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idUsuarioOk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tecnica_Carrera">
     <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
     <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
@@ -239,7 +288,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Usuario_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="idAspNetUsers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="RaceControlModelStoreContainer">
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Autodromo" EntityType="Self.Autodromo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
@@ -251,6 +313,7 @@
     <EntitySet Name="Revision" EntityType="Self.Revision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Carrera_Autodromo" Association="Self.FK_Carrera_Autodromo">
       <End Role="Autodromo" EntitySet="Autodromo" />
       <End Role="Carrera" EntitySet="Carrera" />
@@ -279,6 +342,14 @@
       <End Role="Revision" EntitySet="Revision" />
       <End Role="Observacion" EntitySet="Observacion" />
     </AssociationSet>
+    <AssociationSet Name="FK_Observacion_Usuario" Association="Self.FK_Observacion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Observacion_UsuarioOk" Association="Self.FK_Observacion_UsuarioOk">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
       <End Role="Carrera" EntitySet="Carrera" />
       <End Role="Tecnica" EntitySet="Tecnica" />
@@ -294,6 +365,10 @@
     <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="Self.FK_TecnicaRevision_Tecnica">
       <End Role="Tecnica" EntitySet="Tecnica" />
       <End Role="Revision" EntitySet="Revision" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_AspNetUsers" Association="Self.FK_Usuario_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

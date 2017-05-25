@@ -67,6 +67,20 @@
       <End Role="Revision" EntitySet="Revision" />
       <End Role="Observacion" EntitySet="Observacion" />
     </AssociationSet>
+    <EntitySet Name="AspNetUsers" EntityType="RaceControlModel.AspNetUsers" />
+    <EntitySet Name="Usuario" EntityType="RaceControlModel.Usuario" />
+    <AssociationSet Name="FK_Usuario_AspNetUsers" Association="RaceControlModel.FK_Usuario_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Observacion_Usuario" Association="RaceControlModel.FK_Observacion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Observacion_UsuarioOk" Association="RaceControlModel.FK_Observacion_UsuarioOk">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Categoria">
     <Key>
@@ -293,6 +307,8 @@
     <Property Name="idUsuarioOk" Type="Int64" />
     <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_Observacion_TecnicaRevision" FromRole="Observacion" ToRole="Revision" />
     <NavigationProperty Name="Revision1" Relationship="RaceControlModel.FK_Observacion_TecnicaRevisionOK" FromRole="Observacion" ToRole="Revision" />
+    <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Observacion_Usuario" FromRole="Observacion" ToRole="Usuario" />
+    <NavigationProperty Name="Usuario1" Relationship="RaceControlModel.FK_Observacion_UsuarioOk" FromRole="Observacion" ToRole="Usuario" />
   </EntityType>
   <Association Name="FK_Observacion_TecnicaRevision">
     <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="0..1" />
@@ -315,6 +331,71 @@
       </Principal>
       <Dependent Role="Observacion">
         <PropertyRef Name="idRevisionOk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Usuario_AspNetUsers" FromRole="AspNetUsers" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idAspNetUsers" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="dni" Type="Int32" />
+    <NavigationProperty Name="AspNetUsers" Relationship="RaceControlModel.FK_Usuario_AspNetUsers" FromRole="Usuario" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_Usuario" FromRole="Usuario" ToRole="Observacion" />
+    <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_UsuarioOk" FromRole="Usuario" ToRole="Observacion" />
+  </EntityType>
+  <Association Name="FK_Usuario_AspNetUsers">
+    <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+    <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="idAspNetUsers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Observacion_Usuario">
+    <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="1" />
+    <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Observacion_UsuarioOk">
+    <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="RaceControlModel.Observacion" Role="Observacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Observacion">
+        <PropertyRef Name="idUsuarioOk" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

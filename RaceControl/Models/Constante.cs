@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace RaceControl.Models
 {
     public class Constante
     {
-
+     
         const string quote = "\"";
 
         /// <summary>
@@ -56,6 +58,8 @@ namespace RaceControl.Models
             int output;
             return int.TryParse(s, out output);
         }
+
+        
 
     }
 }

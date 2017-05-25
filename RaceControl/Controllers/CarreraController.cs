@@ -7,6 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RaceControl.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+
 
 namespace RaceControl.Controllers
 {
@@ -207,9 +211,30 @@ namespace RaceControl.Controllers
         {
             Observacion.fecha = DateTime.Now;
             Observacion.ok = false;
+            string currentUserId = User.Identity.GetUserId();
+            Observacion.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+            Observacion.fecha = DateTime.Now;
+
+            db.Observacion.Add(Observacion);
+            db.SaveChanges();
             //Crear logue de usuario
 
-            return View("CreateEditObs");
+            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision });
+        }
+
+        public ActionResult ConfirmarObs(int idObservacion , int idRevisionOK)
+        {
+            Observacion observacion = db.Observacion.Find(idObservacion);
+            observacion.fechaOk = DateTime.Now;
+            observacion.idRevisionOk = idRevisionOK;
+            string currentUserId = User.Identity.GetUserId();
+            Usuario usuarioOK = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+            observacion.idUsuario = usuarioOK.idUsuario;
+            observacion.ok = true;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Revision", new { idRevision = observacion.idRevision });
         }
 
 

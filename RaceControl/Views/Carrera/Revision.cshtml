@@ -22,8 +22,9 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th class="col-sm-8">Obervación</th>
+                <th class="col-sm-6">Obervación</th>
                 <th class="col-sm-4">Carrera</th>
+                <th class="col-sm-2">Confirmar</th>
 
 
             </tr>
@@ -32,11 +33,23 @@
         <tbody>
             @foreach (var item in Model.Observacion)
             {
-                <tr>
-                    <td> <h4>@item.descripcion</h4> </td>
-                    <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
+                if (item.ok == false)
+                {
+                    <tr>
+                        <td> <h4>@item.descripcion</h4> </td>
+                        <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
+                        <td align="center">
 
-                </tr>
+                            <button id="btnSelectCategoria" type="button" class="btn btn-success"
+                                    onclick="location.href='@Url.Action("ConfirmarObs", "Carrera", new { idObservacion = item.idObservacion , idRevisionOk = Model.idRevision })'">
+                                Confirmar
+                            </button>
+
+                        </td>
+
+                    </tr>
+                }
+
             }
 
         </tbody>
@@ -72,7 +85,7 @@
             url = "@Url.Action("EditObs", "Carrera",new { id = "-1" }) ";
             url = url.replace("-1", id);
 
-           
+
 
         }
         $('#resultado').html("Cargando...");
