@@ -70,7 +70,7 @@ namespace RaceControl.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Login1", model);
             }
 
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
@@ -87,7 +87,7 @@ namespace RaceControl.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
-                    return View(model);
+                    return View("Login1", model);
             }
         }
 
