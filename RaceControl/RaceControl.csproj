@@ -254,6 +254,9 @@
     <Compile Include="Models\Piloto.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Precinto.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Revision.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
@@ -523,6 +526,7 @@
     <Content Include="Views\Carrera\CreateEditObs.cshtml" />
     <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register1.cshtml" />
+    <Content Include="Views\Carrera\CreateEditPrecinto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

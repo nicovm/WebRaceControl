@@ -92,6 +92,15 @@
     <Property Name="dni" Type="int" Nullable="false" />
     <Property Name="email" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="Precinto">
+    <Key>
+      <PropertyRef Name="idPrecinto" />
+    </Key>
+    <Property Name="idPrecinto" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="idRevision" Type="bigint" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="idUsuario" Type="bigint" Nullable="false" />
+  </EntityType>
   <EntityType Name="Revision">
     <Key>
       <PropertyRef Name="idRevision" />
@@ -236,6 +245,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Precinto_Revision">
+    <End Role="Revision" Type="Self.Revision" Multiplicity="0..1" />
+    <End Role="Precinto" Type="Self.Precinto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Revision">
+        <PropertyRef Name="idRevision" />
+      </Principal>
+      <Dependent Role="Precinto">
+        <PropertyRef Name="idRevision" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precinto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Precinto" Type="Self.Precinto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Precinto">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tecnica_Carrera">
     <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
     <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
@@ -310,6 +343,7 @@
     <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Observacion" EntityType="Self.Observacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Precinto" EntityType="Self.Precinto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Revision" EntityType="Self.Revision" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
@@ -349,6 +383,14 @@
     <AssociationSet Name="FK_Observacion_UsuarioOk" Association="Self.FK_Observacion_UsuarioOk">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Observacion" EntitySet="Observacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precinto_Revision" Association="Self.FK_Precinto_Revision">
+      <End Role="Revision" EntitySet="Revision" />
+      <End Role="Precinto" EntitySet="Precinto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precinto_Usuario" Association="Self.FK_Precinto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Precinto" EntitySet="Precinto" />
     </AssociationSet>
     <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
       <End Role="Carrera" EntitySet="Carrera" />

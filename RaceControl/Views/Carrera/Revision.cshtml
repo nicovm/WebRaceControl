@@ -6,35 +6,49 @@
 
 
 <h1> @Model.Elem_Revision.nombre</h1>
-<div class="form-group">
-    <button id="btnNuevaObs" type="button" class="btn btn-primary"
-            data-toggle="modal" data-target="#myModal"
-            onclick="clickBtnObervacion(this, true)">
-        Nueva obervación
-    </button>
-
-</div>
 
 
 
+<ul class="nav nav-pills">
+    <li class="nav active"><a href="#observaciones" data-toggle="tab">Observaciones</a></li>
+    <li class="nav"><a href="#precinto" data-toggle="tab">Precintos</a></li>
+</ul>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th class="col-sm-6">Obervación</th>
-                <th class="col-sm-4">Carrera</th>
-                <th class="col-sm-2">Confirmar</th>
+<div class="tab-content">
+
+    <div class="tab-pane fade in active" id="observaciones">
+        <br />
+        <div class="form-group">
+
+            <button id="btnNuevaObs" type="button" class="btn btn-info"
+                    data-toggle="modal" data-target="#myModal"
+                    onclick="clickBtnObervacion(this, true)">
+                Nueva obervación
+            </button>
+
+        </div>
 
 
-            </tr>
 
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Observacion)
-            {
-                if (item.ok == false)
-                {
+
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-sm-6">Obervación</th>
+                        <th class="col-sm-4">Carrera</th>
+                        <th class="col-sm-2">Confirmar</th>
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Observacion)
+                    {
+                    if (item.ok == false)
+                    {
                     <tr>
                         <td> <h4>@item.descripcion</h4> </td>
                         <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
@@ -48,13 +62,83 @@
                         </td>
 
                     </tr>
-                }
+                    }
 
-            }
+                    }
 
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade" id="precinto">
+        <br />
+        <div class="form-group">
+
+            <button id="btnNuevaObs" type="button" class="btn btn-info"
+                    data-toggle="modal" data-target="#myModal"
+                    onclick="clickBtnObervacion(this, true)">
+                Nueva precinto
+            </button>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-sm-4">Carrera</th>
+                        <th class="col-sm-3">Fecha y hora</th>
+                        <th class="col-sm-3">Precinto</th>
+                        <th class="col-sm-2">Eliminar</th>
+
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Precinto)
+                    {
+
+                        <tr>
+                            <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
+                            <td> <h4>@item.fecha</h4> </td>
+                            <td> <h4>@item.idPrecinto</h4> </td>
+
+                            <td align="center">
+
+                                <button id="btnSelectCategoria" type="button" class="btn btn-warning"
+                                        onclick="location.href='@Url.Action("ConfirmarObs", "Carrera", new {  })'">
+                                    Eliminar
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+    </div>
+
+   
+
+
+
 </div>
+
+
+
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -96,6 +180,40 @@
             $('#resultado').html(data);
 
         });
+
+
+
+    }
+
+
+
+    function clickBtnPrecinto(element, nuevo) {
+
+        var tag = "clickBtnPrecinto";
+        var url;
+
+        console.log(tag);
+
+        if (nuevo) url = "@Url.Action("CreatePrecinto", "Carrera",new { idRevision = Model.idRevision}) ";
+    else {
+
+        var id = element.getAttribute('data-id');
+
+
+        url = "@Url.Action("EditPrecinto", "Carrera",new { id = "-1" }) ";
+        url = url.replace("-1", id);
+
+
+
+    }
+    $('#resultado').html("Cargando...");
+    $.get(url, function (data) {
+
+        console.log(tag.concat("Data obtenido"));
+
+        $('#resultado').html(data);
+
+    });
 
 
 

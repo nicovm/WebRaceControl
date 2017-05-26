@@ -237,6 +237,32 @@ namespace RaceControl.Controllers
             return RedirectToAction("Revision", new { idRevision = observacion.idRevision });
         }
 
+        public ActionResult CreatePrecinto(int idRevision)
+        {
+            ViewBag.idRevision = idRevision;
+            return View("CreateEditPrecinto");
+
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult CreatePrecinto(Precinto precinto)
+        {
+            precinto.fecha = DateTime.Now;
+          
+            string currentUserId = User.Identity.GetUserId();
+            precinto.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+
+
+            db.Precinto.Add(precinto);
+            db.SaveChanges();
+            //Crear logue de usuario
+
+            return RedirectToAction("Revision", new { idRevision = precinto.idRevision });
+        }
+
+
+
 
 
         public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)

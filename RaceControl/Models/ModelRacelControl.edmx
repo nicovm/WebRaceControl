@@ -97,6 +97,15 @@
           <Property Name="dni" Type="int" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Precinto">
+          <Key>
+            <PropertyRef Name="idPrecinto" />
+          </Key>
+          <Property Name="idPrecinto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="idRevision" Type="bigint" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="idUsuario" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Revision">
           <Key>
             <PropertyRef Name="idRevision" />
@@ -241,6 +250,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Precinto_Revision">
+          <End Role="Revision" Type="Self.Revision" Multiplicity="0..1" />
+          <End Role="Precinto" Type="Self.Precinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revision">
+              <PropertyRef Name="idRevision" />
+            </Principal>
+            <Dependent Role="Precinto">
+              <PropertyRef Name="idRevision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precinto_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Precinto" Type="Self.Precinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Precinto">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tecnica_Carrera">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
           <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
@@ -315,6 +348,7 @@
           <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Observacion" EntityType="Self.Observacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Precinto" EntityType="Self.Precinto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Revision" EntityType="Self.Revision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tecnica" EntityType="Self.Tecnica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
@@ -354,6 +388,14 @@
           <AssociationSet Name="FK_Observacion_UsuarioOk" Association="Self.FK_Observacion_UsuarioOk">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Observacion" EntitySet="Observacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precinto_Revision" Association="Self.FK_Precinto_Revision">
+            <End Role="Revision" EntitySet="Revision" />
+            <End Role="Precinto" EntitySet="Precinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precinto_Usuario" Association="Self.FK_Precinto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Precinto" EntitySet="Precinto" />
           </AssociationSet>
           <AssociationSet Name="FK_Tecnica_Carrera" Association="Self.FK_Tecnica_Carrera">
             <End Role="Carrera" EntitySet="Carrera" />
@@ -460,6 +502,15 @@
           <AssociationSet Name="FK_Observacion_UsuarioOk" Association="RaceControlModel.FK_Observacion_UsuarioOk">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Observacion" EntitySet="Observacion" />
+          </AssociationSet>
+          <EntitySet Name="Precinto" EntityType="RaceControlModel.Precinto" />
+          <AssociationSet Name="FK_Precinto_Revision" Association="RaceControlModel.FK_Precinto_Revision">
+            <End Role="Revision" EntitySet="Revision" />
+            <End Role="Precinto" EntitySet="Precinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precinto_Usuario" Association="RaceControlModel.FK_Precinto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Precinto" EntitySet="Precinto" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Categoria">
@@ -643,6 +694,7 @@
           <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Revision" ToRole="Tecnica" />
           <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_TecnicaRevision" FromRole="Revision" ToRole="Observacion" />
           <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_TecnicaRevisionOK" FromRole="Revision" ToRole="Observacion" />
+          <NavigationProperty Name="Precinto" Relationship="RaceControlModel.FK_Precinto_Revision" FromRole="Revision" ToRole="Precinto" />
         </EntityType>
         <Association Name="FK_TecnicaRevision_Elem_Revision">
           <End Type="RaceControlModel.Elem_Revision" Role="Elem_Revision" Multiplicity="1">
@@ -742,6 +794,7 @@
           <NavigationProperty Name="AspNetUsers" Relationship="RaceControlModel.FK_Usuario_AspNetUsers" FromRole="Usuario" ToRole="AspNetUsers" />
           <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_Usuario" FromRole="Usuario" ToRole="Observacion" />
           <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_UsuarioOk" FromRole="Usuario" ToRole="Observacion" />
+          <NavigationProperty Name="Precinto" Relationship="RaceControlModel.FK_Precinto_Usuario" FromRole="Usuario" ToRole="Precinto" />
         </EntityType>
         <Association Name="FK_Usuario_AspNetUsers">
           <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -776,6 +829,41 @@
             </Principal>
             <Dependent Role="Observacion">
               <PropertyRef Name="idUsuarioOk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Precinto">
+          <Key>
+            <PropertyRef Name="idPrecinto" />
+          </Key>
+          <Property Name="idPrecinto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idRevision" Type="Int64" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idUsuario" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_Precinto_Revision" FromRole="Precinto" ToRole="Revision" />
+          <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Precinto_Usuario" FromRole="Precinto" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Precinto_Revision">
+          <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="0..1" />
+          <End Type="RaceControlModel.Precinto" Role="Precinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revision">
+              <PropertyRef Name="idRevision" />
+            </Principal>
+            <Dependent Role="Precinto">
+              <PropertyRef Name="idRevision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precinto_Usuario">
+          <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="RaceControlModel.Precinto" Role="Precinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Precinto">
+              <PropertyRef Name="idUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -921,6 +1009,16 @@
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="idAspNetUsers" ColumnName="idAspNetUsers" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Precinto">
+            <EntityTypeMapping TypeName="RaceControlModel.Precinto">
+              <MappingFragment StoreEntitySet="Precinto">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="idRevision" ColumnName="idRevision" />
+                <ScalarProperty Name="idPrecinto" ColumnName="idPrecinto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

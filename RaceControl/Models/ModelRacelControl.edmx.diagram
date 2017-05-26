@@ -27,11 +27,14 @@
         <EntityTypeShape EntityType="RaceControlModel.Observacion" Width="1.5" PointX="5.875" PointY="9.625" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevision" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK" />
-        <EntityTypeShape EntityType="RaceControlModel.AspNetUsers" Width="1.5" PointX="0.75" PointY="10" />
+        <EntityTypeShape EntityType="RaceControlModel.AspNetUsers" Width="1.5" PointX="0.625" PointY="12.5" />
         <EntityTypeShape EntityType="RaceControlModel.Usuario" Width="1.5" PointX="3" PointY="10.625" />
         <AssociationConnector Association="RaceControlModel.FK_Usuario_AspNetUsers" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_Usuario" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_UsuarioOk" />
+        <EntityTypeShape EntityType="RaceControlModel.Precinto" Width="1.5" PointX="10.75" PointY="11.625" />
+        <AssociationConnector Association="RaceControlModel.FK_Precinto_Revision" />
+        <AssociationConnector Association="RaceControlModel.FK_Precinto_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

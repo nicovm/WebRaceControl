@@ -19,6 +19,7 @@ namespace RaceControl.Models
         {
             this.Observacion = new HashSet<Observacion>();
             this.Observacion1 = new HashSet<Observacion>();
+            this.Precinto = new HashSet<Precinto>();
         }
     
         public long idRevision { get; set; }
@@ -31,5 +32,7 @@ namespace RaceControl.Models
         public virtual ICollection<Observacion> Observacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Observacion> Observacion1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Precinto> Precinto { get; set; }
     }
 }
