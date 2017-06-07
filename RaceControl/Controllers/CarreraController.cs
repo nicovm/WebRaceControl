@@ -222,6 +222,26 @@ namespace RaceControl.Controllers
             return RedirectToAction("Revision", new { idRevision = Observacion.idRevision });
         }
 
+        //GET
+        public ActionResult EditObs(int idObservacion)
+        {
+            Observacion obs = db.Observacion.Find(idObservacion);
+            ViewBag.idRevision = obs.idRevision;
+            return View("CreateEditObs", obs);
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult EditObs( Observacion Observacion)
+        {
+            Observacion editar = db.Observacion.Find(Observacion.idObservacion);
+            editar.descripcion = Observacion.descripcion;
+            db.SaveChanges();
+            //Crear logue de usuario
+
+            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision });
+        }
+
         public ActionResult ConfirmarObs(int idObservacion , int idRevisionOK)
         {
             Observacion observacion = db.Observacion.Find(idObservacion);

@@ -140,7 +140,7 @@ namespace RaceControl.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View("Register1");
+            return View("Register");
         }
 
         //

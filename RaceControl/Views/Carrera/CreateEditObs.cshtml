@@ -23,12 +23,18 @@
         if (Model == null)
         {
             @Html.Hidden("idRevision", (int)@ViewBag.idRevision)
-
-          
             <textarea class="form-control" style="min-width: 100%" name="descripcion" id="descripcion"></textarea>
-
-
         }
+        else
+        {
+            @Html.HiddenFor(model => model.idObservacion);
+            @Html.HiddenFor(model => model.idRevision);
+            <textarea class="form-control" style="min-width: 100%" name="descripcion" id="descripcion"
+                    > @Model.descripcion</textarea>
+        }
+
+
+
 
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

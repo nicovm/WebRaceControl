@@ -285,6 +285,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\my-style.css" />
+    <Content Include="Content\Img\img_check48.png" />
+    <Content Include="Content\Img\img_checkok48.png" />
+    <Content Include="Content\Img\img_edit32.png" />
     <Content Include="Content\js\myJs\validacionPiloto.js" />
     <Content Include="Content\js\validaciones.js" />
     <Content Include="Content\Login\bootstrap\css\bootstrap-theme.css" />

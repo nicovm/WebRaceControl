@@ -38,7 +38,7 @@
                     <tr>
                         <th class="col-sm-6">Obervación</th>
                         <th class="col-sm-4">Carrera</th>
-                        <th class="col-sm-2">Confirmar</th>
+                        <th class="col-sm-2"></th>
 
 
                     </tr>
@@ -47,22 +47,38 @@
                 <tbody>
                     @foreach (var item in Model.Observacion)
                     {
-                    if (item.ok == false)
-                    {
+
                     <tr>
                         <td> <h4>@item.descripcion</h4> </td>
                         <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
                         <td align="center">
 
-                            <button id="btnSelectCategoria" type="button" class="btn btn-success"
-                                    onclick="location.href='@Url.Action("ConfirmarObs", "Carrera", new { idObservacion = item.idObservacion , idRevisionOk = Model.idRevision })'">
-                                Confirmar
+                            <button id="btnEditObs" type="button" class="btn btn-default"
+                                    onclick="clickBtnObervacion(this, false)"
+                                    data-id=@item.idObservacion
+                                    data-toggle="modal" data-target="#myModal">
+                                <img src="~/Content/Img/img_edit32.png" />
                             </button>
+
+
+                            @if (item.ok == false)
+                            {
+                            <button id="btnSelectCategoria" type="button" class="btn btn-default"
+                                    onclick="location.href='@Url.Action("ConfirmarObs", "Carrera", new { idObservacion = item.idObservacion , idRevisionOk = Model.idRevision })'">
+
+                                <img src="~/Content/Img/img_check48.png" height="32" width="32">
+                            </button>
+                            }
+                            else
+                            {
+                            <img src="~/Content/Img/img_checkok48.png" height="32" width="32">
+
+                            }
 
                         </td>
 
                     </tr>
-                    }
+
 
                     }
 
@@ -80,7 +96,7 @@
 
             <button id="btnNuevaObs" type="button" class="btn btn-info"
                     data-toggle="modal" data-target="#myModal"
-                    onclick="clickBtnObervacion(this, true)">
+                    onclick="clickBtnPrecinto(this, true)">
                 Nueva precinto
             </button>
 
@@ -111,6 +127,13 @@
 
                             <td align="center">
 
+                                <button id="btnEditObs" type="button" class="btn btn-default"
+                                        onclick="clickBtnPrecinto(this, false)"
+                                        data-id=@item.idPrecinto
+                                        data-toggle="modal" data-target="#myModal">
+                                    <img src="~/Content/Img/img_edit32.png" />
+                                </button>
+
                                 <button id="btnSelectCategoria" type="button" class="btn btn-warning"
                                         onclick="location.href='@Url.Action("ConfirmarObs", "Carrera", new {  })'">
                                     Eliminar
@@ -131,7 +154,7 @@
 
     </div>
 
-   
+
 
 
 
@@ -165,8 +188,9 @@
 
             var id = element.getAttribute('data-id');
 
+            console.log(id);
 
-            url = "@Url.Action("EditObs", "Carrera",new { id = "-1" }) ";
+            url = "@Url.Action("EditObs", "Carrera",new { idObservacion = "-1" }) ";
             url = url.replace("-1", id);
 
 
@@ -195,25 +219,25 @@
         console.log(tag);
 
         if (nuevo) url = "@Url.Action("CreatePrecinto", "Carrera",new { idRevision = Model.idRevision}) ";
-    else {
+        else {
 
-        var id = element.getAttribute('data-id');
-
-
-        url = "@Url.Action("EditPrecinto", "Carrera",new { id = "-1" }) ";
-        url = url.replace("-1", id);
+            var id = element.getAttribute('data-id');
 
 
+            url = "@Url.Action("EditPrecinto", "Carrera",new { idObservacion = "-1" }) ";
+            url = url.replace("-1", id);
 
-    }
-    $('#resultado').html("Cargando...");
-    $.get(url, function (data) {
 
-        console.log(tag.concat("Data obtenido"));
 
-        $('#resultado').html(data);
+        }
+        $('#resultado').html("Cargando...");
+        $.get(url, function (data) {
 
-    });
+            console.log(tag.concat("Data obtenido"));
+
+            $('#resultado').html(data);
+
+        });
 
 
 
