@@ -14,10 +14,11 @@ namespace RaceControl.Models
     
     public partial class Precinto
     {
-        public string idPrecinto { get; set; }
+        public long idPrecinto { get; set; }
         public Nullable<long> idRevision { get; set; }
         public System.DateTime fecha { get; set; }
         public long idUsuario { get; set; }
+        public string precinto1 { get; set; }
     
         public virtual Revision Revision { get; set; }
         public virtual Usuario Usuario { get; set; }

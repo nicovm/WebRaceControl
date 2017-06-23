@@ -4,19 +4,18 @@
 }
 
 <div class="row" id="seleccionado">
-    
+
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading ">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-comments fa-5x"></i>
-                        @* <img src="~/Content/imgTorneo/logo_torneo-CarShow.png" class="img-fluid" width="75px" height="75px">*@
-                        @* <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">*@
+                        <img src="~/Content/Img/img_carreras48.png" />
+
                     </div>
-                    <div class="col-xs-9 text-left">
-                        <h3>@Model.carrera.nombre</h3>
-                        @*<div>New Comments!</div>*@
+                    <div class="col-xs-6 text-left">
+                        <h4>@Model.carrera.nombre</h4>
+
                     </div>
                 </div>
             </div>
@@ -30,13 +29,12 @@
                 <div class="panel-heading ">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-comments fa-5x"></i>
-                            @* <img src="~/Content/imgTorneo/logo_torneo-CarShow.png" class="img-fluid" width="75px" height="75px">*@
-                            @* <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">*@
+                            <img src="~/Content/Img/imb_categorias48.png" />
+
                         </div>
-                        <div class="col-xs-9 text-left">
-                            <h3>@Model.categoria.nombre</h3>
-                            @*<div>New Comments!</div>*@
+                        <div class="col-xs-6 text-left">
+                            <h4>@Model.categoria.nombre</h4>
+
                         </div>
                     </div>
                 </div>
@@ -46,24 +44,43 @@
 
     @if (Model.piloto != null)
     {
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-red">
-                <div class="panel-heading ">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-comments fa-5x"></i>
-                            @* <img src="~/Content/imgTorneo/logo_torneo-CarShow.png" class="img-fluid" width="75px" height="75px">*@
-                            @* <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">*@
+        @*<div class="col-lg-3 col-md-5">
+                <div class="panel panel-red">
+                    <div class="panel-heading ">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="~/Content/Img/img_pilotos48.png" />
+
+                            </div>
+                            <div class="col-xs-6 text-left">
+                                <h4>@Model.piloto.nombre</h4>
+
+                            </div>
                         </div>
-                        <div class="col-xs-9 text-left">
-                            <h3>@Model.piloto.nombre</h3>
-                            @*<div class="huge">@Model.piloto.nombre</div>*@
-                            @*<div>New Comments!</div>*@
+                    </div>
+                </div>
+            </div>*@
+
+
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading ">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img src="~/Content/Img/img_pilotos48.png" />
+
+                            </div>
+                            <div class="col-xs-6 text-left">
+                                <h4>@Model.piloto.nombre</h4>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+
+
     }
 </div>
 
@@ -159,12 +176,11 @@ else // muestro los elementos de revision de la tecnica
 <script>
 
 
-    function buscarPiloto(idCategoria)
-    {
+    function buscarPiloto(idCategoria) {
         var buscar = $('#buscarPiloto').val();
-       
+
         var url = "@Html.Raw(Url.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = "-2", buscar = "-1" }))"
-      
+
         url = url.replace("-1", buscar);
         url = url.replace("-2", idCategoria);
 

@@ -77,7 +77,7 @@
     <Property Name="idRevision" Type="bigint" />
     <Property Name="idRevisionOk" Type="bigint" />
     <Property Name="ok" Type="bit" Nullable="false" />
-    <Property Name="descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="fecha" Type="datetime" Nullable="false" />
     <Property Name="fechaOk" Type="datetime" />
     <Property Name="idUsuario" Type="bigint" Nullable="false" />
@@ -96,10 +96,11 @@
     <Key>
       <PropertyRef Name="idPrecinto" />
     </Key>
-    <Property Name="idPrecinto" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="idPrecinto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idRevision" Type="bigint" />
     <Property Name="fecha" Type="datetime" Nullable="false" />
     <Property Name="idUsuario" Type="bigint" Nullable="false" />
+    <Property Name="precinto" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Revision">
     <Key>

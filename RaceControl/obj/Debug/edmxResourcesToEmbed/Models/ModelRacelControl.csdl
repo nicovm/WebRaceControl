@@ -310,7 +310,7 @@
     <Property Name="idRevision" Type="Int64" />
     <Property Name="idRevisionOk" Type="Int64" />
     <Property Name="ok" Type="Boolean" Nullable="false" />
-    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
     <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="fechaOk" Type="DateTime" Precision="3" />
     <Property Name="idUsuario" Type="Int64" Nullable="false" />
@@ -414,10 +414,11 @@
     <Key>
       <PropertyRef Name="idPrecinto" />
     </Key>
-    <Property Name="idPrecinto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="idPrecinto" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="idRevision" Type="Int64" />
     <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="idUsuario" Type="Int64" Nullable="false" />
+    <Property Name="precinto1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_Precinto_Revision" FromRole="Precinto" ToRole="Revision" />
     <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Precinto_Usuario" FromRole="Precinto" ToRole="Usuario" />
   </EntityType>

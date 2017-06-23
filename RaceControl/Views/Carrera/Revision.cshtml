@@ -123,7 +123,7 @@
                         <tr>
                             <td> <h4>@item.Revision.Tecnica.Carrera.nombre</h4> </td>
                             <td> <h4>@item.fecha</h4> </td>
-                            <td> <h4>@item.idPrecinto</h4> </td>
+                            <td> <h4>@item.precinto1</h4> </td>
 
                             <td align="center">
 
@@ -134,9 +134,10 @@
                                     <img src="~/Content/Img/img_edit32.png" />
                                 </button>
 
-                                <button id="btnSelectCategoria" type="button" class="btn btn-warning"
-                                        onclick="location.href='@Url.Action("ConfirmarObs", "Carrera", new {  })'">
-                                    Eliminar
+                               
+                                <button id="btnEditObs" type="button" class="btn btn-default"
+                                         onclick="location.href='@Url.Action("EliminarPrecinto", "Carrera", new {  })'">
+                                    <img src="~/Content/Img/Eliminar32.png" />
                                 </button>
 
                             </td>
@@ -224,7 +225,7 @@
             var id = element.getAttribute('data-id');
 
 
-            url = "@Url.Action("EditPrecinto", "Carrera",new { idObservacion = "-1" }) ";
+            url = "@Url.Action("EditPrecinto", "Carrera",new { idPrecinto = "-1" }) ";
             url = url.replace("-1", id);
 
 

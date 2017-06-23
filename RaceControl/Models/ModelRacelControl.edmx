@@ -82,7 +82,7 @@
           <Property Name="idRevision" Type="bigint" />
           <Property Name="idRevisionOk" Type="bigint" />
           <Property Name="ok" Type="bit" Nullable="false" />
-          <Property Name="descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="fechaOk" Type="datetime" />
           <Property Name="idUsuario" Type="bigint" Nullable="false" />
@@ -101,10 +101,11 @@
           <Key>
             <PropertyRef Name="idPrecinto" />
           </Key>
-          <Property Name="idPrecinto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="idPrecinto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idRevision" Type="bigint" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="idUsuario" Type="bigint" Nullable="false" />
+          <Property Name="precinto" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Revision">
           <Key>
@@ -732,7 +733,7 @@
           <Property Name="idRevision" Type="Int64" />
           <Property Name="idRevisionOk" Type="Int64" />
           <Property Name="ok" Type="Boolean" Nullable="false" />
-          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="fechaOk" Type="DateTime" Precision="3" />
           <Property Name="idUsuario" Type="Int64" Nullable="false" />
@@ -836,10 +837,11 @@
           <Key>
             <PropertyRef Name="idPrecinto" />
           </Key>
-          <Property Name="idPrecinto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idPrecinto" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idRevision" Type="Int64" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idUsuario" Type="Int64" Nullable="false" />
+          <Property Name="precinto1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_Precinto_Revision" FromRole="Precinto" ToRole="Revision" />
           <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Precinto_Usuario" FromRole="Precinto" ToRole="Usuario" />
         </EntityType>
@@ -1015,6 +1017,7 @@
           <EntitySetMapping Name="Precinto">
             <EntityTypeMapping TypeName="RaceControlModel.Precinto">
               <MappingFragment StoreEntitySet="Precinto">
+                <ScalarProperty Name="precinto1" ColumnName="precinto" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="idRevision" ColumnName="idRevision" />

@@ -32,7 +32,7 @@
         <AssociationConnector Association="RaceControlModel.FK_Usuario_AspNetUsers" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_Usuario" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_UsuarioOk" />
-        <EntityTypeShape EntityType="RaceControlModel.Precinto" Width="1.5" PointX="10.75" PointY="11.625" />
+        <EntityTypeShape EntityType="RaceControlModel.Precinto" Width="1.5" PointX="11.625" PointY="8.75" />
         <AssociationConnector Association="RaceControlModel.FK_Precinto_Revision" />
         <AssociationConnector Association="RaceControlModel.FK_Precinto_Usuario" />
         </Diagram>

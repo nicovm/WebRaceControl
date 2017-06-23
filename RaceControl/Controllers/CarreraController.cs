@@ -281,6 +281,31 @@ namespace RaceControl.Controllers
             return RedirectToAction("Revision", new { idRevision = precinto.idRevision });
         }
 
+        //GET
+        public ActionResult EditPrecinto(int idPrecinto)
+        {
+            Precinto oPrecinto = db.Precinto.Find(idPrecinto);
+         
+        
+            return View("CreateEditPrecinto", oPrecinto);
+        }
+        //POST
+        [HttpPost]
+        public ActionResult EditPrecinto(Precinto EditPrecinto)
+        {
+
+            Precinto precinto = db.Precinto.Find(EditPrecinto.idPrecinto);
+
+            precinto.precinto1 = EditPrecinto.precinto1;
+            precinto.fecha = DateTime.Now;
+
+            string currentUserId = User.Identity.GetUserId();
+            precinto.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+
+            db.SaveChanges();
+
+            return RedirectToAction("Revision", new { idRevision = precinto.idRevision });
+        }
 
 
 
