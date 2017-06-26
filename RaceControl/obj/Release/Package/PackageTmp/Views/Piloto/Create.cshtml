@@ -1,0 +1,63 @@
+﻿@model RaceControl.Models.Piloto
+
+@{
+    Layout = null;
+
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Piloto</h4>
+</div>
+
+<div id="alertModal"></div>
+
+  @using (Html.BeginForm("Create", "Piloto", FormMethod.Post, new { @id = "formPiloto" }))
+  {
+        @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+
+        <div class="form" >
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <h4>Nombre</h4>
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @id = "inputNombre" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <h4>Apellido</h4> 
+                @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control" , @id = "inputApellido" } })
+                @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
+                <div id="alertApellido"></div>
+            </div>
+
+            <div class="form-group">
+                <h4>DNI</h4> 
+                @Html.EditorFor(model => model.dni, new { htmlAttributes = new { @class = "form-control", @id = "inputDNI" } })
+                @Html.ValidationMessageFor(model => model.dni, "", new { @class = "text-danger" })
+                <div id="alertDNI"></div>
+            </div>
+
+            <div class="form-group">
+                <h4>Email</h4> 
+                 @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @id = "inputEmail" } })
+                 @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+
+
+  }
+    
+<script src="~/Content/js/myJs/validacionPiloto.js"></script>
+
+

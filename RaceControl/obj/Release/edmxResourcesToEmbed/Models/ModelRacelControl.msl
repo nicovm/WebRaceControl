@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RaceControlModelStoreContainer" CdmEntityContainer="EntidadesRaceControl">
+    <EntitySetMapping Name="Torneo">
+      <EntityTypeMapping TypeName="RaceControlModel.Torneo">
+        <MappingFragment StoreEntitySet="Torneo">
+          <ScalarProperty Name="idTorneo" ColumnName="idTorneo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categoria">
+      <EntityTypeMapping TypeName="RaceControlModel.Categoria">
+        <MappingFragment StoreEntitySet="Categoria">
+          <ScalarProperty Name="idTorneo" ColumnName="idTorneo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carrera">
+      <EntityTypeMapping TypeName="RaceControlModel.Carrera">
+        <MappingFragment StoreEntitySet="Carrera">
+          <ScalarProperty Name="idAutodromo" ColumnName="idAutodromo" />
+          <ScalarProperty Name="idTorneo" ColumnName="idTorneo" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carrera_Piloto">
+      <EntityTypeMapping TypeName="RaceControlModel.Carrera_Piloto">
+        <MappingFragment StoreEntitySet="Carrera_Piloto">
+          <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+          <ScalarProperty Name="idPiloto" ColumnName="idPiloto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Piloto">
+      <EntityTypeMapping TypeName="RaceControlModel.Piloto">
+        <MappingFragment StoreEntitySet="Piloto">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categoria_Piloto">
+      <EntityTypeMapping TypeName="RaceControlModel.Categoria_Piloto">
+        <MappingFragment StoreEntitySet="Categoria_Piloto">
+          <ScalarProperty Name="auto" ColumnName="auto" />
+          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+          <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Autodromo">
+      <EntityTypeMapping TypeName="RaceControlModel.Autodromo">
+        <MappingFragment StoreEntitySet="Autodromo">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idAutodromo" ColumnName="idAutodromo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Elem_Revision">
+      <EntityTypeMapping TypeName="RaceControlModel.Elem_Revision">
+        <MappingFragment StoreEntitySet="Elem_Revision">
+          <ScalarProperty Name="frecuencia" ColumnName="frecuencia" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tecnica">
+      <EntityTypeMapping TypeName="RaceControlModel.Tecnica">
+        <MappingFragment StoreEntitySet="Tecnica">
+          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="observacion" ColumnName="observacion" />
+          <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+          <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
+          <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Revision">
+      <EntityTypeMapping TypeName="RaceControlModel.Revision">
+        <MappingFragment StoreEntitySet="Revision">
+          <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
+          <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+          <ScalarProperty Name="idRevision" ColumnName="idRevision" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Observacion">
+      <EntityTypeMapping TypeName="RaceControlModel.Observacion">
+        <MappingFragment StoreEntitySet="Observacion">
+          <ScalarProperty Name="idUsuarioOk" ColumnName="idUsuarioOk" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="fechaOk" ColumnName="fechaOk" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="ok" ColumnName="ok" />
+          <ScalarProperty Name="idRevisionOk" ColumnName="idRevisionOk" />
+          <ScalarProperty Name="idRevision" ColumnName="idRevision" />
+          <ScalarProperty Name="idObservacion" ColumnName="idObservacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="RaceControlModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="RaceControlModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="idAspNetUsers" ColumnName="idAspNetUsers" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Precinto">
+      <EntityTypeMapping TypeName="RaceControlModel.Precinto">
+        <MappingFragment StoreEntitySet="Precinto">
+          <ScalarProperty Name="precinto1" ColumnName="precinto" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="idRevision" ColumnName="idRevision" />
+          <ScalarProperty Name="idPrecinto" ColumnName="idPrecinto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

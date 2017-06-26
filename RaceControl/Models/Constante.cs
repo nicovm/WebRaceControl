@@ -59,6 +59,14 @@ namespace RaceControl.Models
             return int.TryParse(s, out output);
         }
 
+        public class defaultTabRevision
+        {
+            public static int TAB_OBSERVACION = 1;
+            public static int TAB_PRECINTO = 2;
+        }
+
+      
+
         
 
     }

@@ -189,9 +189,10 @@ namespace RaceControl.Controllers
         }
     
         //GET
-        public ActionResult Revision(int idRevision)
+        public ActionResult Revision(int idRevision , int tabDefault)
         {
             Revision revision = db.Revision.Find(idRevision);
+            ViewBag.tabDefault = tabDefault;
 
             return View(revision);
             
@@ -218,8 +219,8 @@ namespace RaceControl.Controllers
             db.Observacion.Add(Observacion);
             db.SaveChanges();
             //Crear logue de usuario
-
-            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision });
+            
+            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision , tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
         }
 
         //GET
@@ -238,8 +239,8 @@ namespace RaceControl.Controllers
             editar.descripcion = Observacion.descripcion;
             db.SaveChanges();
             //Crear logue de usuario
-
-            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision });
+           
+            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision , tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION});
         }
 
         public ActionResult ConfirmarObs(int idObservacion , int idRevisionOK)
@@ -253,8 +254,8 @@ namespace RaceControl.Controllers
             observacion.ok = true;
 
             db.SaveChanges();
-
-            return RedirectToAction("Revision", new { idRevision = observacion.idRevision });
+            
+            return RedirectToAction("Revision", new { idRevision = observacion.idRevision , tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
         }
 
         public ActionResult CreatePrecinto(int idRevision)
@@ -277,8 +278,8 @@ namespace RaceControl.Controllers
             db.Precinto.Add(precinto);
             db.SaveChanges();
             //Crear logue de usuario
-
-            return RedirectToAction("Revision", new { idRevision = precinto.idRevision });
+          
+            return RedirectToAction("Revision", new { idRevision = precinto.idRevision , tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
 
         //GET
@@ -303,11 +304,19 @@ namespace RaceControl.Controllers
             precinto.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
 
             db.SaveChanges();
-
-            return RedirectToAction("Revision", new { idRevision = precinto.idRevision });
+       
+            return RedirectToAction("Revision", new { idRevision = precinto.idRevision , tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
 
 
+        public ActionResult EliminarPrecinto(int idPrecinto)
+        {
+            Precinto precinto = db.Precinto.Find(idPrecinto);
+            db.Precinto.Remove(precinto);
+            db.SaveChanges();
+         
+            return RedirectToAction("Revision", new { idRevision = idPrecinto, tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
+        }
 
 
         public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)

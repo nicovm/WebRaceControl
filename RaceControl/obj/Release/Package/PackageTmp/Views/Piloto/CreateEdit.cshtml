@@ -1,0 +1,104 @@
+﻿@model RaceControl.Models.Piloto
+
+@{
+    ViewBag.Title = "CreateEdit";
+    Layout = null;
+
+    string accion = Model == null ? "Create" : "Edit";
+    string titulo = Model == null ? "Nuevo Piloto" : "Editar Piloto";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">@titulo</h4>
+</div>
+
+<div class="modal-body">
+    @using (Html.BeginForm(accion, "Piloto", FormMethod.Post, new { @id = "formPiloto" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form">
+
+            <div id="alertModal"></div>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <h4>Nombre</h4>
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @id = "inputNombre" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <h4>Apellido</h4>
+                @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control", @id = "inputApellido" } })
+                @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
+                <div id="alertApellido"></div>
+            </div>
+
+            <div class="form-group">
+                <h4>DNI</h4>
+                @Html.EditorFor(model => model.dni, new { htmlAttributes = new { @class = "form-control", @id = "inputDNI" } })
+                @Html.ValidationMessageFor(model => model.dni, "", new { @class = "text-danger" })
+                <div id="alertDNI"></div>
+            </div>
+
+            <div class="form-group">
+                <h4>Email</h4>
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @id = "inputEmail" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+
+        </div>
+    }
+
+    <script>
+
+        bootstrap_alert = function () { }
+
+        bootstrap_alert.warning = function (message) {
+            $('#alertModal').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
+        }
+
+
+        $("#formPiloto").on("submit", function () {
+
+            console.log("submit");
+
+            if (!$('#inputNombre').val()) {
+                bootstrap_alert.warning('<strong>¡Campo obligatorio!</strong> Por favor ingrese el nombre del piloto');
+                return false;
+            }
+
+            if (!$('#inputApellido').val()) {
+                bootstrap_alert.warning('<strong>¡Campo obligatorio!</strong> Por favor ingrese el apellido del piloto');
+                return false;
+            }
+
+            if (!$('#inputDNI').val()) {
+
+                bootstrap_alert.warning('<strong>¡Campo obligatorio!</strong> Por favor ingrese el DNI del piloto');
+                return false;
+            }
+
+            if (!$('#inputEmail').val()) {
+
+                bootstrap_alert.warning('<strong>¡Campo obligatorio!</strong> Por favor ingrese el Email del piloto');
+                return false;
+            }
+
+
+        });
+
+
+
+
+    </script>
+
+</div>

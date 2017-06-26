@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cbb5ced4aa1a4b19b86a92965fc2732b" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="RaceControlModel.Torneo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaceControlModel.Categoria" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="RaceControlModel.FK_Categoria_Torneo" />
+        <EntityTypeShape EntityType="RaceControlModel.Carrera" Width="1.5" PointX="0.625" PointY="4.375" />
+        <EntityTypeShape EntityType="RaceControlModel.Carrera_Piloto" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="RaceControlModel.FK_Carrera_Torneo" />
+        <EntityTypeShape EntityType="RaceControlModel.Piloto" Width="1.5" PointX="7" PointY="6.25" />
+        <EntityTypeShape EntityType="RaceControlModel.Categoria_Piloto" Width="3.125" PointX="3.25" PointY="3.75" />
+        <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria" />
+        <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" />
+        <EntityTypeShape EntityType="RaceControlModel.Autodromo" Width="1.5" PointX="3" PointY="6.875" />
+        <AssociationConnector Association="RaceControlModel.FK_Carrera_Autodromo" />
+        <EntityTypeShape EntityType="RaceControlModel.Elem_Revision" Width="1.5" PointX="12.5" PointY="4.875" />
+        <EntityTypeShape EntityType="RaceControlModel.Tecnica" Width="1.5" PointX="7.625" PointY="2.5" />
+        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Carrera" />
+        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Categoria" />
+        <EntityTypeShape EntityType="RaceControlModel.Revision" Width="1.5" PointX="9.375" PointY="6.875" />
+        <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision" />
+        <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Tecnica" />
+        <EntityTypeShape EntityType="RaceControlModel.Observacion" Width="1.5" PointX="5.875" PointY="9.625" />
+        <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevision" />
+        <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK" />
+        <EntityTypeShape EntityType="RaceControlModel.AspNetUsers" Width="1.5" PointX="0.625" PointY="12.5" />
+        <EntityTypeShape EntityType="RaceControlModel.Usuario" Width="1.5" PointX="3" PointY="10.625" />
+        <AssociationConnector Association="RaceControlModel.FK_Usuario_AspNetUsers" />
+        <AssociationConnector Association="RaceControlModel.FK_Observacion_Usuario" />
+        <AssociationConnector Association="RaceControlModel.FK_Observacion_UsuarioOk" />
+        <EntityTypeShape EntityType="RaceControlModel.Precinto" Width="1.5" PointX="11.625" PointY="8.75" />
+        <AssociationConnector Association="RaceControlModel.FK_Precinto_Revision" />
+        <AssociationConnector Association="RaceControlModel.FK_Precinto_Usuario" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

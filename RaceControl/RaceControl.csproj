@@ -391,6 +391,7 @@
     <Content Include="Content\Login\font-awesome\scss\_rotated-flipped.scss" />
     <Content Include="Content\Login\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\Login\font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\RaceControl.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
