@@ -151,7 +151,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/07/2017 20:09:03</publishTime>
     </File>
     <File Include="bin/RaceControl.dll">
-      <publishTime>06/23/2017 22:19:17</publishTime>
+      <publishTime>06/27/2017 20:43:05</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/07/2017 20:09:00</publishTime>
@@ -267,11 +267,158 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Content/bootstrap.min.css">
       <publishTime>06/07/2017 20:08:17</publishTime>
     </File>
+    <File Include="Content/css/bootstrap-rtl.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/css/bootstrap-rtl.min.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/css/bootstrap.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/css/bootstrap.min.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
     <File Include="Content/css/my-style.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/css/plugins/morris.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/css/sb-admin-rtl.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/css/sb-admin.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/css/font-awesome.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/css/font-awesome.min.css">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.eot">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.svg">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.ttf">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.woff">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/FontAwesome.otf">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/bordered-pulled.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/core.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/fixed-width.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/font-awesome.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/icons.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/larger.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/list.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/mixins.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/path.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/rotated-flipped.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/spinning.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/stacked.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/variables.less">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/font-awesome.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_bordered-pulled.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_core.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_fixed-width.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_icons.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_larger.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_list.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_mixins.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_path.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_rotated-flipped.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_spinning.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_stacked.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_variables.scss">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff2">
       <publishTime>06/07/2017 20:08:17</publishTime>
     </File>
     <File Include="Content/Img/Eliminar32.png">
       <publishTime>06/22/2017 20:36:22</publishTime>
+    </File>
+    <File Include="Content/Img/imb_categorias48.png">
+      <publishTime>06/22/2017 21:25:13</publishTime>
+    </File>
+    <File Include="Content/Img/imb_categorias96.png">
+      <publishTime>06/22/2017 21:11:13</publishTime>
+    </File>
+    <File Include="Content/Img/img_carreras48.png">
+      <publishTime>06/22/2017 21:25:29</publishTime>
+    </File>
+    <File Include="Content/Img/img_carreras96.png">
+      <publishTime>06/22/2017 21:10:53</publishTime>
     </File>
     <File Include="Content/Img/img_check48.png">
       <publishTime>09/06/2016 08:21:58</publishTime>
@@ -285,8 +432,65 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Content/Img/img_pilotos144.png">
       <publishTime>06/22/2017 21:03:30</publishTime>
     </File>
+    <File Include="Content/Img/img_pilotos48.png">
+      <publishTime>07/08/2016 20:21:22</publishTime>
+    </File>
+    <File Include="Content/Img/img_pilotos96.png">
+      <publishTime>07/08/2016 20:21:38</publishTime>
+    </File>
+    <File Include="Content/Img/img_torneos48.png">
+      <publishTime>06/22/2017 21:25:49</publishTime>
+    </File>
+    <File Include="Content/ImgTorneo/logo_torneo-Gera.png">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/ImgTorneo/logo_torneo-prueba.png">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/ImgTorneo/logo_torneo-Torneo 2.png">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/bootstrap.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/bootstrap.min.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/jquery.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
     <File Include="Content/js/myJs/validacionPiloto.js">
       <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/plugins/flot/excanvas.min.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/plugins/flot/flot-data.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/plugins/flot/jquery.flot.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/plugins/flot/jquery.flot.pie.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/plugins/flot/jquery.flot.resize.js">
+      <publishTime>06/07/2017 20:08:17</publishTime>
+    </File>
+    <File Include="Content/js/plugins/flot/jquery.flot.tooltip.min.js">
+      <publishTime>06/07/2017 20:08:18</publishTime>
+    </File>
+    <File Include="Content/js/plugins/morris/morris-data.js">
+      <publishTime>06/07/2017 20:08:18</publishTime>
+    </File>
+    <File Include="Content/js/plugins/morris/morris.js">
+      <publishTime>06/07/2017 20:08:18</publishTime>
+    </File>
+    <File Include="Content/js/plugins/morris/morris.min.js">
+      <publishTime>06/07/2017 20:08:18</publishTime>
+    </File>
+    <File Include="Content/js/plugins/morris/raphael.min.js">
+      <publishTime>06/07/2017 20:08:18</publishTime>
     </File>
     <File Include="Content/js/validaciones.js">
       <publishTime>06/07/2017 20:08:18</publishTime>
@@ -748,7 +952,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/07/2017 20:08:23</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>06/07/2017 20:08:19</publishTime>
+      <publishTime>06/27/2017 20:42:31</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>06/07/2017 20:08:24</publishTime>
@@ -772,7 +976,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/07/2017 20:08:24</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
-      <publishTime>06/07/2017 20:08:24</publishTime>
+      <publishTime>06/25/2017 19:57:15</publishTime>
     </File>
     <File Include="Views/Account/Register1.cshtml">
       <publishTime>06/07/2017 20:08:24</publishTime>
@@ -889,7 +1093,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/07/2017 20:08:28</publishTime>
     </File>
     <File Include="Views/Piloto/Index.cshtml">
-      <publishTime>06/07/2017 20:08:28</publishTime>
+      <publishTime>06/25/2017 18:15:08</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>06/07/2017 20:08:28</publishTime>
@@ -898,7 +1102,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/07/2017 20:08:28</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/07/2017 20:08:29</publishTime>
+      <publishTime>06/27/2017 20:31:37</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>06/07/2017 20:08:29</publishTime>
@@ -907,7 +1111,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/07/2017 20:08:29</publishTime>
     </File>
     <File Include="Views/Torneo/Index.cshtml">
-      <publishTime>06/07/2017 20:08:29</publishTime>
+      <publishTime>06/25/2017 18:14:14</publishTime>
     </File>
     <File Include="Views/Torneo/_Torneo.cshtml">
       <publishTime>06/07/2017 20:08:29</publishTime>
