@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using RaceControl.Models;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace RaceControl
 {
@@ -19,6 +21,44 @@ namespace RaceControl
         public Task SendAsync(IdentityMessage message)
         {
             // Conecte su servicio de correo electrónico aquí para enviar correo electrónico.
+            return configSendGridasync(message); //Task.FromResult(0);
+
+
+
+        }
+
+        private Task configSendGridasync(IdentityMessage message)
+        {
+
+            #region formatter
+            //string text = string.Format("Please click on this link to {0}: {1}", message.Subject, message.Body);
+            string html = message.Body; // "Please confirm your account by clicking this link: <a href=\"" + message.Body + "\">link</a><br/>";
+
+            //html += HttpUtility.HtmlEncode(message.Body);
+            #endregion
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("racecontrolarg@gmail.com");
+            msg.To.Add(new MailAddress(message.Destination));
+            msg.Subject = message.Subject;
+            //msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("racecontrolarg@gmail.com", "machupichu");
+            smtpClient.Credentials = credentials;
+            smtpClient.EnableSsl = true;
+            try
+            {
+                smtpClient.Send(msg);
+            }
+            catch (Exception)
+            {
+
+
+            }
+
+
             return Task.FromResult(0);
         }
     }
@@ -30,6 +70,8 @@ namespace RaceControl
             // Conecte el servicio SMS aquí para enviar un mensaje de texto.
             return Task.FromResult(0);
         }
+
+       
     }
 
     // Configure el administrador de usuarios de aplicación que se usa en esta aplicación. UserManager se define en ASP.NET Identity y se usa en la aplicación.
