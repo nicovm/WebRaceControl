@@ -65,9 +65,23 @@ namespace RaceControl.Models
             public static int TAB_PRECINTO = 2;
         }
 
+
+
+        public class RolesRaceControl
+        {
+            public static int ADMINISTRADOR = 1;
+            public static int CLIENTE = 2;
+            public static int OPERADOR = 3;
+
+            public static string STR_ADMINISTRADOR = "Administrador";
+            public static string STR_CLIENTE = "Cliente";
+            public static string STR_OPERADOR = "Operador";
+
+        }
+
       
 
-        
 
-    }
+
+        }
 }

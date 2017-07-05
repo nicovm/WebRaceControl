@@ -3,10 +3,12 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using RaceControl.Models;
 
@@ -154,12 +156,17 @@ namespace RaceControl.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+               
                 if (result.Succeeded)
                 {
                     //Creo un usuario
-                    Usuario UsuarioRaceControl = new Usuario { idAspNetUsers = user.Id, dni = 0 };
+                    Usuario UsuarioRaceControl = new Usuario { idAspNetUsers = user.Id,
+                        dni = model.DNI , nombre = model.Nombre , apellido = model.Apellido , idCategoriaUsuario = Constante.RolesRaceControl.OPERADOR };
+
                     db.Usuario.Add(UsuarioRaceControl);
                     db.SaveChanges();
+                    //Asigno el rol
+                   // asignarRol(user, Constante.RolesRaceControl.OPERADOR);
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
@@ -391,6 +398,10 @@ namespace RaceControl.Controllers
             return View(model);
         }
 
+
+       
+
+
         //
         // POST: /Account/LogOff
         [HttpPost]
@@ -399,6 +410,15 @@ namespace RaceControl.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult IndexOperador()
+        {
+
+            List<Usuario> listUsuario = db.Usuario.Where(u => u.idCategoriaUsuario == Constante.RolesRaceControl.OPERADOR).ToList();
+          
+
+            return View(listUsuario);
         }
 
         //
@@ -427,6 +447,21 @@ namespace RaceControl.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private void asignarRol( ApplicationUser usuario, int RolRaceControl)
+        {
+            AspNetRoles aspNetRolRaceControl =  db.AspNetRoles.Find(RolRaceControl.ToString());
+
+            //Asigno el rol 
+            var roleStore = new RoleStore<IdentityRole>(db);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            UserManager.AddToRole(usuario.Id, aspNetRolRaceControl.Name);
+
         }
 
         #region Aplicaciones auxiliares

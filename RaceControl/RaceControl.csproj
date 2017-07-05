@@ -209,6 +209,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
@@ -222,6 +225,9 @@
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Categoria.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoriaUsuario.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Categoria_Piloto.cs">
@@ -300,6 +306,8 @@
     <Content Include="Content\ImgTorneo\logo_torneo-prueba.png" />
     <Content Include="Content\ImgTorneo\logo_torneo-Torneo 2.png" />
     <Content Include="Content\Img\Eliminar32.png" />
+    <Content Include="Content\Img\favicon.ico" />
+    <Content Include="Content\Img\FondoRaceControl.jpg" />
     <Content Include="Content\Img\imb_categorias48.png" />
     <Content Include="Content\Img\imb_categorias96.png" />
     <Content Include="Content\Img\img_carreras48.png" />
@@ -601,6 +609,7 @@
     <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register1.cshtml" />
     <Content Include="Views\Carrera\CreateEditPrecinto.cshtml" />
+    <Content Include="Views\Account\IndexOperador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

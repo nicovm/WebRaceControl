@@ -35,6 +35,10 @@
         <EntityTypeShape EntityType="RaceControlModel.Precinto" Width="1.5" PointX="11.625" PointY="8.75" />
         <AssociationConnector Association="RaceControlModel.FK_Precinto_Revision" />
         <AssociationConnector Association="RaceControlModel.FK_Precinto_Usuario" />
+        <EntityTypeShape EntityType="RaceControlModel.AspNetRoles" Width="1.5" PointX="4" PointY="14.5" />
+        <EntityTypeShape EntityType="RaceControlModel.CategoriaUsuario" Width="1.5" PointX="0.5" PointY="9.125" />
+        <AssociationConnector Association="RaceControlModel.FK_Usuario_CategoriaUsuario" />
+        <AssociationConnector Association="RaceControlModel.AspNetUserRoles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

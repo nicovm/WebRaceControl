@@ -25,6 +25,9 @@ namespace RaceControl.Models
         public long idUsuario { get; set; }
         public string idAspNetUsers { get; set; }
         public Nullable<int> dni { get; set; }
+        public string nombre { get; set; }
+        public string apellido { get; set; }
+        public Nullable<int> idCategoriaUsuario { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -33,5 +36,6 @@ namespace RaceControl.Models
         public virtual ICollection<Observacion> Observacion1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Precinto> Precinto { get; set; }
+        public virtual CategoriaUsuario CategoriaUsuario { get; set; }
     }
 }

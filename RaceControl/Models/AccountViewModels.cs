@@ -65,6 +65,9 @@ namespace RaceControl.Models
     public class RegisterViewModel
     {
         [Required]
+        public int idCategoriaUsuario { get; set; }
+
+        [Required]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
@@ -74,7 +77,6 @@ namespace RaceControl.Models
 
         [Required]
         [Display(Name = "DNI")]
-        [MinLength(8)]
         public int DNI { get; set; }
 
         [Required]

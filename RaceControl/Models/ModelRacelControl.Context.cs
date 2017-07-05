@@ -39,5 +39,7 @@ namespace RaceControl.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Precinto> Precinto { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<CategoriaUsuario> CategoriaUsuario { get; set; }
     }
 }

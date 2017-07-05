@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RaceControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +79,14 @@
           <Property Name="dniPiloto" Type="int" Nullable="false" />
           <Property Name="idCategoria" Type="bigint" Nullable="false" />
           <Property Name="auto" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CategoriaUsuario">
+          <Key>
+            <PropertyRef Name="idCategoriaUsuario" />
+          </Key>
+          <Property Name="idCategoriaUsuario" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Elem_Revision">
           <Key>
@@ -142,6 +165,9 @@
           <Property Name="idUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idAspNetUsers" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="dni" Type="int" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="idCategoriaUsuario" Type="int" />
         </EntityType>
         <Association Name="FK_Carrera_Autodromo">
           <End Role="Autodromo" Type="Self.Autodromo" Multiplicity="1" />
@@ -200,6 +226,34 @@
             </Principal>
             <Dependent Role="Categoria">
               <PropertyRef Name="idTorneo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,13 +393,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_CategoriaUsuario">
+          <End Role="CategoriaUsuario" Type="Self.CategoriaUsuario" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaUsuario">
+              <PropertyRef Name="idCategoriaUsuario" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idCategoriaUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RaceControlModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Autodromo" EntityType="Self.Autodromo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera_Piloto" EntityType="Self.Carrera_Piloto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoriaUsuario" EntityType="Self.CategoriaUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Observacion" EntityType="Self.Observacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
@@ -373,6 +442,14 @@
           <AssociationSet Name="FK_Categoria_Torneo" Association="Self.FK_Categoria_Torneo">
             <End Role="Torneo" EntitySet="Torneo" />
             <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_Observacion_TecnicaRevision" Association="Self.FK_Observacion_TecnicaRevision">
             <End Role="Revision" EntitySet="Revision" />
@@ -416,6 +493,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Usuario_AspNetUsers" Association="Self.FK_Usuario_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_CategoriaUsuario" Association="Self.FK_Usuario_CategoriaUsuario">
+            <End Role="CategoriaUsuario" EntitySet="CategoriaUsuario" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
@@ -512,6 +593,16 @@
           <AssociationSet Name="FK_Precinto_Usuario" Association="RaceControlModel.FK_Precinto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Precinto" EntitySet="Precinto" />
+          </AssociationSet>
+          <EntitySet Name="AspNetRoles" EntityType="RaceControlModel.AspNetRoles" />
+          <EntitySet Name="CategoriaUsuario" EntityType="RaceControlModel.CategoriaUsuario" />
+          <AssociationSet Name="FK_Usuario_CategoriaUsuario" Association="RaceControlModel.FK_Usuario_CategoriaUsuario">
+            <End Role="CategoriaUsuario" EntitySet="CategoriaUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="RaceControlModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Categoria">
@@ -784,6 +875,7 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Usuario_AspNetUsers" FromRole="AspNetUsers" ToRole="Usuario" />
+          <NavigationProperty Name="AspNetRoles" Relationship="RaceControlModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -796,6 +888,10 @@
           <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_Usuario" FromRole="Usuario" ToRole="Observacion" />
           <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_UsuarioOk" FromRole="Usuario" ToRole="Observacion" />
           <NavigationProperty Name="Precinto" Relationship="RaceControlModel.FK_Precinto_Usuario" FromRole="Usuario" ToRole="Precinto" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idCategoriaUsuario" Type="Int32" />
+          <NavigationProperty Name="CategoriaUsuario" Relationship="RaceControlModel.FK_Usuario_CategoriaUsuario" FromRole="Usuario" ToRole="CategoriaUsuario" />
         </EntityType>
         <Association Name="FK_Usuario_AspNetUsers">
           <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -868,6 +964,39 @@
               <PropertyRef Name="idUsuario" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="RaceControlModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="CategoriaUsuario">
+          <Key>
+            <PropertyRef Name="idCategoriaUsuario" />
+          </Key>
+          <Property Name="idCategoriaUsuario" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Usuario_CategoriaUsuario" FromRole="CategoriaUsuario" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Usuario_CategoriaUsuario">
+          <End Type="RaceControlModel.CategoriaUsuario" Role="CategoriaUsuario" Multiplicity="0..1" />
+          <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaUsuario">
+              <PropertyRef Name="idCategoriaUsuario" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idCategoriaUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="RaceControlModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1008,6 +1137,9 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="RaceControlModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="idCategoriaUsuario" ColumnName="idCategoriaUsuario" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="idAspNetUsers" ColumnName="idAspNetUsers" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
@@ -1025,6 +1157,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="RaceControlModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoriaUsuario">
+            <EntityTypeMapping TypeName="RaceControlModel.CategoriaUsuario">
+              <MappingFragment StoreEntitySet="CategoriaUsuario">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idCategoriaUsuario" ColumnName="idCategoriaUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="RaceControlModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

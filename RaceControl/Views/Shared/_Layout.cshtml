@@ -27,10 +27,10 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    
+    <link href="~/Content/Img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
     <link href="~/Content/css/my-style.css" rel="stylesheet" />
-
+   
 </head>
 <body>
     @*<div class="navbar navbar-inverse navbar-fixed-top">
@@ -162,7 +162,12 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Cerrar sesión</a>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-fw fa-power-off"></i> Cerrar sesión</a>
+                            }
+                           
                         </li>
                     </ul>
                 </li>
@@ -184,8 +189,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <img src="~/Content/Img/img_pilotos48.png" width="32px" height="32px" />
+                        <a href="@Url.Action("IndexOperador", "Account")">
+                            <img src="~/Content/Img/img_usuario48.png" width="32px" height="32px" />
                             Operadores
                         </a>
                     </li>
