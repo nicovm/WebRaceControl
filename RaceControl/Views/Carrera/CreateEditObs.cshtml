@@ -29,18 +29,24 @@
         }
         else
         {
-            @Html.HiddenFor(model => model.idObservacion);
+
+            <p>
+                <strong>Fecha:</strong> @Model.fecha
+                @if (Model.Usuario1 != null)
+                { <strong>Fecha de confirmación:</strong> @Model.fechaOk }
+            </p>
+        @Html.HiddenFor(model => model.idObservacion);
             @Html.HiddenFor(model => model.idRevision);
             <textarea class="form-control" style="min-width: 100%" name="descripcion" id="descripcion">
                 @Model.descripcion
             </textarea>
 
-                <br />
+            <br />
                 <row>
                     <p>
-                        <img src="~/Content/Img/img_usuario48.png" /> @Model.Usuario.nombre @Model.Usuario.apellido
+                        <img src="~/Content/Img/img_usuario48.png" data-toggle="tooltip" data-placement="bottom" title="Usuario que creo la observación" /> @Model.Usuario.nombre @Model.Usuario.apellido
                         @if (Model.Usuario1 != null)
-                        { <img src="~/Content/Img/img_checkok48.png" /> @Model.Usuario1.nombre @Model.Usuario1.apellido}
+                        { <img src="~/Content/Img/img_checkok48.png" data-toggle="tooltip" data-placement="bottom" title="Usuario que confirmo la observación" /> @Model.Usuario1.nombre @Model.Usuario1.apellido}
                     </p>
 
                 </row>
@@ -61,6 +67,13 @@
 </div>
 
 <script>
+
+    $(document).ready(function () {
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+    });
+
 
     bootstrap_alert = function () { }
 
