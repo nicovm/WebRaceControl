@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RaceControl.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,11 @@ namespace RaceControl.Controllers
 {
     public class HomeController : Controller
     {
+        private EntidadesRaceControl db = new EntidadesRaceControl();
+
         public ActionResult Index()
         {
+            ViewBag.torneos = db.Torneo.ToList();
             return View();
         }
 

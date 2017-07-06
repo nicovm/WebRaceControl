@@ -65,41 +65,7 @@
 
 
 
-    @*<table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fecha)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.idCliente)
-                </th>
-                <th></th>
-            </tr>
 
-        @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idCliente)
-                </td>
-                <td>
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"
-                            data-id="@item.idTorneo" id="edit-cliente" onclick="clickBtnCliente(this,false)">
-                        Editar
-                    </button>
-                </td>
-            </tr>
-        }
-
-        </table>*@
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

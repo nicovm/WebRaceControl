@@ -3,29 +3,50 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1><font color="black">Race</font><font color="red">Control</font></h1>
+    <p class="lead">Sistema de gestión de torneo</p>
+   
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-lg-12">
+
+
+        <h1 class="page-header">
+            <img src="~/Content/Img/img_torneos48.png" />
+            Torneos
+        </h1>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+</div>
+
+
+<div class="row">
+
+    @foreach (var item in ViewBag.torneos)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                          
+                            <img src=@String.Format("/Content/ImgTorneo/logo_torneo-{0}.png",item.nombre) class="img-fluid" width="75px" height="75px">
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@item.nombre</div>
+                            @*<div>New Comments!</div>*@
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer" onclick="location.href='@Url.Action("GetOne", "Torneo", new { id = @item.idTorneo })'">
+                        <span class="pull-left">Ingresar</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+
 </div>

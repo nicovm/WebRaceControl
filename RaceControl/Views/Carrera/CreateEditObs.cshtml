@@ -20,6 +20,8 @@
     {
         <div id="alertModal"></div>
 
+
+
         if (Model == null)
         {
             @Html.Hidden("idRevision", (int)@ViewBag.idRevision)
@@ -29,9 +31,22 @@
         {
             @Html.HiddenFor(model => model.idObservacion);
             @Html.HiddenFor(model => model.idRevision);
-            <textarea class="form-control" style="min-width: 100%" name="descripcion" id="descripcion"
-                    > @Model.descripcion</textarea>
+            <textarea class="form-control" style="min-width: 100%" name="descripcion" id="descripcion">
+                @Model.descripcion
+            </textarea>
+
+                <br />
+                <row>
+                    <p>
+                        <img src="~/Content/Img/img_usuario48.png" /> @Model.Usuario.nombre @Model.Usuario.apellido
+                        @if (Model.Usuario1 != null)
+                        { <img src="~/Content/Img/img_checkok48.png" /> @Model.Usuario1.nombre @Model.Usuario1.apellido}
+                    </p>
+
+                </row>
         }
+
+
 
 
 
@@ -42,7 +57,7 @@
         </div>
     }
 
-    
+
 </div>
 
 <script>
@@ -64,7 +79,7 @@
         }
 
 
-       
+
 
     });
 
