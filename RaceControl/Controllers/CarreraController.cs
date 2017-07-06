@@ -250,7 +250,7 @@ namespace RaceControl.Controllers
             observacion.idRevisionOk = idRevisionOK;
             string currentUserId = User.Identity.GetUserId();
             Usuario usuarioOK = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
-            observacion.idUsuario = usuarioOK.idUsuario;
+            observacion.idUsuarioOk = usuarioOK.idUsuario;
             observacion.ok = true;
 
             db.SaveChanges();
