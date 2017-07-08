@@ -154,7 +154,7 @@ namespace RaceControl.Controllers
                 //Busco las categoria del torneo
                 ViewBag.Categorias = db.Categoria.Where(c => c.idTorneo == carrera.idTorneo).ToList();
                 //retorno la vista con las categorias del torneo a seleccionar
-                return View(tecnicaTmp);
+                return View("SelectTecnica",tecnicaTmp);
             }
 
 
@@ -169,7 +169,7 @@ namespace RaceControl.Controllers
                 //Buscar todos los pilotos que pertenecen a la categoria seleccionada
                 ViewBag.CatPiloto = db.Categoria_Piloto.Where(cp => cp.idCategoria == tecnicaTmp.categoria.idCategoria).ToList();
                 //retorno la vista con las categorias del torneo a seleccionar
-                return View(tecnicaTmp);
+                return View("SelectTecnica", tecnicaTmp);
             }
 
 
@@ -308,7 +308,7 @@ namespace RaceControl.Controllers
             return RedirectToAction("Revision", new { idRevision = precinto.idRevision , tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
 
-
+        //GET
         public ActionResult EliminarPrecinto(int idPrecinto)
         {
             Precinto precinto = db.Precinto.Find(idPrecinto);
@@ -317,6 +317,55 @@ namespace RaceControl.Controllers
          
             return RedirectToAction("Revision", new { idRevision = idPrecinto, tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
+
+        public ActionResult CreateNeumatico(int idTecnica)
+        {
+            ViewBag.idTecnica = idTecnica;
+
+            return View("CreateEditNeumatico");
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult CreateNeumatico(Neumatico neumatico)
+        {
+
+            string currentUserId = User.Identity.GetUserId();
+            neumatico.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+            neumatico.fecha = DateTime.Now;
+            db.Neumatico.Add(neumatico);
+            db.SaveChanges();
+            return View("CreateEditNeumatico");
+        }
+
+        public Boolean ExisteNeumatico(int numNeumatico)
+        {
+            Neumatico neumatico = db.Neumatico.Find(numNeumatico);
+
+            //Existe el neumatico si se encuentra un neumatico con el mismo numero
+            return neumatico != null;
+        }
+
+        public ActionResult EditNeumatico(int numNeumatico)
+        {
+            Neumatico neumatico = db.Neumatico.Find(numNeumatico);
+            ViewBag.idTecnica = neumatico.idTecnica;
+
+            return View("CreateEditNeumatico", neumatico);
+        }
+
+        [HttpPost]
+        public ActionResult EditNeumatico(Neumatico editNeumatico)
+        {
+            Neumatico neumatico = db.Neumatico.Find(editNeumatico);
+            neumatico.numNeumatico = editNeumatico.numNeumatico;
+            neumatico.nuevo = editNeumatico.nuevo;
+            neumatico.fecha = DateTime.Now;
+
+            db.SaveChanges();
+            return View("CreateEditNeumatico", neumatico);
+        }
+
 
 
         public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)
@@ -347,7 +396,7 @@ namespace RaceControl.Controllers
             return View("ListPilotoTecnica");
         }
 
-        private Tecnica nuevaTecnica(long idCarrera ,long idCategoria , long dniPiloto)
+        private Tecnica nuevaTecnica(long idCarrera ,long idCategoria , int dniPiloto)
         {
             Tecnica newTecnica = new Models.Tecnica();
             newTecnica.idCarrera = idCarrera;

@@ -254,6 +254,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelRacelControl.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Neumatico.cs">
+      <DependentUpon>ModelRacelControl.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Observacion.cs">
       <DependentUpon>ModelRacelControl.tt</DependentUpon>
     </Compile>
@@ -613,6 +616,8 @@
     <Content Include="Views\Account\Register1.cshtml" />
     <Content Include="Views\Carrera\CreateEditPrecinto.cshtml" />
     <Content Include="Views\Account\IndexOperador.cshtml" />
+    <Content Include="Views\Carrera\CreateEditNeumatico.cshtml" />
+    <Content Include="Views\Carrera\SelectTecnica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

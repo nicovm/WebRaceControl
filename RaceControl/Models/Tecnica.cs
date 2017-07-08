@@ -18,10 +18,11 @@ namespace RaceControl.Models
         public Tecnica()
         {
             this.Revision = new HashSet<Revision>();
+            this.Neumatico = new HashSet<Neumatico>();
         }
     
         public long idTecnica { get; set; }
-        public long dniPiloto { get; set; }
+        public int dniPiloto { get; set; }
         public long idCarrera { get; set; }
         public string observacion { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
@@ -29,7 +30,10 @@ namespace RaceControl.Models
     
         public virtual Carrera Carrera { get; set; }
         public virtual Categoria Categoria { get; set; }
+        public virtual Piloto Piloto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Revision> Revision { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Neumatico> Neumatico { get; set; }
     }
 }

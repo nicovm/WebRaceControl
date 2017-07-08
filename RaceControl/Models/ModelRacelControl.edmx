@@ -97,6 +97,16 @@
           <Property Name="descripcion" Type="nvarchar" MaxLength="50" />
           <Property Name="frecuencia" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Neumatico">
+          <Key>
+            <PropertyRef Name="numNeumatico" />
+          </Key>
+          <Property Name="numNeumatico" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="nuevo" Type="bit" Nullable="false" />
+          <Property Name="idUsuario" Type="bigint" Nullable="false" />
+          <Property Name="idTecnica" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Observacion">
           <Key>
             <PropertyRef Name="idObservacion" />
@@ -143,7 +153,7 @@
             <PropertyRef Name="idTecnica" />
           </Key>
           <Property Name="idTecnica" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="dniPiloto" Type="bigint" Nullable="false" />
+          <Property Name="dniPiloto" Type="int" Nullable="false" />
           <Property Name="idCarrera" Type="bigint" Nullable="false" />
           <Property Name="observacion" Type="nvarchar" MaxLength="50" />
           <Property Name="fecha" Type="datetime" />
@@ -257,6 +267,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Neumatico_Tecnica">
+          <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="1" />
+          <End Role="Neumatico" Type="Self.Neumatico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tecnica">
+              <PropertyRef Name="idTecnica" />
+            </Principal>
+            <Dependent Role="Neumatico">
+              <PropertyRef Name="idTecnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Neumatico_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Neumatico" Type="Self.Neumatico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Neumatico">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Observacion_TecnicaRevision">
           <End Role="Revision" Type="Self.Revision" Multiplicity="0..1" />
           <End Role="Observacion" Type="Self.Observacion" Multiplicity="*" />
@@ -353,6 +387,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tecnica_Piloto">
+          <End Role="Piloto" Type="Self.Piloto" Multiplicity="1" />
+          <End Role="Tecnica" Type="Self.Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Piloto">
+              <PropertyRef Name="dni" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="dniPiloto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TecnicaRevision_Elem_Revision">
           <End Role="Elem_Revision" Type="Self.Elem_Revision" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -416,6 +462,7 @@
           <EntitySet Name="Categoria_Piloto" EntityType="Self.Categoria_Piloto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoriaUsuario" EntityType="Self.CategoriaUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Elem_Revision" EntityType="Self.Elem_Revision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Neumatico" EntityType="Self.Neumatico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Observacion" EntityType="Self.Observacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Piloto" EntityType="Self.Piloto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Precinto" EntityType="Self.Precinto" Schema="dbo" store:Type="Tables" />
@@ -451,6 +498,14 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Neumatico_Tecnica" Association="Self.FK_Neumatico_Tecnica">
+            <End Role="Tecnica" EntitySet="Tecnica" />
+            <End Role="Neumatico" EntitySet="Neumatico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Neumatico_Usuario" Association="Self.FK_Neumatico_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Neumatico" EntitySet="Neumatico" />
+          </AssociationSet>
           <AssociationSet Name="FK_Observacion_TecnicaRevision" Association="Self.FK_Observacion_TecnicaRevision">
             <End Role="Revision" EntitySet="Revision" />
             <End Role="Observacion" EntitySet="Observacion" />
@@ -481,6 +536,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tecnica_Categoria" Association="Self.FK_Tecnica_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tecnica_Piloto" Association="Self.FK_Tecnica_Piloto">
+            <End Role="Piloto" EntitySet="Piloto" />
             <End Role="Tecnica" EntitySet="Tecnica" />
           </AssociationSet>
           <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="Self.FK_TecnicaRevision_Elem_Revision">
@@ -544,22 +603,9 @@
             <End Role="Carrera" EntitySet="Carrera" />
           </AssociationSet>
           <EntitySet Name="Elem_Revision" EntityType="RaceControlModel.Elem_Revision" />
-          <EntitySet Name="Tecnica" EntityType="RaceControlModel.Tecnica" />
-          <AssociationSet Name="FK_Tecnica_Carrera" Association="RaceControlModel.FK_Tecnica_Carrera">
-            <End Role="Carrera" EntitySet="Carrera" />
-            <End Role="Tecnica" EntitySet="Tecnica" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tecnica_Categoria" Association="RaceControlModel.FK_Tecnica_Categoria">
-            <End Role="Categoria" EntitySet="Categoria" />
-            <End Role="Tecnica" EntitySet="Tecnica" />
-          </AssociationSet>
           <EntitySet Name="Revision" EntityType="RaceControlModel.Revision" />
           <AssociationSet Name="FK_TecnicaRevision_Elem_Revision" Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision">
             <End Role="Elem_Revision" EntitySet="Elem_Revision" />
-            <End Role="Revision" EntitySet="Revision" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="RaceControlModel.FK_TecnicaRevision_Tecnica">
-            <End Role="Tecnica" EntitySet="Tecnica" />
             <End Role="Revision" EntitySet="Revision" />
           </AssociationSet>
           <EntitySet Name="Observacion" EntityType="RaceControlModel.Observacion" />
@@ -603,6 +649,32 @@
           <AssociationSet Name="AspNetUserRoles" Association="RaceControlModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Tecnica" EntityType="RaceControlModel.Tecnica" />
+          <AssociationSet Name="FK_Tecnica_Carrera" Association="RaceControlModel.FK_Tecnica_Carrera">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tecnica_Categoria" Association="RaceControlModel.FK_Tecnica_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tecnica_Piloto" Association="RaceControlModel.FK_Tecnica_Piloto">
+            <End Role="Piloto" EntitySet="Piloto" />
+            <End Role="Tecnica" EntitySet="Tecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TecnicaRevision_Tecnica" Association="RaceControlModel.FK_TecnicaRevision_Tecnica">
+            <End Role="Tecnica" EntitySet="Tecnica" />
+            <End Role="Revision" EntitySet="Revision" />
+          </AssociationSet>
+          <EntitySet Name="Neumatico" EntityType="RaceControlModel.Neumatico" />
+          <AssociationSet Name="FK_Neumatico_Tecnica" Association="RaceControlModel.FK_Neumatico_Tecnica">
+            <End Role="Tecnica" EntitySet="Tecnica" />
+            <End Role="Neumatico" EntitySet="Neumatico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Neumatico_Usuario" Association="RaceControlModel.FK_Neumatico_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Neumatico" EntitySet="Neumatico" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Categoria">
@@ -671,6 +743,7 @@
           <Property Name="dni" Type="Int32" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Categoria_Piloto" Relationship="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" FromRole="Piloto" ToRole="Categoria_Piloto" />
+          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_Tecnica_Piloto" FromRole="Piloto" ToRole="Tecnica" />
         </EntityType>
         <EntityType Name="Categoria_Piloto">
           <Key>
@@ -737,44 +810,6 @@
           <Property Name="frecuencia" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="Elem_Revision" ToRole="Revision" />
         </EntityType>
-        <EntityType Name="Tecnica">
-          <Key>
-            <PropertyRef Name="idTecnica" />
-          </Key>
-          <Property Name="idTecnica" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="dniPiloto" Type="Int64" Nullable="false" />
-          <Property Name="idCarrera" Type="Int64" Nullable="false" />
-          <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="fecha" Type="DateTime" Precision="3" />
-          <Property Name="idCategoria" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Carrera" Relationship="RaceControlModel.FK_Tecnica_Carrera" FromRole="Tecnica" ToRole="Carrera" />
-          <NavigationProperty Name="Categoria" Relationship="RaceControlModel.FK_Tecnica_Categoria" FromRole="Tecnica" ToRole="Categoria" />
-          <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Tecnica" ToRole="Revision" />
-        </EntityType>
-        <Association Name="FK_Tecnica_Carrera">
-          <End Type="RaceControlModel.Carrera" Role="Carrera" Multiplicity="1" />
-          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Carrera">
-              <PropertyRef Name="idCarrera" />
-            </Principal>
-            <Dependent Role="Tecnica">
-              <PropertyRef Name="idCarrera" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tecnica_Categoria">
-          <End Type="RaceControlModel.Categoria" Role="Categoria" Multiplicity="1" />
-          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categoria">
-              <PropertyRef Name="idCategoria" />
-            </Principal>
-            <Dependent Role="Tecnica">
-              <PropertyRef Name="idCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Revision">
           <Key>
             <PropertyRef Name="idRevision" />
@@ -783,10 +818,10 @@
           <Property Name="idTecnica" Type="Int64" Nullable="false" />
           <Property Name="idElemRevision" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Elem_Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Elem_Revision" FromRole="Revision" ToRole="Elem_Revision" />
-          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Revision" ToRole="Tecnica" />
           <NavigationProperty Name="Observacion" Relationship="RaceControlModel.FK_Observacion_TecnicaRevision" FromRole="Revision" ToRole="Observacion" />
           <NavigationProperty Name="Observacion1" Relationship="RaceControlModel.FK_Observacion_TecnicaRevisionOK" FromRole="Revision" ToRole="Observacion" />
           <NavigationProperty Name="Precinto" Relationship="RaceControlModel.FK_Precinto_Revision" FromRole="Revision" ToRole="Precinto" />
+          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Revision" ToRole="Tecnica" />
         </EntityType>
         <Association Name="FK_TecnicaRevision_Elem_Revision">
           <End Type="RaceControlModel.Elem_Revision" Role="Elem_Revision" Multiplicity="1">
@@ -799,20 +834,6 @@
             </Principal>
             <Dependent Role="Revision">
               <PropertyRef Name="idElemRevision" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TecnicaRevision_Tecnica">
-          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tecnica">
-              <PropertyRef Name="idTecnica" />
-            </Principal>
-            <Dependent Role="Revision">
-              <PropertyRef Name="idTecnica" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -892,6 +913,7 @@
           <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="idCategoriaUsuario" Type="Int32" />
           <NavigationProperty Name="CategoriaUsuario" Relationship="RaceControlModel.FK_Usuario_CategoriaUsuario" FromRole="Usuario" ToRole="CategoriaUsuario" />
+          <NavigationProperty Name="Neumatico" Relationship="RaceControlModel.FK_Neumatico_Usuario" FromRole="Usuario" ToRole="Neumatico" />
         </EntityType>
         <Association Name="FK_Usuario_AspNetUsers">
           <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -998,6 +1020,108 @@
           <End Type="RaceControlModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="RaceControlModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
+        <EntityType Name="Tecnica">
+          <Key>
+            <PropertyRef Name="idTecnica" />
+          </Key>
+          <Property Name="idTecnica" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dniPiloto" Type="Int32" Nullable="false" />
+          <Property Name="idCarrera" Type="Int64" Nullable="false" />
+          <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="idCategoria" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Carrera" Relationship="RaceControlModel.FK_Tecnica_Carrera" FromRole="Tecnica" ToRole="Carrera" />
+          <NavigationProperty Name="Categoria" Relationship="RaceControlModel.FK_Tecnica_Categoria" FromRole="Tecnica" ToRole="Categoria" />
+          <NavigationProperty Name="Piloto" Relationship="RaceControlModel.FK_Tecnica_Piloto" FromRole="Tecnica" ToRole="Piloto" />
+          <NavigationProperty Name="Revision" Relationship="RaceControlModel.FK_TecnicaRevision_Tecnica" FromRole="Tecnica" ToRole="Revision" />
+          <NavigationProperty Name="Neumatico" Relationship="RaceControlModel.FK_Neumatico_Tecnica" FromRole="Tecnica" ToRole="Neumatico" />
+        </EntityType>
+        <Association Name="FK_Tecnica_Carrera">
+          <End Type="RaceControlModel.Carrera" Role="Carrera" Multiplicity="1" />
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="idCarrera" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="idCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tecnica_Categoria">
+          <End Type="RaceControlModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tecnica_Piloto">
+          <End Type="RaceControlModel.Piloto" Role="Piloto" Multiplicity="1" />
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Piloto">
+              <PropertyRef Name="dni" />
+            </Principal>
+            <Dependent Role="Tecnica">
+              <PropertyRef Name="dniPiloto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TecnicaRevision_Tecnica">
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="RaceControlModel.Revision" Role="Revision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tecnica">
+              <PropertyRef Name="idTecnica" />
+            </Principal>
+            <Dependent Role="Revision">
+              <PropertyRef Name="idTecnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Neumatico">
+          <Key>
+            <PropertyRef Name="numNeumatico" />
+          </Key>
+          <Property Name="numNeumatico" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nuevo" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuario" Type="Int64" Nullable="false" />
+          <Property Name="idTecnica" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Tecnica" Relationship="RaceControlModel.FK_Neumatico_Tecnica" FromRole="Neumatico" ToRole="Tecnica" />
+          <NavigationProperty Name="Usuario" Relationship="RaceControlModel.FK_Neumatico_Usuario" FromRole="Neumatico" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Neumatico_Tecnica">
+          <End Type="RaceControlModel.Tecnica" Role="Tecnica" Multiplicity="1" />
+          <End Type="RaceControlModel.Neumatico" Role="Neumatico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tecnica">
+              <PropertyRef Name="idTecnica" />
+            </Principal>
+            <Dependent Role="Neumatico">
+              <PropertyRef Name="idTecnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Neumatico_Usuario">
+          <End Type="RaceControlModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="RaceControlModel.Neumatico" Role="Neumatico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Neumatico">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1077,18 +1201,6 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="idElemRevision" ColumnName="idElemRevision" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tecnica">
-            <EntityTypeMapping TypeName="RaceControlModel.Tecnica">
-              <MappingFragment StoreEntitySet="Tecnica">
-                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="observacion" ColumnName="observacion" />
-                <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
-                <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
-                <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1182,6 +1294,29 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Tecnica">
+            <EntityTypeMapping TypeName="RaceControlModel.Tecnica">
+              <MappingFragment StoreEntitySet="Tecnica">
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="idCarrera" ColumnName="idCarrera" />
+                <ScalarProperty Name="dniPiloto" ColumnName="dniPiloto" />
+                <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Neumatico">
+            <EntityTypeMapping TypeName="RaceControlModel.Neumatico">
+              <MappingFragment StoreEntitySet="Neumatico">
+                <ScalarProperty Name="idTecnica" ColumnName="idTecnica" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="nuevo" ColumnName="nuevo" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="numNeumatico" ColumnName="numNeumatico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

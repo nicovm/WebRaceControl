@@ -11,19 +11,15 @@
         <EntityTypeShape EntityType="RaceControlModel.Carrera" Width="1.5" PointX="0.625" PointY="4.375" />
         <EntityTypeShape EntityType="RaceControlModel.Carrera_Piloto" Width="1.5" PointX="5.375" PointY="0.75" />
         <AssociationConnector Association="RaceControlModel.FK_Carrera_Torneo" />
-        <EntityTypeShape EntityType="RaceControlModel.Piloto" Width="1.5" PointX="7" PointY="6.25" />
+        <EntityTypeShape EntityType="RaceControlModel.Piloto" Width="1.5" PointX="6.125" PointY="6.625" />
         <EntityTypeShape EntityType="RaceControlModel.Categoria_Piloto" Width="3.125" PointX="3.25" PointY="3.75" />
         <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria" />
         <AssociationConnector Association="RaceControlModel.FK_Categoria_Piloto_Categoria_Piloto" />
         <EntityTypeShape EntityType="RaceControlModel.Autodromo" Width="1.5" PointX="3" PointY="6.875" />
         <AssociationConnector Association="RaceControlModel.FK_Carrera_Autodromo" />
         <EntityTypeShape EntityType="RaceControlModel.Elem_Revision" Width="1.5" PointX="12.5" PointY="4.875" />
-        <EntityTypeShape EntityType="RaceControlModel.Tecnica" Width="1.5" PointX="7.625" PointY="2.5" />
-        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Carrera" />
-        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Categoria" />
         <EntityTypeShape EntityType="RaceControlModel.Revision" Width="1.5" PointX="9.375" PointY="6.875" />
         <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Elem_Revision" />
-        <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Tecnica" />
         <EntityTypeShape EntityType="RaceControlModel.Observacion" Width="1.5" PointX="5.875" PointY="9.625" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevision" />
         <AssociationConnector Association="RaceControlModel.FK_Observacion_TecnicaRevisionOK" />
@@ -39,6 +35,14 @@
         <EntityTypeShape EntityType="RaceControlModel.CategoriaUsuario" Width="1.5" PointX="0.5" PointY="9.125" />
         <AssociationConnector Association="RaceControlModel.FK_Usuario_CategoriaUsuario" />
         <AssociationConnector Association="RaceControlModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="RaceControlModel.Tecnica" Width="1.5" PointX="8.375" PointY="2.25" />
+        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Carrera" />
+        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Categoria" />
+        <AssociationConnector Association="RaceControlModel.FK_Tecnica_Piloto" />
+        <AssociationConnector Association="RaceControlModel.FK_TecnicaRevision_Tecnica" />
+        <EntityTypeShape EntityType="RaceControlModel.Neumatico" Width="1.5" PointX="14.625" PointY="7.875" />
+        <AssociationConnector Association="RaceControlModel.FK_Neumatico_Tecnica" />
+        <AssociationConnector Association="RaceControlModel.FK_Neumatico_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

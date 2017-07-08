@@ -18,6 +18,7 @@ namespace RaceControl.Models
         public Piloto()
         {
             this.Categoria_Piloto = new HashSet<Categoria_Piloto>();
+            this.Tecnica = new HashSet<Tecnica>();
         }
     
         public string nombre { get; set; }
@@ -27,5 +28,7 @@ namespace RaceControl.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Categoria_Piloto> Categoria_Piloto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tecnica> Tecnica { get; set; }
     }
 }

@@ -33,7 +33,6 @@ namespace RaceControl.Models
         public virtual DbSet<Categoria_Piloto> Categoria_Piloto { get; set; }
         public virtual DbSet<Autodromo> Autodromo { get; set; }
         public virtual DbSet<Elem_Revision> Elem_Revision { get; set; }
-        public virtual DbSet<Tecnica> Tecnica { get; set; }
         public virtual DbSet<Revision> Revision { get; set; }
         public virtual DbSet<Observacion> Observacion { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
@@ -41,5 +40,7 @@ namespace RaceControl.Models
         public virtual DbSet<Precinto> Precinto { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<CategoriaUsuario> CategoriaUsuario { get; set; }
+        public virtual DbSet<Tecnica> Tecnica { get; set; }
+        public virtual DbSet<Neumatico> Neumatico { get; set; }
     }
 }

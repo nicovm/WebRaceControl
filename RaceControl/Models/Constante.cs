@@ -65,6 +65,12 @@ namespace RaceControl.Models
             public static int TAB_PRECINTO = 2;
         }
 
+        public class defaultTabTecnica
+        {
+            public static int TAB_REVISION = 1;
+            public static int TAB_NEUMAITCO = 2;
+        }
+
 
 
         public class RolesRaceControl

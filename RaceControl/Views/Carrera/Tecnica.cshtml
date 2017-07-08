@@ -1,7 +1,23 @@
-﻿
+﻿@using RaceControl.Models
 @model RaceControl.Models.TecnicaTmp
 @{
-   
+    string navRevision, navNeumatico, tabContentClassRevision, tabContentClassNeumatico;
+
+    if (ViewBag.tabDefault == null || ViewBag.tabDefault == Constante.defaultTabTecnica.TAB_REVISION)
+    {
+        navRevision = "nav active";
+        navNeumatico = "nav";
+        tabContentClassRevision = "tab-pane fade in active";
+        tabContentClassNeumatico = "tab-pane fade";
+    }
+    else // Nuematico
+    {
+        navRevision = "nav";
+        navNeumatico = "nav active";
+        tabContentClassRevision = "tab-pane fade";
+        tabContentClassNeumatico = "tab-pane fade in active";
+    }
+
 }
 
 <div class="row" id="seleccionado">
@@ -63,145 +79,260 @@
 
     @if (Model.piloto != null)
     {
-       
 
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading ">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <img src="~/Content/Img/img_pilotos48.png" />
 
-                            </div>
-                            <div class="col-xs-6 text-left">
-                                <h4>@Model.piloto.nombre</h4>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading ">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <img src="~/Content/Img/img_pilotos48.png" />
 
-                            </div>
+                        </div>
+                        <div class="col-xs-6 text-left">
+                            <h4>@Model.piloto.nombre</h4>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
     }
 </div>
 
-@if (Model.categoria == null)
-{
-    <div id="selectCategoria">
-        <h3>Seleccione una categoría </h3>
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th class="col-sm-11">Nombre</th>
-                        <th class="col-sm-1">-</th>
-                    </tr>
+<br />
+<div class="row">
 
-                </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.Categorias)
-                    {
+
+
+    @if (Model.categoria == null)
+    {
+        <div id="selectCategoria">
+            <h3>Seleccione una categoría </h3>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
                         <tr>
-                            <td> <h4>@item.nombre</h4> </td>
-
-                            <td align="center">
-                                <button id="btnSelectCategoria" type="button" class="btn btn-info"
-                                        data-toggle="modal" data-target="#myModal" data-id=@item.idCategoria
-                                        onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = Model.carrera.idCarrera , idCategoria = item.idCategoria })'">
-                                    Seleccionar
-                                </button>
-                            </td>
+                            <th class="col-sm-11">Nombre</th>
+                            <th class="col-sm-1">-</th>
                         </tr>
-                    }
 
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Categorias)
+                        {
+                            <tr>
+                                <td> <h4>@item.nombre</h4> </td>
+
+                                <td align="center">
+                                    <button id="btnSelectCategoria" type="button" class="btn btn-info"
+                                            data-toggle="modal" data-target="#myModal" data-id=@item.idCategoria
+                                            onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = Model.carrera.idCarrera, idCategoria = item.idCategoria })'">
+                                        Seleccionar
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-
-    </div>
-}
-else if (Model.piloto == null) //tiene seleccionada la categoria debe seleccionar el piloto
-{
-    <div id="selectPiloto">
-        <h3>Seleccione un piloto </h3>
-        <div class="form-group input-group">
-            <input class="form-control" type="text" id="buscarPiloto">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button"
-                        onclick="buscarPiloto(@Model.categoria.idCategoria)">
-                    <i class="fa fa-search"></i>
-                </button>
-            </span>
-        </div>
-
-        <div id="listPiloto">
-            @Html.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = Model.categoria.idCategoria, buscar = "" })
-        </div>
-
-    </div>
-}
-else // muestro los elementos de revision de la tecnica
-{
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th class="col-sm-11">Elemento</th>
-                    <th class="col-sm-1">-</th>
-                </tr>
-
-            </thead>
-            <tbody>
-                @foreach (var item in Model.tecnica.Revision)
-                {
-                    <tr>
-                        <td> <h4>@item.Elem_Revision.nombre</h4> </td>
-
-                        <td align="center">
-                            <button id="btnSelectCategoria" type="button" class="btn btn-info"
-                                    data-toggle="modal" data-target="#myModal" data-id=@item.idRevision
-                                    onclick="location.href='@Url.Action("Revision", "Carrera", new { idRevision = item.idRevision  , tabDefault = RaceControl.Models.Constante.defaultTabRevision.TAB_OBSERVACION })'">
-                                Revisión
-                            </button>
-                        </td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-    </div>
-
-}
-
-<script>
-
-
-    function buscarPiloto(idCategoria) {
-        var buscar = $('#buscarPiloto').val();
-
-        var url = "@Html.Raw(Url.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = "-2", buscar = "-1" }))"
-
-        url = url.replace("-1", buscar);
-        url = url.replace("-2", idCategoria);
-
-        $.get(url, function (data) {
-
-            $('#listPiloto').html('');
-            $('#listPiloto').html(data);
-
-
-        });
-
     }
+    else if (Model.piloto == null) //tiene seleccionada la categoria debe seleccionar el piloto
+    {
+        <div id="selectPiloto">
+            <h3>Seleccione un piloto </h3>
+            <div class="form-group input-group">
+                <input class="form-control" type="text" id="buscarPiloto">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"
+                            onclick="buscarPiloto(@Model.categoria.idCategoria)">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
 
-    @if (Model.categoria != null)
+            <div id="listPiloto">
+                @Html.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = Model.categoria.idCategoria, buscar = "" })
+            </div>
+
+        </div>
+    }
+    else // muestro los elementos de revision de la tecnica
     {
 
+
+        <ul class="nav nav-pills">
+            <li class="@navRevision">
+                <a href="#revision" data-toggle="tab">
+                    <img src="~/Content/Img/img_torneos48.png" width="32px" height="32px" />
+                    <strong> Revisión </strong>
+                </a>
+            </li>
+            <li class="@navNeumatico">
+                <a href="#neumatico" data-toggle="tab">
+                    <img src="~/Content/Img/img_torneos48.png" width="32px" height="32px" />
+                    <strong> Neumatico </strong>
+                </a>
+            </li>
+        </ul>
+        <br />
+
+        <div class="tab-content">
+
+
+            <div class="@tabContentClassRevision" id="revision">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-11">Elemento</th>
+                                <th class="col-sm-1">-</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.tecnica.Revision)
+                {
+                                <tr>
+                                    <td> <h4>@item.Elem_Revision.nombre</h4> </td>
+
+                                    <td align="center">
+                                        <button id="btnSelectCategoria" type="button" class="btn btn-info"
+                                                data-toggle="modal" data-target="#myModal" data-id=@item.idRevision
+                                                onclick="location.href='@Url.Action("Revision", "Carrera", new { idRevision = item.idRevision  , tabDefault = RaceControl.Models.Constante.defaultTabRevision.TAB_OBSERVACION })'">
+                                            Revisión
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="@tabContentClassNeumatico" id="neumatico">
+
+                <div class="form-group">
+
+                    <button id="btnNuevaObs" type="button" class="btn btn-info"
+                            data-toggle="modal" data-target="#myModal"
+                            onclick="clickBtnNeumatico(this, true)">
+                        Agregar neumático
+                    </button>
+
+                </div>
+
+
+                <div class="table-responsive">
+
+
+
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-11">Neumatico</th>
+                                <th class="col-sm-1">-</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.tecnica.Neumatico)
+                {
+                                <tr>
+                                    <td> <h4>@item.numNeumatico</h4> </td>
+
+                                    <td align="center">
+                                        <button id="btnSelectNeumatico" type="button" class="btn btn-info"
+                                                data-toggle="modal" data-target="#myModal" data-id=@item.numNeumatico
+                                                onclick="clickBtnNeumatico(this, false)">
+                                            Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
     }
 
 
+    <script>
 
-</script>
+
+        function buscarPiloto(idCategoria) {
+            var buscar = $('#buscarPiloto').val();
+
+            var url = "@Html.Raw(Url.Action("BuscarPiloto", new { idCarrera = Model.carrera.idCarrera, idCategoria = "-2", buscar = "-1" }))"
+
+            url = url.replace("-1", buscar);
+            url = url.replace("-2", idCategoria);
+
+            $.get(url, function (data) {
+
+                $('#listPiloto').html('');
+                $('#listPiloto').html(data);
+
+
+            });
+
+        }
+
+
+     
+
+        function clickBtnNeumatico(element, nuevo) {
+
+            var tag = "clickBtnNeumatico";
+            var url;
+
+            console.log(tag);
+
+                if (nuevo) url = "@Url.Action("CreateNeumatico", "Carrera",new { idRevision = Model.tecnica.idTecnica}) ";
+            else {
+
+                    var id = element.getAttribute('data-id');
+
+                    console.log(id);
+
+                    url = "@Url.Action("EditNeumatico", "Carrera",new { numNeumatico = "-1" }) ";
+                    url = url.replace("-1", id);
+
+
+
+                }
+
+            $('#resultado').html("Cargando...");
+            $.get(url, function (data) {
+
+                console.log(tag.concat("Data obtenido"));
+
+                $('#resultado').html(data);
+
+            });
+
+
+
+        }
+
+
+
+
+
+    </script>
