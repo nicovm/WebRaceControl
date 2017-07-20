@@ -136,7 +136,7 @@ namespace RaceControl.Controllers
         }
 
 
-        public ActionResult Tecnica(int idCarrera, int? idCategoria, int? dniPiloto)
+        public ActionResult Tecnica(int idCarrera, int? idCategoria, int? dniPiloto, int? tabDefault)
         {
             TecnicaTmp tecnicaTmp = new TecnicaTmp();
 
@@ -154,7 +154,7 @@ namespace RaceControl.Controllers
                 //Busco las categoria del torneo
                 ViewBag.Categorias = db.Categoria.Where(c => c.idTorneo == carrera.idTorneo).ToList();
                 //retorno la vista con las categorias del torneo a seleccionar
-                return View("SelectTecnica",tecnicaTmp);
+                return View("SelectTecnica", tecnicaTmp);
             }
 
 
@@ -180,22 +180,24 @@ namespace RaceControl.Controllers
                 && t.idCategoria == tecnicaTmp.categoria.idCategoria && t.dniPiloto == tecnicaTmp.piloto.dni).FirstOrDefault();
 
                 if (tecnica != null) tecnicaTmp.tecnica = tecnica; // ya tiene una tecnica creada
-                else tecnicaTmp.tecnica = nuevaTecnica(tecnicaTmp.carrera.idCarrera, 
+                else tecnicaTmp.tecnica = nuevaTecnica(tecnicaTmp.carrera.idCarrera,
                     tecnicaTmp.categoria.idCategoria, tecnicaTmp.piloto.dni);// nueva tecnica
-              
+
             }
 
+            if (tabDefault == null) ViewBag.tabDefault = Constante.defaultTabTecnica.TAB_REVISION;
+            else ViewBag.tabDefault = tabDefault;
             return View(tecnicaTmp);
         }
-    
+
         //GET
-        public ActionResult Revision(int idRevision , int tabDefault)
+        public ActionResult Revision(int idRevision, int tabDefault)
         {
             Revision revision = db.Revision.Find(idRevision);
             ViewBag.tabDefault = tabDefault;
 
             return View(revision);
-            
+
         }
 
 
@@ -206,7 +208,7 @@ namespace RaceControl.Controllers
             return View("CreateEditObs");
         }
 
-       //POST
+        //POST
         [HttpPost]
         public ActionResult CreateObs(Observacion Observacion)
         {
@@ -219,8 +221,8 @@ namespace RaceControl.Controllers
             db.Observacion.Add(Observacion);
             db.SaveChanges();
             //Crear logue de usuario
-            
-            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision , tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
+
+            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision, tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
         }
 
         //GET
@@ -233,17 +235,17 @@ namespace RaceControl.Controllers
 
         //POST
         [HttpPost]
-        public ActionResult EditObs( Observacion Observacion)
+        public ActionResult EditObs(Observacion Observacion)
         {
             Observacion editar = db.Observacion.Find(Observacion.idObservacion);
             editar.descripcion = Observacion.descripcion;
             db.SaveChanges();
             //Crear logue de usuario
-           
-            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision , tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION});
+
+            return RedirectToAction("Revision", new { idRevision = Observacion.idRevision, tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
         }
 
-        public ActionResult ConfirmarObs(int idObservacion , int idRevisionOK)
+        public ActionResult ConfirmarObs(int idObservacion, int idRevisionOK)
         {
             Observacion observacion = db.Observacion.Find(idObservacion);
             observacion.fechaOk = DateTime.Now;
@@ -254,8 +256,8 @@ namespace RaceControl.Controllers
             observacion.ok = true;
 
             db.SaveChanges();
-            
-            return RedirectToAction("Revision", new { idRevision = observacion.idRevision , tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
+
+            return RedirectToAction("Revision", new { idRevision = observacion.idRevision, tabDefault = Constante.defaultTabRevision.TAB_OBSERVACION });
         }
 
         public ActionResult CreatePrecinto(int idRevision)
@@ -270,7 +272,7 @@ namespace RaceControl.Controllers
         public ActionResult CreatePrecinto(Precinto precinto)
         {
             precinto.fecha = DateTime.Now;
-          
+
             string currentUserId = User.Identity.GetUserId();
             precinto.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
 
@@ -278,16 +280,16 @@ namespace RaceControl.Controllers
             db.Precinto.Add(precinto);
             db.SaveChanges();
             //Crear logue de usuario
-          
-            return RedirectToAction("Revision", new { idRevision = precinto.idRevision , tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
+
+            return RedirectToAction("Revision", new { idRevision = precinto.idRevision, tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
 
         //GET
         public ActionResult EditPrecinto(int idPrecinto)
         {
             Precinto oPrecinto = db.Precinto.Find(idPrecinto);
-         
-        
+
+
             return View("CreateEditPrecinto", oPrecinto);
         }
         //POST
@@ -304,8 +306,8 @@ namespace RaceControl.Controllers
             precinto.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
 
             db.SaveChanges();
-       
-            return RedirectToAction("Revision", new { idRevision = precinto.idRevision , tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
+
+            return RedirectToAction("Revision", new { idRevision = precinto.idRevision, tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
 
         //GET
@@ -314,7 +316,7 @@ namespace RaceControl.Controllers
             Precinto precinto = db.Precinto.Find(idPrecinto);
             db.Precinto.Remove(precinto);
             db.SaveChanges();
-         
+
             return RedirectToAction("Revision", new { idRevision = idPrecinto, tabDefault = Constante.defaultTabRevision.TAB_PRECINTO });
         }
 
@@ -335,7 +337,17 @@ namespace RaceControl.Controllers
             neumatico.fecha = DateTime.Now;
             db.Neumatico.Add(neumatico);
             db.SaveChanges();
-            return View("CreateEditNeumatico");
+
+            Tecnica tecnica = db.Tecnica.Find(neumatico.idTecnica);
+
+            // //int idCarrera, int? idCategoria, int? dniPiloto, int? tabDefault
+            return RedirectToAction("Tecnica", new
+            {
+                idCarrera = tecnica.idCarrera,
+                idCategoria = tecnica.idCategoria,
+                dniPiloto = tecnica.dniPiloto,
+                tabDefault = Constante.defaultTabTecnica.TAB_NEUMAITCO
+            });
         }
 
         public Boolean ExisteNeumatico(int numNeumatico)
@@ -357,16 +369,41 @@ namespace RaceControl.Controllers
         [HttpPost]
         public ActionResult EditNeumatico(Neumatico editNeumatico)
         {
-            Neumatico neumatico = db.Neumatico.Find(editNeumatico);
+            Neumatico neumatico = db.Neumatico.Find(editNeumatico.numNeumatico);
             neumatico.numNeumatico = editNeumatico.numNeumatico;
             neumatico.nuevo = editNeumatico.nuevo;
             neumatico.fecha = DateTime.Now;
-
+            string currentUserId = User.Identity.GetUserId();
+            neumatico.Usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
             db.SaveChanges();
-            return View("CreateEditNeumatico", neumatico);
+
+            Tecnica tecnica = db.Tecnica.Find(neumatico.idTecnica);
+            return RedirectToAction("Tecnica", new
+            {
+                idCarrera = tecnica.idCarrera,
+                idCategoria = tecnica.idCategoria,
+                dniPiloto = tecnica.dniPiloto,
+                tabDefault = Constante.defaultTabTecnica.TAB_NEUMAITCO
+            });
         }
 
+        public ActionResult EliminarNeumatico(Int64 numNeumatico)
+        {
+            Neumatico neumatico = db.Neumatico.Find(numNeumatico);
+            Tecnica tecnica = db.Tecnica.Find(neumatico.idTecnica);
 
+            db.Neumatico.Remove(neumatico);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Tecnica", new
+            {
+                idCarrera = tecnica.idCarrera,
+                idCategoria = tecnica.idCategoria,
+                dniPiloto = tecnica.dniPiloto,
+                tabDefault = Constante.defaultTabTecnica.TAB_NEUMAITCO
+            });
+        }
 
         public ActionResult BuscarPiloto(int idCarrera, int idCategoria, string buscar)
         {
@@ -396,7 +433,7 @@ namespace RaceControl.Controllers
             return View("ListPilotoTecnica");
         }
 
-        private Tecnica nuevaTecnica(long idCarrera ,long idCategoria , int dniPiloto)
+        private Tecnica nuevaTecnica(long idCarrera, long idCategoria, int dniPiloto)
         {
             Tecnica newTecnica = new Models.Tecnica();
             newTecnica.idCarrera = idCarrera;
@@ -405,7 +442,7 @@ namespace RaceControl.Controllers
             newTecnica.fecha = DateTime.Now;
 
             db.Tecnica.Add(newTecnica);
-          
+
             db.SaveChanges();
             // Tambien asocio los elementos de revision con la tecnica
             asociarElemRevisionTenica(newTecnica.idTecnica);
@@ -429,7 +466,7 @@ namespace RaceControl.Controllers
                 newTecRev.idTecnica = idTecnica;
 
                 db.Revision.Add(newTecRev);
-              
+
             }
 
             db.SaveChanges();
@@ -443,6 +480,6 @@ namespace RaceControl.Controllers
             base.Dispose(disposing);
         }
 
-       
+
     }
 }

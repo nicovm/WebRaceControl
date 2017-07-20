@@ -15,7 +15,7 @@
 
 <div class="modal-body">
 
-    @using (Html.BeginForm(accion, "Carrera", FormMethod.Post, new { @id = "formModal" }))
+    @using (Html.BeginForm(accion, "Carrera", FormMethod.Post, new { @id = "formModal", @class = "form" }))
     {
         <div id="alertModal"></div>
 
@@ -43,6 +43,9 @@
             <input type="submit" value="Guardar" class="btn btn-primary" />
         </div>
     }
+
+
+ 
 
 
 </div>

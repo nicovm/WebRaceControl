@@ -172,13 +172,13 @@
         <ul class="nav nav-pills">
             <li class="@navRevision">
                 <a href="#revision" data-toggle="tab">
-                    <img src="~/Content/Img/img_torneos48.png" width="32px" height="32px" />
+                    <img src="~/Content/Img/img_tecnica48.png" width="32px" height="32px" />
                     <strong> Revisión </strong>
                 </a>
             </li>
             <li class="@navNeumatico">
                 <a href="#neumatico" data-toggle="tab">
-                    <img src="~/Content/Img/img_torneos48.png" width="32px" height="32px" />
+                    <img src="~/Content/Img/img_naumaticos48.png" width="32px" height="32px" />
                     <strong> Neumatico </strong>
                 </a>
             </li>
@@ -194,7 +194,9 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="col-sm-11">Elemento</th>
+                                <th class="col-sm-10">Elemento</th>
+                                <th class="col-sm-1">Observaciones</th>
+                                <th class="col-sm-1">Precintos</th>
                                 <th class="col-sm-1">-</th>
                             </tr>
 
@@ -204,6 +206,8 @@
                 {
                                 <tr>
                                     <td> <h4>@item.Elem_Revision.nombre</h4> </td>
+                                    <td> <h4 align="center" >@item.Observacion.Count()</h4> </td>
+                                    <td> <h4 align="center">@item.Precinto.Count()</h4> </td>
 
                                     <td align="center">
                                         <button id="btnSelectCategoria" type="button" class="btn btn-info"
@@ -241,7 +245,9 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="col-sm-11">Neumatico</th>
+                                <th class="col-sm-7">Neumatico</th>
+                                <th class="col-sm-2">Fecha y hora</th>
+                                <th class="col-sm-2">Tipo de neumatico</th>
                                 <th class="col-sm-1">-</th>
                             </tr>
 
@@ -252,11 +258,20 @@
                                 <tr>
                                     <td> <h4>@item.numNeumatico</h4> </td>
 
+                                    <td align="center"> <h4>@item.fecha</h4> </td>
+                                    @{ 
+                                        string strTipoNeumatico = "";
+                                        if (item.nuevo) { strTipoNeumatico = "Nuevo"; }
+                                        else { strTipoNeumatico = "Usado"; }
+                                    }
+
+                                    <td align="center"> <h4>@strTipoNeumatico</h4> </td>
+
                                     <td align="center">
-                                        <button id="btnSelectNeumatico" type="button" class="btn btn-info"
+                                        <button id="btnSelectNeumatico" type="button" class="btn btn-default"
                                                 data-toggle="modal" data-target="#myModal" data-id=@item.numNeumatico
                                                 onclick="clickBtnNeumatico(this, false)">
-                                            Editar
+                                            <img src="~/Content/Img/img_edit32.png" />
                                         </button>
                                     </td>
                                 </tr>
@@ -272,6 +287,15 @@
 
     }
 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content" id="resultado">
+
+            </div>
+
+        </div>
+    </div>
 
     <script>
 
@@ -304,7 +328,7 @@
 
             console.log(tag);
 
-                if (nuevo) url = "@Url.Action("CreateNeumatico", "Carrera",new { idRevision = Model.tecnica.idTecnica}) ";
+                if (nuevo) url = "@Url.Action("CreateNeumatico", "Carrera",new { idTecnica = Model.tecnica.idTecnica}) ";
             else {
 
                     var id = element.getAttribute('data-id');

@@ -318,9 +318,11 @@
     <Content Include="Content\Img\img_check48.png" />
     <Content Include="Content\Img\img_checkok48.png" />
     <Content Include="Content\Img\img_edit32.png" />
+    <Content Include="Content\Img\img_naumaticos48.png" />
     <Content Include="Content\Img\img_pilotos144.png" />
     <Content Include="Content\Img\img_pilotos48.png" />
     <Content Include="Content\Img\img_pilotos96.png" />
+    <Content Include="Content\Img\img_tecnica48.png" />
     <Content Include="Content\Img\img_torneos32.png" />
     <Content Include="Content\Img\img_torneos48.png" />
     <Content Include="Content\Img\img_usuario48.png" />
