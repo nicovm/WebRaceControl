@@ -284,6 +284,8 @@ namespace RaceControl.Controllers
             return View();
         }
 
+
+
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
@@ -360,6 +362,7 @@ namespace RaceControl.Controllers
             }
         }
 
+
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
@@ -429,6 +432,31 @@ namespace RaceControl.Controllers
             return View();
         }
 
+        //GET
+        public ActionResult PerfilRaceControl()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            Usuario usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+            return View(usuario);
+        }
+
+        /// <summary>
+        /// Modificar el perfil de usuario
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ModPerfilRaceControl(Usuario modUsuario)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            Usuario usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+            usuario.nombre = modUsuario.nombre;
+            usuario.apellido = modUsuario.apellido;
+            usuario.dni = modUsuario.dni;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -620,6 +620,7 @@
     <Content Include="Views\Account\IndexOperador.cshtml" />
     <Content Include="Views\Carrera\CreateEditNeumatico.cshtml" />
     <Content Include="Views\Carrera\SelectTecnica.cshtml" />
+    <Content Include="Views\Account\PerfilRaceControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
