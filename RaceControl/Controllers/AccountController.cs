@@ -452,6 +452,8 @@ namespace RaceControl.Controllers
             usuario.nombre = modUsuario.nombre;
             usuario.apellido = modUsuario.apellido;
             usuario.dni = modUsuario.dni;
+            usuario.AspNetUsers.Email = modUsuario.AspNetUsers.Email;
+            usuario.AspNetUsers.UserName = modUsuario.AspNetUsers.Email;
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
 
