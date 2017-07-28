@@ -447,8 +447,8 @@ namespace RaceControl.Controllers
         [HttpPost]
         public ActionResult ModPerfilRaceControl(Usuario modUsuario)
         {
-            string currentUserId = User.Identity.GetUserId();
-            Usuario usuario = db.Usuario.Where(u => u.idAspNetUsers == currentUserId).FirstOrDefault();
+
+            Usuario usuario = db.Usuario.Find(modUsuario.idUsuario);
             usuario.nombre = modUsuario.nombre;
             usuario.apellido = modUsuario.apellido;
             usuario.dni = modUsuario.dni;
@@ -459,6 +459,15 @@ namespace RaceControl.Controllers
 
 
         }
+
+
+        public ActionResult EditOperador( int idUsuario)
+        {
+            Usuario usuario = db.Usuario.Find(idUsuario);
+
+            return View("PerfilRaceControl",usuario);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

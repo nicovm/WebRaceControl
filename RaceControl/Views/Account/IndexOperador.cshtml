@@ -60,10 +60,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.idUsuario }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.idUsuario }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.idUsuario })
+                    <td align="center">
+                        <button id="btnEditarCarrera" type="button" class="btn btn-info"
+                                data-toggle="modal" data-target="#modalNvoCarrera" 
+                               onclick="location.href='@Url.Action("EditOperador", "Account", new { idUsuario = item.idUsuario})'">
+
+                            Editar
+                        </button>
                     </td>
                 </tr>
 
