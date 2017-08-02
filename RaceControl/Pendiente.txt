@@ -1,2 +1,3 @@
 ﻿1.	 Cuando registro un operador o el usuario administrador poner la columna emailConfirmed = true o borrar el if
 2. Agregar el boton volver en la pantalla de piloto cuando se quiere agregar una piloto a una categoria
+3. Boton Volver a la tecnica desde la revision 

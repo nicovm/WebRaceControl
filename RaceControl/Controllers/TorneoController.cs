@@ -51,9 +51,10 @@ namespace RaceControl.Content
         {
             if (ModelState.IsValid)
             {
-                guardarImg(file, torneo.nombre);
+                guardarImg(file, torneo.idTorneo);
                 db.Torneo.Add(torneo);
                 db.SaveChanges();
+                guardarImg(file, torneo.idTorneo);
                 return RedirectToAction("Index");
             }
 
@@ -141,11 +142,11 @@ namespace RaceControl.Content
             return View(torneo);
         }
 
-        private void guardarImg(HttpPostedFileBase file, string nombreTorneo)
+        private void guardarImg(HttpPostedFileBase file, long idTorneo)
         {
             if (file != null)
             {
-                string filename = string.Format("logo_torneo-{0}.png", nombreTorneo);
+                string filename = string.Format("logo_torneo-{0}.png", idTorneo);
                 string path = Path.Combine(Server.MapPath("~/Content/imgTorneo"), filename);
                 file.SaveAs(path);
 

@@ -257,12 +257,16 @@
             </table>
         </div>
 
-
-
+     
     </div>
 
 
-    
+    <button id="btnVolverTecnica" type="button" class="btn btn-default"
+            onclick="location.href='@Url.Action("Tecnica", "Carrera", new { idCarrera = Model.Tecnica.idCarrera,idCategoria = Model.Tecnica.idCategoria ,
+                                      dniPiloto = Model.Tecnica.dniPiloto })'" >
+        Tecnica
+    </button>
+
 
 
     
@@ -322,8 +326,6 @@
 
     }
 
-
-
     function clickBtnPrecinto(element, nuevo) {
 
         var tag = "clickBtnPrecinto";
@@ -352,8 +354,9 @@
 
         });
 
-
-
     }
+
+
+
 
 </script>
